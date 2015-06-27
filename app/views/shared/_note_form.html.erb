@@ -1,0 +1,18 @@
+<%= form_for @note do |f| %>
+<!-- DISPLAY ERRORS -->
+<!--	
+	<% if @note.errors.any? %>
+		<div class="errors">
+			<h4><%= pluralize(@note.errors.count,"error") %> prevented the note from saving !</h4>
+			<ul>
+				<% @note.errors.full_messages.each do |message| %>
+					<li><%= message %></li>
+				<% end %>
+			</ul>
+		</div>
+	<% end %> 
+-->
+
+	<%= f.text_field :content,placeholder: "Enter new note here.. " %>
+	<%= f.button "Submit" %>
+<% end %>

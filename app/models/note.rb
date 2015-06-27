@@ -4,4 +4,6 @@ class Note < ActiveRecord::Base
 	has_many :tags,:dependent=>:destroy
 
 	validates :content,presence: true
+
+	scope :recent_notes,lambda { order("notes.created_at DESC") }
 end

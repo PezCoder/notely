@@ -1,0 +1,20 @@
+<div class="notes index">
+	<div class="new-note">
+		<%= render :partial=>'shared/note_form' %>
+	</div>
+	<div class="all-notes">
+		<% @notes.each do |note| %>
+			<div class="content">
+				<p><%= note.content %></p>
+			</div>
+			<div class="operations">
+				<ul>
+					<li><%= link_to "Show",note_path(note) %></li>
+					<li><%= link_to "Edit",edit_note_path(note) %></li>
+					<li><%= link_to "Delete",note_path(note),:method=>"delete",data:"Are you sure ?" %></li>
+						
+				</ul>
+			</div>
+		<% end %>
+	</div>
+</div>
