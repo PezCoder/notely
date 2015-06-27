@@ -1,4 +1,14 @@
 <div class="notes index">
+	<section>
+		<h3>Tags</h3>
+		<ul class="all-tags">
+			<% @notes.each do |note| %>
+				<% note.tags.each do |tag| %>
+					<li><%= tag.tagname %></li>
+				<% end %>
+			<% end %>
+		</ul>
+	</section>
 	<div class="new-note">
 		<%= render :partial=>'shared/note_form' %>
 	</div>
