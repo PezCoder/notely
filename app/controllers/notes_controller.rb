@@ -1,4 +1,6 @@
 class NotesController < ApplicationController
+  before_action :check_logged_in
+  
   def index
     @notes = Note.recent_notes
     @note = Note.new
@@ -12,7 +14,7 @@ class NotesController < ApplicationController
     note = Note.new(get_user_params)
     if note.save
       flash[:notice]="Note added."
-      redirect_to(notes_path)
+      redirect_to(user_notes_path(session[:id]))
     else
       flash[:alert]="Error occured while saving note.. !"
       @note = note
@@ -29,11 +31,11 @@ class NotesController < ApplicationController
     note = Note.find_by_id(params[:id])
     if note.update_attributes(get_user_params)
       flash[:notice]="Note updated."
-      redirect_to(notes_path)
+      redirect_to(user_notes_path(session[:id]))
     else
       flash[:alert]="Error occured while updating note.. !"
       @note = Note.find_by_id(params[:id])
-      render(edit_note_path(params[:id]))
+      render(edit_user_note_path(session[:id],params[:id]))
     end
   end
 
@@ -41,7 +43,7 @@ class NotesController < ApplicationController
     note = Note.find_by_id(params[:id])
     note.destroy
     flash[:notice]="Note disposed."
-    redirect_to(notes_path)
+    redirect_to(user_notes_path(session[:id]))
   end
 
   private

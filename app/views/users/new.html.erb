@@ -1,0 +1,7 @@
+<div class="users new">
+	<h4>Register here</h4>
+	<%= form_for @user do |f| %>
+		<%= render :partial=>"/shared/user_form",:locals=>{:f=>f,:new_user=>true} %>
+		<%= f.button "Create my account" %>
+	<% end %>
+</div>

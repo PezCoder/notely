@@ -1,0 +1,7 @@
+<%= f.text_field :username,placeholder:"Username.." %>
+<%= f.text_field :email,placeholder: "Email Address.." %>
+<% if new_user %>
+	<%= f.password_field :password,placeholder: "Password.. " %>
+<% else %>
+	<%= f.password_field :password,placeholder: "New Password.. " %>
+<% end %>
