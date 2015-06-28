@@ -10,7 +10,10 @@
 		</ul>
 	</section>
 	<div class="new-note">
-		<%= render :partial=>'shared/note_form' %>
+		<%= form_for :note,:url=>user_notes_path(session[:id],@note) do |f| %>
+			<%= f.text_field :content,placeholder: "Enter new note here.. " %>
+			<%= f.button "Add note" %>
+		<% end %>
 	</div>
 	<div class="all-notes">
 		<% @notes.each do |note| %>
@@ -19,9 +22,9 @@
 			</div>
 			<div class="operations">
 				<ul>
-					<li><%= link_to "Show",note_path(note) %></li>
-					<li><%= link_to "Edit",edit_note_path(note) %></li>
-					<li><%= link_to "Delete",note_path(note),:method=>"delete",data:"Are you sure ?" %></li>
+					<li><%= link_to "Show",user_note_path(session[:id],note) %></li>
+					<li><%= link_to "Edit",edit_user_note_path(session[:id],note) %></li>
+					<li><%= link_to "Delete",user_note_path(session[:id],note),:method=>"delete",data:"Are you sure ?" %></li>
 						
 				</ul>
 			</div>

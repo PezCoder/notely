@@ -1,3 +1,6 @@
 <div class="notes edit">
-	<%= render :partial=>'shared/note_form' %>
+	<%= form_for @note,:url=>user_note_path(session[:id],@note) do |f| %>
+		<%= f.text_field :content,placeholder: "Enter new note here.. " %>
+		<%= f.button "Submit" %>
+	<% end %>
 </div>

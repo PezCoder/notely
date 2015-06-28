@@ -1,5 +1,7 @@
 class UsersController < ApplicationController
-	before_action :check_logged_in,:except=>[:show,:edit,:update,:destroy]
+	layout 'application'
+	
+	before_action :check_logged_in,:only=>[:show,:edit,:update,:destroy]
 	def index
 		@users = User.recent_users
 	end

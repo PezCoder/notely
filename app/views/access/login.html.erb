@@ -1,0 +1,8 @@
+<div class="access login">
+	<%= form_tag(login_attempt_path) do %>
+	<h3>SIGN IN</h3>
+		<%= text_field_tag(:username,nil,placeholder: "Username..")%><br>
+		<%= password_field_tag(:password,nil,placeholder: "Password..")%><br>
+		<%= button_tag("Login") %>
+	<% end %>
+</div>

@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
   		return true
   	else 
   		flash[:warning]="Please login !"
-  		redirect_to login_access_path
+  		redirect_to login_path
   		return false
   	end
   end

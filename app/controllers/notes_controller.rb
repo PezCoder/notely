@@ -1,9 +1,11 @@
 class NotesController < ApplicationController
-
+  layout 'application' 
+  
   before_action :check_logged_in
 
   def index
-    @notes = Note.recent_notes
+    user = User.find_by_id(session[:id])
+    @notes = user.notes.recent_notes
     @note = Note.new
   end
 
@@ -12,7 +14,7 @@ class NotesController < ApplicationController
   end
 
   def create
-    
+    user = User.find_by_id(session[:id])
     note = Note.new(get_user_params)
     if note.save
       # Extract tags
@@ -21,6 +23,10 @@ class NotesController < ApplicationController
         #save tags
         save_tags(tags,note)
       end
+
+      # add it to user
+      user.notes << note
+      
       flash[:notice]="Note added."
       redirect_to(user_notes_path(session[:id]))
     else
@@ -54,7 +60,7 @@ class NotesController < ApplicationController
     else
       flash[:alert]="Error occured while updating note.. !"
       @note = Note.find_by_id(params[:id])
-      render(edit_user_note_path(session[:id],params[:id]))
+      render('edit')
     end
   end
 
