@@ -11,10 +11,10 @@ class NotesController < ApplicationController
   def create
     note = Note.new(get_user_params)
     if note.save
-      flash[:success]="Note added."
+      flash[:notice]="Note added."
       redirect_to(notes_path)
     else
-      flash[:error]="Error occured while saving note.. !"
+      flash[:alert]="Error occured while saving note.. !"
       @note = note
       @notes = Note.recent_notes
       render('index')
@@ -28,10 +28,10 @@ class NotesController < ApplicationController
   def update
     note = Note.find_by_id(params[:id])
     if note.update_attributes(get_user_params)
-      flash[:success]="Note updated."
+      flash[:notice]="Note updated."
       redirect_to(notes_path)
     else
-      flash[:error]="Error occured while updating note.. !"
+      flash[:alert]="Error occured while updating note.. !"
       @note = Note.find_by_id(params[:id])
       render(edit_note_path(params[:id]))
     end
@@ -40,7 +40,7 @@ class NotesController < ApplicationController
   def destroy
     note = Note.find_by_id(params[:id])
     note.destroy
-    flash[:success]="Note disposed."
+    flash[:notice]="Note disposed."
     redirect_to(notes_path)
   end
 
