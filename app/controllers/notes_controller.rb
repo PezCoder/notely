@@ -23,7 +23,12 @@ class NotesController < ApplicationController
         #save tags
         save_tags(tags,note)
       end
-
+      #Extract User
+      collab_users = get_users
+      unless collab_users.empty?
+        #save it to shared users
+        save_collab_users(collab_users,note)
+      end
       # add it to user
       user.notes << note
       
@@ -96,4 +101,25 @@ class NotesController < ApplicationController
       puts ">>> Tags added are : #{tag}"
     end
   end
+
+  def get_users
+    content = params[:note][:content]
+    users_with_junk = content.split("@")
+    users_with_junk.shift
+    #remove spaces 
+    users = []
+    users_with_junk.each do |junk_user| 
+      users << junk_user.split(" ")[0]
+    end
+    return users
+  end
+
+  def save_collab_users(users,note)
+    users.each do |username|
+      new_user = SharedUser.new(:username=>username)
+      note.shared_users << new_user
+      puts ">>> Tags added are : #{tag}"
+    end
+  end
+
 end
