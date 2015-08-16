@@ -5,8 +5,20 @@ class NotesController < ApplicationController
 
   def index
     user = User.find_by_id(session[:id])
-    @notes = user.notes.recent_notes
     @note = Note.new
+    if(params[:search_by])
+      # find tag
+      tag = Tag.find_by_tagname(params[:search_by])
+      #Find notes related to this tag
+      @notes = tag.notes.recent_notes
+    else
+      # No search 
+      @notes = user.notes.recent_notes
+    end
+    
+    # User's most frequently used tags
+    @tags = get_suggested_tags
+
   end
 
   def show
@@ -53,12 +65,16 @@ class NotesController < ApplicationController
       tags = get_tags
       unless tags.empty?
         #remove previous tags of this note
-        note.tags.each do |tag|
-          tag.destroy
-          puts " >>> Tag #{tag.tagname} Destroyed .. "
+        tags.each do |tag|
+          if my_tag = Tag.find_by_tagname(tag)
+            # if tag already there then update it
+            my_tag.touch
+          else 
+            #not present so save it 
+            save_tags([tag],note)
+          end
         end
-        #save tags
-        save_tags(tags,note)
+
       end
       flash[:notice]="Note updated."
       redirect_to(user_notes_path(session[:id]))
@@ -91,12 +107,23 @@ class NotesController < ApplicationController
     tags_with_junk.each do |junk_tags| 
       tags << junk_tags.split(" ")[0]
     end
-    return tags
+    #return unique tags only
+    return tags.uniq
   end
 
   def save_tags(tags,note)
     tags.each do |tag|
-      new_tag = Tag.new(:tagname=>tag)
+      # Find if tag already exist
+      result = Tag.find_by_tagname(tag)
+      if result.nil?
+        #new tag so add it for that note
+        new_tag = Tag.new(:tagname=>tag)
+      else
+        # give new_tag the already existed tag 
+        # This is to ensure we can do tag.notes later on
+        new_tag = result
+      end
+
       note.tags << new_tag
       puts ">>> Tags added are : #{tag}"
     end
@@ -120,6 +147,19 @@ class NotesController < ApplicationController
       note.shared_users << new_user
       puts ">>> Tags added are : #{tag}"
     end
+  end
+
+  def get_suggested_tags
+  # note: Tags are already unique since it's accessed from "tags" table
+  # tagnames with most occurences first
+    tagnames = {}
+    #tagname = {tagname,occurence}
+    tags = Tag.recent_tags
+    tags.each do |tag|
+       tagnames[tag.tagname]=tag.notes.count
+    end
+    #Sort in most occurence first & returned multi dim array
+    tagnames.sort{|val1, val2| val2[1]<=>val1[1]}
   end
 
 end

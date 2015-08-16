@@ -1,3 +1,4 @@
 class Tag < ActiveRecord::Base
-	belongs_to :note
+	has_and_belongs_to_many :notes
+	scope :recent_tags,lambda { order("updated_at desc") }
 end

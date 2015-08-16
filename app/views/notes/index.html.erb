@@ -2,10 +2,9 @@
 	<section>
 		<h3>Tags</h3>
 		<ul class="all-tags">
-			<% @notes.each do |note| %>
-				<% note.tags.each do |tag| %>
-					<li><%= tag.tagname %></li>
-				<% end %>
+			<% @tags.each do |tag| %>
+			<%= tag.inspect %>
+				<li><%= link_to tag[0],user_notes_path(session[:id],:search_by=>tag[0]) %></li>
 			<% end %>
 		</ul>
 	</section>
