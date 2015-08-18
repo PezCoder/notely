@@ -3,7 +3,6 @@
 		<h3>Tags</h3>
 		<ul class="all-tags">
 			<% @tags.each do |tag| %>
-			<%= tag.inspect %>
 				<li><%= link_to tag[0],user_notes_path(session[:id],:search_by=>tag[0]) %></li>
 			<% end %>
 		</ul>

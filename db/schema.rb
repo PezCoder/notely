@@ -11,7 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150815223303) do
+ActiveRecord::Schema.define(version: 20150818195400) do
+
+  create_table "collaborations", force: :cascade do |t|
+    t.boolean  "is_admin",   limit: 1
+    t.integer  "user_id",    limit: 4
+    t.integer  "note_id",    limit: 4
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
+
+  add_index "collaborations", ["user_id", "note_id"], name: "index_collaborations_on_user_id_and_note_id", using: :btree
 
   create_table "notes", force: :cascade do |t|
     t.text     "content",    limit: 65535

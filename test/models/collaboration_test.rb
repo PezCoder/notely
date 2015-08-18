@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class SharedUserTest < ActiveSupport::TestCase
+class CollaborationTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end
