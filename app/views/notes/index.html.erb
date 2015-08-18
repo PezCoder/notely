@@ -6,6 +6,7 @@
 				<li><%= link_to tag[0],user_notes_path(session[:id],:search_by=>tag[0]) %></li>
 			<% end %>
 		</ul>
+
 	</section>
 	<div class="new-note">
 		<%= form_for :note,:url=>user_notes_path(session[:id],@note) do |f| %>
@@ -17,6 +18,10 @@
 		<% @notes.each do |note| %>
 			<div class="content">
 				<p><%= note.content %></p>
+				<p><% note.collaborations.each do |collab| %>
+				@<%= collab.user.username %><br>
+				<% end %>
+				</p>
 			</div>
 			<div class="operations">
 				<ul>

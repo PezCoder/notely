@@ -150,9 +150,10 @@ class NotesController < ApplicationController
     #make sure it's downcased
     users.each do |user|
       user.downcase!
+      puts ">> Get User :: #{user}"
     end
     #remove users name .. if they put it by default
-    return users-[session[:username]]
+    return users
   end
 
   def save_collab_users(users,note)
