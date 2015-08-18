@@ -19,6 +19,12 @@
 	</p>
 <% end %>
 
+<% if flash[:warning].present? %>
+	<p class="flash warning">
+		<%= flash[:warning] %>
+	</p>
+<% end %>
+
 <nav>
 	<% if session[:id].present? %>
 		<ul>

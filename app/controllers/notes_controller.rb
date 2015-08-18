@@ -2,10 +2,13 @@ class NotesController < ApplicationController
   layout 'application' 
   
   before_action :check_logged_in
+  #check for privileges before updation of note
+  before_action :check_user_privileges,:only=>[:update]
 
   def index
     user = User.find_by_id(session[:id])
     @note = Note.new
+    #If tags are searched
     if(params[:search_by])
       # find tag
       tag = Tag.find_by_tagname(params[:search_by])
@@ -30,19 +33,19 @@ class NotesController < ApplicationController
     note = Note.new(get_user_params)
     if note.save
       # Extract tags
-      tags = get_tags
+      tags = get_tags(nil)
       unless tags.empty?
         #save tags
         save_tags(tags,note)
       end
-      #Extract User
-      collab_users = get_users
+      #Extract collab Users
+      collab_users = get_users(nil)
       unless collab_users.empty?
         #save it to shared users
         save_collab_users(collab_users,note)
       end
-      # add it to user
-      user.notes << note
+      # add the admin to user
+      Collaboration.create(:user=>user,:note=>note,:is_admin=>true)
       
       flash[:notice]="Note added."
       redirect_to(user_notes_path(session[:id]))
@@ -62,7 +65,7 @@ class NotesController < ApplicationController
     note = Note.find_by_id(params[:id])
     if note.update_attributes(get_user_params)
       # Extract tags
-      tags = get_tags
+      tags = get_tags(nil)
       unless tags.empty?
         #remove previous tags of this note
         tags.each do |tag|
@@ -74,7 +77,13 @@ class NotesController < ApplicationController
             save_tags([tag],note)
           end
         end
+      end
 
+      #updating the collab users
+      if check_if_admin
+        #if admin also update the collab users
+        users = get_users(nil)
+        update_collab_users(users,note)
       end
       flash[:notice]="Note updated."
       redirect_to(user_notes_path(session[:id]))
@@ -98,8 +107,8 @@ class NotesController < ApplicationController
     params.require(:note).permit(:content)
   end
 
-  def get_tags
-    content = params[:note][:content]
+  def get_tags(content)
+    content ||= params[:note][:content]
     tags_with_junk = content.split("#")
     tags_with_junk.shift
     #remove spaces 
@@ -129,8 +138,8 @@ class NotesController < ApplicationController
     end
   end
 
-  def get_users
-    content = params[:note][:content]
+  def get_users(content)
+    content||=params[:note][:content]
     users_with_junk = content.split("@")
     users_with_junk.shift
     #remove spaces 
@@ -138,14 +147,51 @@ class NotesController < ApplicationController
     users_with_junk.each do |junk_user| 
       users << junk_user.split(" ")[0]
     end
-    return users
+    #make sure it's downcased
+    users.each do |user|
+      user.downcase!
+    end
+    #remove users name .. if they put it by default
+    return users-[session[:username]]
   end
 
   def save_collab_users(users,note)
     users.each do |username|
-      new_user = SharedUser.new(:username=>username)
-      note.shared_users << new_user
-      puts ">>> Tags added are : #{tag}"
+      #add collab users with not giving them admin rights
+      c_user = User.find_by_username(username)
+      Collaboration.create(:user=>c_user,:note=>note,:is_admin=>false) if c_user
+    end
+  end
+
+  def update_collab_users(users,note)
+    old_users = []
+    note.collaborations.each do |collab|
+      old_users<<collab.user.username
+    end
+    old_users= old_users - [session[:username]]
+    puts ">>> Old Users: " + old_users.inspect
+
+    new_users = users-old_users
+    delete_users = old_users - users
+
+    puts ">>> New Users:" + new_users.inspect
+    unless new_users.empty?
+      new_users.each do |username|
+        #if not already there add it
+        c_user = User.find_by_username(username)
+        puts ">> Added Users : #{username}"
+        Collaboration.create(:user=>c_user,:note=>note,:is_admin=>false) if c_user
+      end
+    end
+    puts ">>> Delete Users: #{delete_users.inspect}"
+    unless delete_users.empty?
+      #delete removed users by admin
+      note.collaborations.each do |collab|
+        if delete_users.find(){|name| name==collab.user.username}
+          puts ">>> Deleted User > #{collab.user.username}" 
+          collab.destroy
+        end
+      end
     end
   end
 
@@ -161,5 +207,35 @@ class NotesController < ApplicationController
     #Sort in most occurence first & returned multi dim array
     tagnames.sort{|val1, val2| val2[1]<=>val1[1]}
   end
+
+  def check_user_privileges
+    note = Note.find_by_id(params[:id])
+    #old one's
+    set1 = get_users(nil)
+    #after updating note
+    set2 = get_users(note.content)
+    puts "-----------------"
+    puts set1.inspect 
+    puts "---------------"
+    puts set2.inspect
+    puts "---------------"
+    if (set1-set2).empty? && (set2-set1).empty?
+      #No updation of collab users
+      return true
+    else
+      # there is an updation of collab users in the note
+      #if admin of this note => All ohk
+      if check_if_admin 
+        return true
+      else
+        flash[:warning]="You don't have permission to modify collaborated users !"
+        @note = note
+        render('edit')
+        return false   
+      end
+    end
+
+  end
+
 
 end

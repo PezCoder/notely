@@ -13,4 +13,16 @@ class ApplicationController < ActionController::Base
   		return false
   	end
   end
+
+  def check_if_admin
+    note=Note.find_by_id(params[:id])
+    note.collaborations.each do |collab|
+      if collab.user.id==session[:id] && collab.is_admin 
+        #if it's admin of note => alright 
+        return true
+      end 
+    end
+    return false
+  end
+
 end
