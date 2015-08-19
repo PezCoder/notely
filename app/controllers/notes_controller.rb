@@ -11,8 +11,9 @@ class NotesController < ApplicationController
     #If tags are searched
     if(params[:search_by])
       # find tag
-      tag = Tag.find_by_tagname(params[:search_by])
+      tag = user.tags.find_by_tagname(params[:search_by])
       #Find notes related to this tag
+
       @notes = tag.notes.recent_notes
     else
       # No search 
@@ -20,7 +21,7 @@ class NotesController < ApplicationController
     end
     
     # User's most frequently used tags
-    @tags = get_suggested_tags
+    @tags = get_suggested_tags(user.notes.recent_notes)
 
   end
 
@@ -121,9 +122,10 @@ class NotesController < ApplicationController
   end
 
   def save_tags(tags,note)
+    user = User.find_by_id(session[:id])
     tags.each do |tag|
       # Find if tag already exist
-      result = Tag.find_by_tagname(tag)
+      result = user.tags.find_by_tagname(tag)
       if result.nil?
         #new tag so add it for that note
         new_tag = Tag.new(:tagname=>tag)
@@ -134,7 +136,7 @@ class NotesController < ApplicationController
       end
 
       note.tags << new_tag
-      puts ">>> Tags added are : #{tag}"
+      user.tags << new_tag
     end
   end
 
@@ -150,7 +152,6 @@ class NotesController < ApplicationController
     #make sure it's downcased
     users.each do |user|
       user.downcase!
-      puts ">> Get User :: #{user}"
     end
     #remove users name .. if they put it by default
     return users
@@ -170,43 +171,48 @@ class NotesController < ApplicationController
       old_users<<collab.user.username
     end
     old_users= old_users - [session[:username]]
-    puts ">>> Old Users: " + old_users.inspect
 
     new_users = users-old_users
     delete_users = old_users - users
 
-    puts ">>> New Users:" + new_users.inspect
     unless new_users.empty?
       new_users.each do |username|
         #if not already there add it
         c_user = User.find_by_username(username)
-        puts ">> Added Users : #{username}"
         Collaboration.create(:user=>c_user,:note=>note,:is_admin=>false) if c_user
       end
     end
-    puts ">>> Delete Users: #{delete_users.inspect}"
     unless delete_users.empty?
       #delete removed users by admin
       note.collaborations.each do |collab|
         if delete_users.find(){|name| name==collab.user.username}
-          puts ">>> Deleted User > #{collab.user.username}" 
           collab.destroy
         end
       end
     end
   end
 
-  def get_suggested_tags
+  def get_suggested_tags(notes)
   # note: Tags are already unique since it's accessed from "tags" table
   # tagnames with most occurences first
-    tagnames = {}
-    #tagname = {tagname,occurence}
-    tags = Tag.recent_tags
-    tags.each do |tag|
-       tagnames[tag.tagname]=tag.notes.count
+    unique_tags =[]
+    notes.each do |note|
+      note.tags.each do |tag|
+        unique_tags << tag if !unique_tags.find(){|tag| tag}
+      end
     end
-    #Sort in most occurence first & returned multi dim array
-    tagnames.sort{|val1, val2| val2[1]<=>val1[1]}
+    unless unique_tags.empty?
+      puts "--->Unique tags of this user : #{unique_tags.inspect}"
+      tagnames = {}
+      #tagname = {tagname,occurence}
+      tags = unique_tags.recent_tags
+      tags.each do |tag|
+         tagnames[tag.tagname]=tag.notes.count
+      end
+      #Sort in most occurence first & returned multi dim array
+      tagnames.sort{|val1, val2| val2[1]<=>val1[1]}
+    end
+    return []
   end
 
   def check_user_privileges
@@ -215,11 +221,7 @@ class NotesController < ApplicationController
     set1 = get_users(nil)
     #after updating note
     set2 = get_users(note.content)
-    puts "-----------------"
-    puts set1.inspect 
-    puts "---------------"
-    puts set2.inspect
-    puts "---------------"
+
     if (set1-set2).empty? && (set2-set1).empty?
       #No updation of collab users
       return true

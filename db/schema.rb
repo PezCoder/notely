@@ -52,11 +52,13 @@ ActiveRecord::Schema.define(version: 20150818195400) do
 
   create_table "tags", force: :cascade do |t|
     t.string   "tagname",    limit: 30
+    t.integer  "user_id",    limit: 4
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
   end
 
   add_index "tags", ["tagname"], name: "index_tags_on_tagname", using: :btree
+  add_index "tags", ["user_id"], name: "index_tags_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "username",        limit: 50
