@@ -70,13 +70,8 @@ class NotesController < ApplicationController
       unless tags.empty?
         #remove previous tags of this note
         tags.each do |tag|
-          if my_tag = Tag.find_by_tagname(tag)
-            # if tag already there then update it
-            my_tag.touch
-          else 
-            #not present so save it 
-            save_tags([tag],note)
-          end
+          #not present so save it 
+          save_tags([tag],note)
         end
       end
 
@@ -129,14 +124,14 @@ class NotesController < ApplicationController
       if result.nil?
         #new tag so add it for that note
         new_tag = Tag.new(:tagname=>tag)
+        user.tags << new_tag
       else
         # give new_tag the already existed tag 
-        # This is to ensure we can do tag.notes later on
+        # so directly add the note to the found tag
         new_tag = result
       end
 
       note.tags << new_tag
-      user.tags << new_tag
     end
   end
 
