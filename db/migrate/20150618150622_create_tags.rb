@@ -6,6 +6,5 @@ class CreateTags < ActiveRecord::Migration
       t.timestamps null: false
     end
     add_index('tags','tagname')  
-    add_index('tags','user_id')
   end
 end

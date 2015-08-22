@@ -13,7 +13,6 @@ class NotesController < ApplicationController
       # find tag
       tag = user.tags.find_by_tagname(params[:search_by])
       #Find notes related to this tag
-
       @notes = tag.notes.recent_notes
     else
       # No search 
@@ -21,7 +20,7 @@ class NotesController < ApplicationController
     end
     
     # User's most frequently used tags
-    @tags = get_suggested_tags(user.notes.recent_notes)
+    @tags = get_suggested_tags
 
   end
 
@@ -52,10 +51,9 @@ class NotesController < ApplicationController
       redirect_to(user_notes_path(session[:id]))
     else
       flash[:alert]="Error occured while saving note.. !"
-      @note = note
-      @notes = Note.recent_notes
-      render('index')
+      redirect_to(user_notes_path(session[:id]))
     end
+    
   end
 
   def edit
@@ -187,28 +185,43 @@ class NotesController < ApplicationController
     end
   end
 
-  def get_suggested_tags(notes)
-  # note: Tags are already unique since it's accessed from "tags" table
+  # def get_suggested_tags(notes)
+  # # note: Tags are already unique since it's accessed from "tags" table
+  # # tagnames with most occurences first
+  #   unique_tags =[]
+  #   notes.each do |note|
+  #     note.tags.each do |tag|
+  #       unique_tags << tag if !unique_tags.find(){|tag| tag}
+  #     end
+  #   end
+  #   unless unique_tags.empty?
+  #     puts "--->Unique tags of this user : #{unique_tags.inspect}"
+  #     tagnames = {}
+  #     #tagname = {tagname,occurence}
+  #     tags = unique_tags.recent_tags
+  #     tags.each do |tag|
+  #        tagnames[tag.tagname]=tag.notes.count
+  #     end
+  #     #Sort in most occurence first & returned multi dim array
+  #     tagnames.sort{|val1, val2| val2[1]<=>val1[1]}
+  #   end
+  #   return []
+  # end
+
+def get_suggested_tags
+  # note: Tags are already unique 
   # tagnames with most occurences first
-    unique_tags =[]
-    notes.each do |note|
-      note.tags.each do |tag|
-        unique_tags << tag if !unique_tags.find(){|tag| tag}
-      end
-    end
-    unless unique_tags.empty?
-      puts "--->Unique tags of this user : #{unique_tags.inspect}"
-      tagnames = {}
-      #tagname = {tagname,occurence}
-      tags = unique_tags.recent_tags
-      tags.each do |tag|
-         tagnames[tag.tagname]=tag.notes.count
-      end
-      #Sort in most occurence first & returned multi dim array
-      tagnames.sort{|val1, val2| val2[1]<=>val1[1]}
-    end
-    return []
+  user = User.find_by_id(session[:id])
+  tagnames = {}
+  #tagname = {tagname,occurence}
+  puts "#{user.tags.inspect}"
+  tags = user.tags.recent_tags
+  tags.each do |tag|
+     tagnames[tag.tagname]=tag.notes.count
   end
+  #Sort in most occurence first & returned multi dim array
+  tagnames.sort{|val1, val2| val2[1]<=>val1[1]}
+end
 
   def check_user_privileges
     note = Note.find_by_id(params[:id])

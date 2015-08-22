@@ -38,15 +38,6 @@ ActiveRecord::Schema.define(version: 20150818195400) do
 
   add_index "notes_tags", ["note_id", "tag_id"], name: "index_notes_tags_on_note_id_and_tag_id", using: :btree
 
-  create_table "shared_users", force: :cascade do |t|
-    t.string   "username",   limit: 50
-    t.integer  "note_id",    limit: 4
-    t.datetime "created_at",            null: false
-    t.datetime "updated_at",            null: false
-  end
-
-  add_index "shared_users", ["note_id"], name: "index_shared_users_on_note_id", using: :btree
-
   create_table "tags", force: :cascade do |t|
     t.string   "tagname",    limit: 30
     t.integer  "user_id",    limit: 4
@@ -55,7 +46,6 @@ ActiveRecord::Schema.define(version: 20150818195400) do
   end
 
   add_index "tags", ["tagname"], name: "index_tags_on_tagname", using: :btree
-  add_index "tags", ["user_id"], name: "index_tags_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "username",        limit: 50
