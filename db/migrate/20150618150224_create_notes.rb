@@ -4,6 +4,5 @@ class CreateNotes < ActiveRecord::Migration
     	t.text 'content'
       t.timestamps null: false
     end
-    add_index('notes','user_id')
   end
 end
