@@ -62,14 +62,20 @@ class NotesController < ApplicationController
 
   def update
     note = Note.find_by_id(params[:id])
+    user = User.find_by_id(session[:id])
     if note.update_attributes(get_user_params)
       # Extract tags
       tags = get_tags(nil)
       unless tags.empty?
         #remove previous tags of this note
         tags.each do |tag|
-          #not present so save it 
-          save_tags([tag],note)
+          if my_tag = user.tags.find_by_tagname(tag)
+            # if tag already there then touch it (for recommendation purpose)
+            my_tag.touch
+          else 
+            #not present so save it 
+            save_tags([tag],note)
+          end
         end
       end
 
@@ -185,36 +191,12 @@ class NotesController < ApplicationController
     end
   end
 
-  # def get_suggested_tags(notes)
-  # # note: Tags are already unique since it's accessed from "tags" table
-  # # tagnames with most occurences first
-  #   unique_tags =[]
-  #   notes.each do |note|
-  #     note.tags.each do |tag|
-  #       unique_tags << tag if !unique_tags.find(){|tag| tag}
-  #     end
-  #   end
-  #   unless unique_tags.empty?
-  #     puts "--->Unique tags of this user : #{unique_tags.inspect}"
-  #     tagnames = {}
-  #     #tagname = {tagname,occurence}
-  #     tags = unique_tags.recent_tags
-  #     tags.each do |tag|
-  #        tagnames[tag.tagname]=tag.notes.count
-  #     end
-  #     #Sort in most occurence first & returned multi dim array
-  #     tagnames.sort{|val1, val2| val2[1]<=>val1[1]}
-  #   end
-  #   return []
-  # end
-
 def get_suggested_tags
   # note: Tags are already unique 
   # tagnames with most occurences first
   user = User.find_by_id(session[:id])
   tagnames = {}
   #tagname = {tagname,occurence}
-  puts "#{user.tags.inspect}"
   tags = user.tags.recent_tags
   tags.each do |tag|
      tagnames[tag.tagname]=tag.notes.count
