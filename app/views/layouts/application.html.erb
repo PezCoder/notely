@@ -31,6 +31,29 @@
 			<li>@<%= session[:username] %></li>
 			<li><%= link_to "Logout",logout_path %></li>
 		</ul>
+		<div class="notifications">
+			<ul>
+				<% @notifications.each do |notification| %>
+					<% if notification.rejected %>
+						@<%= notification.from_user %> rejected the request.
+					<% else %>
+						<li>
+						<%= link_to(user_note_path(session[:id],notification.note.id)) do %>
+							 @<%= notification.from_user %> wants to collaborate with you . 
+								<%= link_to "Accept",accept_user_path(session[:id],:notification_id=>notification.id) %>
+								<%= link_to "reject",reject_user_path(session[:id],:notification_id=>notification.id) %>
+							<span><i> <% if notification.is_seen %>
+									SEEN
+									<% else %>
+									NOT SEEN YET 
+									<% end %>
+							</i></span>
+						<% end %>
+						</li>
+					<% end %>
+				<% end %>
+			</ul>
+		</div>
 	<% end %>
 </nav>
 <%= yield %>

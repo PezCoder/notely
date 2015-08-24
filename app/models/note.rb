@@ -2,6 +2,7 @@ class Note < ActiveRecord::Base
 	has_many :collaborations
 	has_many :users,:through=>:collaborations
 	has_and_belongs_to_many :tags
+	has_many :notifications
 
 	validates :content,presence: true
 

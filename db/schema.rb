@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150818195400) do
+ActiveRecord::Schema.define(version: 20150824085148) do
 
   create_table "collaborations", force: :cascade do |t|
     t.boolean  "is_admin",   limit: 1
@@ -37,6 +37,19 @@ ActiveRecord::Schema.define(version: 20150818195400) do
   end
 
   add_index "notes_tags", ["note_id", "tag_id"], name: "index_notes_tags_on_note_id_and_tag_id", using: :btree
+
+  create_table "notifications", force: :cascade do |t|
+    t.integer  "user_id",    limit: 4
+    t.integer  "note_id",    limit: 4
+    t.boolean  "is_seen",    limit: 1,   default: false
+    t.string   "from_user",  limit: 255
+    t.boolean  "is_removed", limit: 1,   default: false
+    t.boolean  "rejected",   limit: 1,   default: false
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
+  end
+
+  add_index "notifications", ["user_id", "note_id"], name: "index_notifications_on_user_id_and_note_id", using: :btree
 
   create_table "tags", force: :cascade do |t|
     t.string   "tagname",    limit: 30
