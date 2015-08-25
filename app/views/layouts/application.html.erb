@@ -38,7 +38,7 @@
 						@<%= notification.from_user %> rejected the request.
 					<% else %>
 						<li>
-						<%= link_to(user_note_path(session[:id],notification.note.id)) do %>
+						
 							 @<%= notification.from_user %> wants to collaborate with you . 
 								<%= link_to "Accept",accept_user_path(session[:id],:notification_id=>notification.id) %>
 								<%= link_to "reject",reject_user_path(session[:id],:notification_id=>notification.id) %>
@@ -48,7 +48,7 @@
 									NOT SEEN YET 
 									<% end %>
 							</i></span>
-						<% end %>
+						
 						</li>
 					<% end %>
 				<% end %>

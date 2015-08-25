@@ -1,7 +1,10 @@
 class Note < ActiveRecord::Base
 	has_many :collaborations
 	has_many :users,:through=>:collaborations
-	has_and_belongs_to_many :tags
+
+	has_many :tags_handlers
+	has_many :tags,:through=>:tags_handlers
+	
 	has_many :notifications
 
 	validates :content,presence: true
@@ -9,18 +12,24 @@ class Note < ActiveRecord::Base
 	scope :recent_notes,lambda { order("notes.created_at DESC") }
 
 	#active record callbacks
-	after_destroy :destroy_related_tags
+	before_destroy :destroy_related_tags,:destroy_related_notifications
 	after_update :touch_tags
 	private
 	def destroy_related_tags
 		self.tags.each do |tag|
 			tag.destroy
-			puts ">> Destroying #{tag.tagname}"
 		end
 	end
 
+	def destroy_related_notifications
+		self.notifications.each do |notification|
+			notification.destroy
+		end
+	end
 	def touch_tags
-		note.tags.touch
+		self.tags.each do |tag|
+			tag.touch
+		end
 	end
 
 end

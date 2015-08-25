@@ -1,7 +1,10 @@
 class User < ActiveRecord::Base
 	has_many :collaborations
 	has_many :notes,:through=>:collaborations
-	has_many :tags,:dependent=>:destroy
+
+	has_many :tags_handlers
+	has_many :tags,:through=>:tags_handlers
+	
 	has_many :notifications
 	
 	#Encrypt password
@@ -13,17 +16,13 @@ class User < ActiveRecord::Base
 	
 	scope :recent_users,lambda { order("users.created_at DESC")} 
 
-	after_destroy :destroy_related_notes,:destroy_related_tags
+	before_destroy :destroy_related_notes
 
 	private 
 	def destroy_related_notes
 		self.notes.each do |note|
 			note.destroy
-			puts ">>> Note destroyed : #{note.content}"
 		end
 	end
 
-	def destroy_related_tags
-
-	end
 end

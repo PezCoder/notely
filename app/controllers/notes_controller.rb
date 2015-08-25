@@ -155,7 +155,6 @@ class NotesController < ApplicationController
         if result.nil?
           #new tag so add it for that note
           new_tag = Tag.new(:tagname=>tag)
-          user.tags << new_tag
         else
           # give new_tag the already existed tag 
           if old_tag = note.tags.find_by_tagname(tag)
@@ -166,8 +165,7 @@ class NotesController < ApplicationController
             new_tag = result
           end
         end
-
-        note.tags << new_tag if new_tag
+        TagsHandler.create(:user=>user,:note=>note,:tag=>new_tag) if new_tag
       end #end tags
     end #end users
 
@@ -186,7 +184,6 @@ class NotesController < ApplicationController
       delete_tags.each do |tagname| 
         tag = note.tags.find_by_username(tagname)
         tag.destroy
-        puts ">>> TAG DELETED : #{tagname}"
       end
     end
     #add the new tags
@@ -259,11 +256,12 @@ class NotesController < ApplicationController
     user = User.find_by_id(session[:id])
     tagnames = {}
     #tagname = {tagname,occurence}
+    puts user.tags.inspect
     tags = user.tags.recent_tags
     tags.each do |tag|
+      puts "#{tag.notes.inspect}"
        tagnames[tag.tagname]=tag.notes.count
     end
-    puts ">>>> #{tags.inspect} "
     #Sort in most occurence first & returned multi dim array
     tagnames.sort{|val1, val2| val2[1]<=>val1[1]}
   end
