@@ -12,4 +12,18 @@ class User < ActiveRecord::Base
 	validates :username,:email, uniqueness: {:case_sensitive=>false}
 	
 	scope :recent_users,lambda { order("users.created_at DESC")} 
+
+	after_destroy :destroy_related_notes,:destroy_related_tags
+
+	private 
+	def destroy_related_notes
+		self.notes.each do |note|
+			note.destroy
+			puts ">>> Note destroyed : #{note.content}"
+		end
+	end
+
+	def destroy_related_tags
+
+	end
 end

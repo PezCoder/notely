@@ -8,4 +8,19 @@ class Note < ActiveRecord::Base
 
 	scope :recent_notes,lambda { order("notes.created_at DESC") }
 
+	#active record callbacks
+	after_destroy :destroy_related_tags
+	after_update :touch_tags
+	private
+	def destroy_related_tags
+		self.tags.each do |tag|
+			tag.destroy
+			puts ">> Destroying #{tag.tagname}"
+		end
+	end
+
+	def touch_tags
+		note.tags.touch
+	end
+
 end

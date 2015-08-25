@@ -38,14 +38,7 @@ class NotesController < ApplicationController
         #save tags
         save_tags([user],tags,note)
       end
-      # === OLD CODE === #
-      #Extract collab Users
-      # collab_users = get_users(nil)
-      # unless collab_users.empty?
-      #   #save it to shared users
-      #   save_collab_users(collab_users,note)
-      # end
-      # add the admin to user, but genereate notifications for users other than admin
+
       Collaboration.create(:user=>user,:note=>note,:is_admin=>true)
       # === Modified above collaboration to integrate Notifications === #
       users = get_users(nil)
@@ -81,21 +74,9 @@ class NotesController < ApplicationController
       #Update the tags to all the users that are collaborated
       # Extract tags
       tags = get_tags(nil)
-      unless tags.empty?
-        #remove previous tags of this note
-        #all users that are currently collabored with this note
-        c_users = note.users
+      #delete tags that are not present after updation
+      update_tags(note,tags)
 
-        tags.each do |tag|
-          if my_tag = user.tags.find_by_tagname(tag)
-            # if tag already there then touch it (for recommendation purpose)
-            my_tag.touch
-          else 
-            #not present so save it 
-            save_tags(c_users,tags,note)
-          end
-        end
-      end
     else
       flash[:alert]="Error occured while updating note.. !"
       @note = Note.find_by_id(params[:id])
@@ -187,12 +168,35 @@ class NotesController < ApplicationController
         end
 
         note.tags << new_tag if new_tag
-      end
+      end #end tags
+    end #end users
 
-
-    end
   end
 
+  def update_tags(note,tags)
+    #delete tags that are not present after updation
+    old_tags = []
+    note.tags.each do |tag|
+      old_tags<<tag.tagname
+    end
+    new_tags = tags
+    #destroy whatever tags are not present now
+    delete_tags = old_tags - new_tags
+    unless delete_tags.empty?
+      delete_tags.each do |tagname| 
+        tag = note.tags.find_by_username(tagname)
+        tag.destroy
+        puts ">>> TAG DELETED : #{tagname}"
+      end
+    end
+    #add the new tags
+    add_tags = new_tags-old_tags
+    unless add_tags.empty?
+      c_users = note.users
+      save_tags(c_users,add_tags,note)
+    end
+
+  end
   def get_users(content)
     content||=params[:note][:content]
     users_with_junk = content.split("@")
@@ -290,6 +294,6 @@ class NotesController < ApplicationController
 
   def get_notifications
     user = User.find_by_id(session[:id])
-    @notifications = user.notifications
+    @notifications = user.notifications.recent_notifications
   end
 end
