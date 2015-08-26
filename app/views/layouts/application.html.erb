@@ -3,60 +3,50 @@
 <head>
   <title>Notely</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
-<body>
-<% if flash[:notice].present? %>
-	<p class="flash notice">
-		<%= flash[:notice] %>
-	</p>
-<% end %>
+<body> 
 
-<% if flash[:alert].present? %>
-	<p class="flash alert">
-		<%= flash[:alert] %>
-	</p>
-<% end %>
-
-<% if flash[:warning].present? %>
-	<p class="flash warning">
-		<%= flash[:warning] %>
-	</p>
-<% end %>
-
-<nav>
-	<% if session[:id].present? %>
-		<ul>
-			<li>@<%= session[:username] %></li>
-			<li><%= link_to "Logout",logout_path %></li>
-		</ul>
-		<div class="notifications">
-			<ul>
-				<% @notifications.each do |notification| %>
-					<% if notification.rejected %>
-						@<%= notification.from_user %> rejected the request.
-					<% else %>
-						<li>
-						
-							 @<%= notification.from_user %> wants to collaborate with you . 
-								<%= link_to "Accept",accept_user_path(session[:id],:notification_id=>notification.id) %>
-								<%= link_to "reject",reject_user_path(session[:id],:notification_id=>notification.id) %>
-							<span><i> <% if notification.is_seen %>
-									SEEN
-									<% else %>
-									NOT SEEN YET 
-									<% end %>
-							</i></span>
-						
-						</li>
-					<% end %>
-				<% end %>
-			</ul>
-		</div>
-	<% end %>
-</nav>
-<%= yield %>
-
+    <header>
+    <% if session[:id].present? %>
+        <div class="right-links">
+            <%= link_to "@"+session[:username],root_path %>
+            <%= link_to "Logout",logout_path %>
+        </div>
+     <% end %>
+    </header>
+    <aside class="left-container">
+        <p id="notely">Notely</p>
+        <nav>
+            <ul>
+                <div class="each-list-set">
+                    <li><a href="#" class="bold-link">General</a></li>
+                    <li><%= link_to "My Notes",user_notes_path(session[:id]) %></li>
+                    <li><a href="#">Create Note</a></li>
+                    <li><a href="#">Archives</a></li>
+                </div>
+                <div class="each-list-set">
+                    <li><a href="#" class="bold-link">Settings</a>
+                        <!--                 <i class="fa fa-lg fa-cog"></i>-->
+                    </li>
+                    <li><a href="#">Note </a></li>
+                    <li><a href="#">Profile </a></li>
+                </div>
+                <div class="each-list-set">
+                    <li><a href="#" class="bold-link">Contact</a> </li>
+                    <li><a href="http://github.com/PezCoder">Github</a> <i class="fa fa-lg fa-github"></i></li>
+                    <li><a href="#">LinkedIn</a> <i class="fa fa-lg fa-linkedin"></i></li>
+                    <li><a href="http://facebook.com/rahul11061995">Facebook</a> <i class="fa fa-lg fa-facebook-official"></i></li>
+                    <li><a href="#">Email</a> <i class="fa fa-lg fa-email"></i></li>
+                </div>
+            </ul>
+        </nav>
+    </aside>
+    <main>
+		<%= yield %>
+    </main>
 </body>
 </html>

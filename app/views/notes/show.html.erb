@@ -1,7 +1,20 @@
-<div class="notes show">
-	<p class="note-content">
-		<%= @note.content %><br>
-		- <%= @note.user.username %><br>
-		<i>Posted <%= time_ago_in_words(@note.created_at) %> ago</i>
-	</p>
-</div>
+<section class="middle-container">
+	<div class="show-note each-note">
+	   <div class="content">
+			<%= @note.content %>
+			- <span class="content-user">
+				<% @note.users.each do |user| %>
+					@<%= user.username %>,
+				<% end %>
+			</span>	
+		</div>
+		<div class="floating-options">
+			<%= link_to edit_user_note_path(session[:id],@note),class: "edit" do %>
+				<i class="fa fa-3x fa-pencil"></i>
+			<% end %>
+			<%= link_to user_note_path(session[:id],@note),class: "delete",:method=>"delete",data: "Are you sure ?" do %>
+				<i class="fa fa-3x fa-trash-o"></i>
+			<% end %>
+		</div>
+	</div>
+</section>

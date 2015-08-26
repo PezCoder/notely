@@ -1,38 +1,60 @@
-<div class="notes index">
-	<section>
-		<h3>Tags</h3>
-		<ul class="all-tags">
-			<% @tags.each do |tag| %>
-
-				<li><%= link_to tag[0],user_notes_path(session[:id],:search_by=>tag[0]) %></li>
-				<%= tag.inspect %>
-			<% end %>
-		</ul>
-
-	</section>
-	<div class="new-note">
+<!-- ALL NOTES ARE SHOWN HERE --> 
+<section class="middle-container">
+	<div class="create-note">
 		<%= form_for :note,:url=>user_notes_path(session[:id],@note) do |f| %>
-			<%= f.text_field :content,placeholder: "Enter new note here.. " %>
+			<%= f.text_area :content,placeholder: "Note down anything here..",cols: 30,rows: 5,id: "new-note" %>
 			<%= f.button "Add note" %>
 		<% end %>
 	</div>
-	<div class="all-notes">
-		<% @notes.each do |note| %>
-			<div class="content">
-				<p><%= note.content %></p>
-				<p><% note.collaborations.each do |collab| %>
-				@<%= collab.user.username %><br>
+	<% @notes.each do |note| %>
+		<section class="each-note">
+		    <div class="content">
+		        <%= note.content %>
+		        - <span class="content-user">
+					<% note.users.each do |user| %>
+						@<%= user.username %>,
+					<% end %>
+				</span>	
+		    </div>
+		    <div class="content-options">  
+		        <%= link_to user_note_path(session[:id],note) do %>
+					<i class="fa fa-lg fa-expand"></i>
+		        <% end %>
+				<%= link_to edit_user_note_path(session[:id],note) do %>
+					<i class="fa fa-lg fa-pencil"></i>
 				<% end %>
-				</p>
-			</div>
-			<div class="operations">
-				<ul>
-					<li><%= link_to "Show",user_note_path(session[:id],note) %></li>
-					<li><%= link_to "Edit",edit_user_note_path(session[:id],note) %></li>
-					<li><%= link_to "Delete",user_note_path(session[:id],note),:method=>"delete",data:"Are you sure ?" %></li>
-						
-				</ul>
-			</div>
-		<% end %>
-	</div>
-</div>
+				<%= link_to user_note_path(session[:id],note),:method=>"delete",data: "Are you sure ?" do %>
+					<i class="fa fa-lg fa-trash-o"></i>
+				<% end %>
+		        <span class="post-date"><i>Posted <%= time_ago_in_words(note.created_at) %> ago.</i></span>
+		    </div>
+		</section>
+	<% end %>
+
+</section>
+<!-- right container for tags & users & search -->
+<section class="right-container">
+    <div class="search">
+        <input type="search" placeholder="Search Tags/Users.. ">
+        <i class="fa fa-lg fa-search"></i>
+    </div>
+    <div class="search-results">
+        <div class="tab-links">
+            <a href="#tags" class="active">Tags</a>
+            <a href="#users">Collab. Users</a>
+        </div>
+        <div class="tab-content">
+            <div class="tags" id="tags">
+	            <% @tags.each do |tag| %>
+					<%= link_to "#"+tag[0],user_notes_path(session[:id],:search_by=>tag[0]) %>
+				<% end %>
+            </div>
+            <div class="users" id="users">
+                <a href="#">@arya</a>
+                <a href="#">@ayush</a>
+                <a href="#">@puneet</a>
+                <a href="#">@shinchan</a>
+            </div>
+        </div>
+    </div>
+</section>

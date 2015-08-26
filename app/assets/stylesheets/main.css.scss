@@ -1,0 +1,324 @@
+@import url("https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css");
+@import "normalize";
+@import url(http://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700);
+
+@mixin shadow($offset, $blur) {
+    -webkit-box-shadow: $offset $offset $blur grey;
+    -moz-box-shadow: $offset $offset $blur grey;
+    -ms-box-shadow: $offset $offset $blur grey;
+    -o-box-shadow: $offset $offset $blur grey;
+    box-shadow: $offset $offset $blur grey;
+}
+
+//font-weight
+$thin: 100;
+$light: 300;
+$normal: 400;
+$medium: 500;
+$bold: 700;
+
+/* For left Container */
+
+//width and paddings
+$left-width: 270px;
+
+$logo-pad-b: 14px;
+$logo-pad-t: 66px;
+
+$li-margin-r: 37px;
+$li-margin-t: 10px;
+$list-seperation: 29px;
+$header-height: 50px;
+
+//middle section
+$middle-width: 720px;
+$middle-padding-l: 81px;
+$middle-padding-r: 61px;
+$middle-padding-t: 40px;
+
+//colors
+$main-color: #2470ef;
+$bold-heading: #2b51a4;
+$complement: #f8981d;
+$work-area: #fafafa;
+$hr: #eeeeee;
+$light-text: #C6B1B1;
+
+//each note measurements
+$en-m-t: 32px;
+$bottom-bar-bg: #f8fafa;
+$user-color: #fb3f93;
+$tag-color: $main-color;
+$posted-color: rgba(#666262, 0.6);
+
+//right section
+$right-width: 1366px- ($left-width - $middle-width);
+
+* {
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+a {
+    text-decoration: none;
+}
+
+html, body {
+    background-color: $work-area;
+}
+
+ul li {
+    list-style: none;
+}
+
+.left-container {
+    //positions
+    position: fixed;
+    width: $left-width;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    //color & design
+    background-color: $main-color;
+    color: white;
+    //logo
+    #notely {
+        width: $left-width * 3 / 4;
+        margin: 0 auto;
+        font-weight: $thin;
+        text-align: center;
+        padding-bottom: $logo-pad-b;
+        padding-top: $logo-pad-t;
+        font-size: 50pt;
+        border-bottom: 1px solid white;
+    }
+    //list navigation
+    ul {
+        padding-top: $list-seperation;
+        .each-list-set {
+            margin-top: 30px;
+        }
+        li {
+            margin-top: $li-margin-t;
+            text-align: right;
+            margin-right: $li-margin-r;
+        }
+        a {
+            text-align: right;
+            color: white;
+            font-weight: $light;
+        }
+        .bold-link {
+            color: $bold-heading;
+            font-weight: $medium;
+        }
+    }
+    //fix fa icons position
+    .each-list-set {
+        .fa {
+            position: relative;
+            top: 0px;
+            margin-left: 4px;
+        }
+    }
+}
+
+/* End left container */
+
+header {
+    z-index:1;
+    position: fixed;
+    background-color: white;
+    left: $left-width;
+    top: 0;
+    right: 0;
+    height: $header-height;
+    border-bottom: 1px solid $hr;
+    .right-links {
+        display: inline-block;
+        float: right;
+        margin-top: $header-height / 4;
+        margin-right: $header-height / 4;
+    }
+    a {
+        margin-right: 40px;
+        color: $main-color;
+    }
+}
+
+.middle-container {
+    position:relative;
+    width: $middle-width;
+    padding: $middle-padding-t $middle-padding-l;
+    padding-right: $middle-padding-r;
+    float: left;
+    //text area
+    .create-note {
+        position: relative;
+        #new-note {
+            width: 100%;
+            height: 112px;
+            @include shadow(2px, 8px);
+            font-weight: $light;
+            padding: 26px 30px;
+        }
+    }
+    //each note
+    .each-note {
+        border-radius: 2px;
+        border: 1px solid $hr;
+        margin-top: $en-m-t;
+        background-color: white;
+        @include shadow(1px, 2px);
+    }
+    .content {
+        padding: 26px 30px;
+        .content-tag {
+            color: $tag-color;
+        }
+        .content-user {
+            color: $user-color;
+        }
+    }
+    .content-options {
+        border-top: 1px solid $hr;
+        background-color: $bottom-bar-bg;
+        padding: 9px 26px 9px 26px;
+        span {
+            //posted ago time
+            float: right;
+            color: $posted-color;
+        }
+        i.fa {
+            margin-right: 15px;
+        }
+    }
+    /* Content-options */
+    
+    .floating-options{
+        padding:10px;
+        position: absolute;
+        top:100px;
+        right:-100px;
+        a{
+            margin-bottom: 30px;
+            float:left;
+            color:rgba($hr,0.9);
+            clear:both;
+            padding:20px 22px;
+            border-radius: 200px;
+            @include shadow(1px, 2px);   
+            transition:all 0.1s ease-in;
+        }
+        
+        .edit{
+            transition:all 0.1s ease-in;
+            background-color:rgba($main-color,0.85);
+            &:hover{
+                background-color:rgba($main-color,1);
+            }
+            &:active{
+                 background-color: $bold-heading;   
+            }
+        }
+        a:hover{
+             color:rgba($hr,1);   
+        }
+        .delete{
+             background-color:rgba(216, 50, 50, 0.9);
+            &:hover{
+             background-color:rgba(214, 33, 33, 0.91);
+                    
+            }
+            &:active{
+                background-color:rgba(163, 8, 8, 0.9);
+            }    
+        }
+        
+    }/* end floating options */
+}
+
+main {
+    margin-top: $header-height;
+    margin-left: $left-width;
+    overflow:auto;
+}
+
+.right-container {
+    padding-top: $middle-padding-t;
+    padding-right: $middle-padding-l;
+    float: right;
+    width: $right-width;
+    .search {
+        width: 260px;
+        position: relative;
+        input {
+            box-sizing: border-box;
+            width: 100%;
+            padding: 11px 33px 11px 15px;
+            @include shadow(1px, 2px);
+            outline: 0;
+            border: 1px solid $hr;
+            border-radius: 2px;
+            font-weight: $light;
+        }
+        .fa {
+            position: absolute;
+            left: 225px;
+            top: 14px;
+            opacity: 0.5;
+        }
+    }
+    /* end Serach Container */
+    .search-results {
+        width: 260px;
+        @include shadow(1px, 2px);
+        background-color: white;
+        border: 1px solid $hr;
+        margin-top: 22px;
+        border-radius: 2px;
+        .tab-links {
+            position: relative;
+            padding-left: 2px;
+            padding-right: 2px;
+            border-bottom: 1px solid $hr;
+            a {
+                font-weight: $normal;
+                color: $light-text;
+                padding: 12px 1px 12px 1px;
+                text-align: center;
+                display: inline-block;
+            }
+            a:first-child {
+                width: 40%;
+            }
+            a:nth-child(2) {
+                width: 58%;
+            }
+            a.active {
+                border-bottom: 1px solid $main-color;
+                font-weight: $bold;
+                color: $main-color;
+            }
+        }
+        .tab-content {
+            min-height: 200px;
+            padding: 22px 30px;
+            a {
+                margin-bottom: 11px;
+                display: block;
+            }
+            .tags a {
+                color: $tag-color;
+            }
+            .users a {
+                color: $user-color;
+            }
+            .users {
+                display: none;
+            }
+        }
+    }
+    /* end search-results */
+}
+
