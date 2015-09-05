@@ -12,12 +12,18 @@ class Note < ActiveRecord::Base
 	scope :recent_notes,lambda { order("notes.created_at DESC") }
 
 	#active record callbacks
-	before_destroy :destroy_related_tags,:destroy_related_notifications
+	before_destroy :destroy_related_tags,:destroy_related_notifications,:destroy_its_collabs
 	after_update :touch_tags
 	private
 	def destroy_related_tags
 		self.tags.each do |tag|
 			tag.destroy
+		end
+	end
+
+	def destroy_its_collabs
+		self.collaborations.each do |collab|
+			collab.destroy
 		end
 	end
 

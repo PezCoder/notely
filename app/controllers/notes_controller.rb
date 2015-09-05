@@ -9,19 +9,20 @@ class NotesController < ApplicationController
     user = User.find_by_id(session[:id])
     @note = Note.new
     #If tags are searched
-    if(params[:search_by])
+    if(params[:filter_tagnames])
       # find tag
-      tag = user.tags.find_by_tagname(params[:search_by])
+      tag = user.tags.find_by_tagname(params[:filter_tagnames])
       #Find notes related to this tag
       @notes = tag.notes.recent_notes
+    elsif params[:filter_user]
+
     else
       # No search 
       @notes = user.notes.recent_notes
     end
-    
     # User's most frequently used tags
     @tags = get_suggested_tags
-
+    @users = get_suggested_users
   end
 
   def show
@@ -263,7 +264,28 @@ class NotesController < ApplicationController
        tagnames[tag.tagname]=tag.notes.count
     end
     #Sort in most occurence first & returned multi dim array
-    tagnames.sort{|val1, val2| val2[1]<=>val1[1]}
+    return tagnames.sort{|val1, val2| val2[1]<=>val1[1]}
+  end
+
+  def get_suggested_users
+    user = User.find_by_id(session[:id])
+    notes = user.notes.recent_notes
+    usernames = {}
+    notes.each do |note|
+      note.users.each do |user|
+        if usernames.find(){|username| username==user.username}
+          #if found increment count
+          usernames[user.username]+=1
+        else 
+          # initialize to 0
+          usernames[user.username]=1
+        end    
+      end
+    end
+    usernames.delete(user.username)
+    puts " >>> Users COllaborated " + usernames.inspect
+    #sort acc to values
+    return usernames.sort{|val1,val2| val1[1]<=>va2[1]}
   end
 
   def check_user_privileges

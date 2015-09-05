@@ -44,16 +44,15 @@
             <a href="#users">Collab. Users</a>
         </div>
         <div class="tab-content">
-            <div class="tags" id="tags">
+            <div class="tags visible" id="tags">
 	            <% @tags.each do |tag| %>
-					<%= link_to "#"+tag[0],user_notes_path(session[:id],:search_by=>tag[0]) %>
+					<%= link_to "#"+tag[0],user_notes_path(session[:id],:filter_tagname=>tag[0]) %>
 				<% end %>
             </div>
             <div class="users" id="users">
-                <a href="#">@arya</a>
-                <a href="#">@ayush</a>
-                <a href="#">@puneet</a>
-                <a href="#">@shinchan</a>
+				<% @users.each do |user| %>
+					<%= link_to "@"+user[0],user_notes_path(session[:id],:filter_user=>user[0]) %>
+				<% end %>
             </div>
         </div>
     </div>

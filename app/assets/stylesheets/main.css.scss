@@ -27,7 +27,7 @@ $logo-pad-t: 66px;
 
 $li-margin-r: 37px;
 $li-margin-t: 10px;
-$list-seperation: 29px;
+$list-seperation: 15px;
 $header-height: 50px;
 
 //middle section
@@ -141,14 +141,24 @@ header {
         margin-right: $header-height / 4;
     }
     a {
+        float:left;
+        display:inline-block;
         margin-right: 40px;
         color: $main-color;
+    }
+    .notification{
+        float:left;
+        display:inline-block;
+        margin-right:40px;
+        i{
+            color:$main-color;
+        }
     }
 }
 
 .middle-container {
     position:relative;
-    width: $middle-width;
+    max-width: $middle-width;
     padding: $middle-padding-t $middle-padding-l;
     padding-right: $middle-padding-r;
     float: left;
@@ -191,51 +201,10 @@ header {
         }
         i.fa {
             margin-right: 15px;
+            color:$posted-color;
         }
     }
-    /* Content-options */
-    
-    .floating-options{
-        padding:10px;
-        position: absolute;
-        top:100px;
-        right:-100px;
-        a{
-            margin-bottom: 30px;
-            float:left;
-            color:rgba($hr,0.9);
-            clear:both;
-            padding:20px 22px;
-            border-radius: 200px;
-            @include shadow(1px, 2px);   
-            transition:all 0.1s ease-in;
-        }
-        
-        .edit{
-            transition:all 0.1s ease-in;
-            background-color:rgba($main-color,0.85);
-            &:hover{
-                background-color:rgba($main-color,1);
-            }
-            &:active{
-                 background-color: $bold-heading;   
-            }
-        }
-        a:hover{
-             color:rgba($hr,1);   
-        }
-        .delete{
-             background-color:rgba(216, 50, 50, 0.9);
-            &:hover{
-             background-color:rgba(214, 33, 33, 0.91);
-                    
-            }
-            &:active{
-                background-color:rgba(163, 8, 8, 0.9);
-            }    
-        }
-        
-    }/* end floating options */
+
 }
 
 main {
@@ -245,6 +214,8 @@ main {
 }
 
 .right-container {
+    position:fixed;
+    right:0;
     padding-top: $middle-padding-t;
     padding-right: $middle-padding-l;
     float: right;
@@ -314,11 +285,60 @@ main {
             .users a {
                 color: $user-color;
             }
-            .users {
-                display: none;
+
+            div{
+                display:none;
+            }
+            .visible{
+                display:block;
             }
         }
     }
     /* end search-results */
 }
 
+.show-note{
+    min-height:400px;
+    /* floating edit and delete etc options */
+    .floating-options{
+        padding:10px;
+        position: absolute;
+        top:100px;
+        right:-100px;
+        a{
+            margin-bottom: 30px;
+            float:left;
+            color:rgba($hr,0.9);
+            clear:both;
+            padding:20px 22px;
+            border-radius: 200px;
+            @include shadow(1px, 2px);   
+            transition:all 0.1s ease-in;
+        }
+        
+        .edit{
+            transition:all 0.1s ease-in;
+            background-color:rgba($main-color,0.85);
+            &:hover{
+                background-color:rgba($main-color,1);
+            }
+            &:active{
+                 background-color: $bold-heading;   
+            }
+        }
+        a:hover{
+             color:rgba($hr,1);   
+        }
+        .delete{
+             background-color:rgba(216, 50, 50, 0.9);
+            &:hover{
+             background-color:rgba(214, 33, 33, 0.91);
+                    
+            }
+            &:active{
+                background-color:rgba(163, 8, 8, 0.9);
+            }    
+        }
+        
+    }/* end floating options */
+}
