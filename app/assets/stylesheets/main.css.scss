@@ -203,6 +203,24 @@ header {
             font-size: 13px;
             transition: all 0.3s cubic-bezier(.61, .44, .3, 1.45);
             opacity: 0;
+
+            .big-bell{
+                text-align: center;
+                padding:30px 0px 0px 10px;
+                i{
+                     color:#ECEEEF;   
+                }
+            }
+            
+            p{      
+                margin:0 auto;
+                padding:20px;
+                line-height: 15px;
+                text-align: center;
+                width:80%;
+                padding-bottom: 30px;
+                    
+                }
         }
         #notify-panel.smoothUp{
             top:$header-height+20px;

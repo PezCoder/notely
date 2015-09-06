@@ -21,6 +21,10 @@
                         Notifications
                     </div>
                     <div class="notify-content">
+                    <% if @notifications.count ==0 %>
+                    <div class="big-bell"><i class="fa fa-bell fa-5x"></i></div>
+                        <p>We will let you know as sooon as something comes up !</p>
+                    <% end %>
                     <% @notifications.each do |notification| %>
                     <% unless notification.is_seen %>
                         <% if notification.rejected %>
