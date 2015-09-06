@@ -14,11 +14,53 @@
     <% if session[:id].present? %>
         <div class="right-links">
              <div class="notification">
-                <i class="fa fa-lg fa-bell-o"></i>
+                <a class="header-link" id="bell"><i class="fa fa-lg fa-bell-o"></i></a>
+                <div id="notify-panel">
+                    <div class="up-arrow"></div>
+                    <div class="notify-header">
+                        Notifications
+                    </div>
+                    <div class="notify-content">
+                    <% @notifications.each do |notification| %>
+                    <% unless notification.is_seen %>
+                        <% if notification.rejected %>
+                        <div class="each-request">
+                            <div class="request-from"><span class="user">@<%= notification.from_user %> </span>
+                              rejected your request.
+                            </div>
+                        </div>
+                        <% else %>
+                        <div class="each-request expandable ">
+                            <i class="fa fa-lg fa-caret-right"></i>
+                            <div class="request-from"><span class="user">@<%= notification.from_user %> </span>
+                                <% if notification.is_removed %>
+                                    removed you from collaboration. 
+                                <% else %>
+                                    want to collaborate with you.
+                                <% end %>
+                            </div>
+                            <div class="request-note">
+                                <%= truncate(notification.note.content,:length=>72) %>
+                                <% unless notification.is_removed %>
+                                    <%= link_to accept_user_path(session[:id],:notification_id=>notification.id),class:"accept" do %>
+                                        <i class="fa fa-check"></i>
+                                    <% end %>                                
+                                    <%= link_to reject_user_path(session[:id],:notification_id=>notification.id),class:"reject" do %>
+                                        <i class="fa fa-times"></i>
+                                    <% end %>
+                                <% end %>
+                            </div>
+                        </div>
+                        <% end %>
+                    <% end %>
+                    <% end %>
+                    </div>
+                </div>
             </div>
-            <%= link_to "@"+session[:username],root_path %>
-            <%= link_to "Logout",logout_path %>
+            <%= link_to "@"+session[:username],root_path,class: "header-link" %>
+            <%= link_to "Logout",logout_path,class: "header-link" %>
         </div>
+
      <% end %>
     </header>
     <aside class="left-container">
