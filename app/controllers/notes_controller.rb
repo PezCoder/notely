@@ -15,7 +15,14 @@ class NotesController < ApplicationController
       #Find notes related to this tag
       @notes = tag.notes.recent_notes
     elsif params[:filter_user]
-
+      @notes = []
+      user.notes.each do |note|
+        note.users.each do |cuser|
+          if cuser.username == params[:filter_user]
+            @notes << note
+          end
+        end
+      end
     else
       # No search 
       @notes = user.notes.recent_notes
@@ -285,7 +292,7 @@ class NotesController < ApplicationController
     usernames.delete(user.username)
     puts " >>> Users COllaborated " + usernames.inspect
     #sort acc to values
-    return usernames.sort{|val1,val2| val1[1]<=>va2[1]}
+    return usernames.sort{|val1,val2| val1[1]<=>val2[1]}
   end
 
   def check_user_privileges
