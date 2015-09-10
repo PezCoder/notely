@@ -10,9 +10,11 @@
 		<section class="each-note">
 		    <div class="content">
 		        <%= note.content %>
-		        - <span class="content-user">
-					<% note.users.each do |user| %>
-						@<%= user.username %>,
+		        &#8211; <span class="content-user">
+					<% note.collaborations.each do |collab| %>
+						<% if collab.is_admin %>
+							@<%= collab.user.username %>
+						<% end %>
 					<% end %>
 				</span>	
 		    </div>

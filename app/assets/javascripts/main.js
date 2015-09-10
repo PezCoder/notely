@@ -1,10 +1,28 @@
 (function() {
 
     $(document).on("ready page:load",function() {
+        loadContentColors();
         addTabListener();
         handleNotifications();
         // fix the button click issue
     });
+    function loadContentColors(){
+        //sets color for tags(blue) & cusers (pink)
+        var content = document.getElementsByClassName('content');
+        for(var i=0;i<content.length;i++){
+            var str = content[i].innerHTML;
+            // any word & digit combination sepearted by _ or - and may or mayn't be followed by word & digit.
+            //ex: _xyz or -23x isn't accepted
+            //insert span color tag for tags
+            var regx_tag = /(#[a-zA-Z0-9]+((_|-)[a-zA-Z0-9]+)*)/g;
+            var tags_inserted = str.replace(regx_tag,'<span class="content-tag">$1</span>');
+            //insert span color tag for user
+            var regx_user = /(@[a-z0-9]+)/g;
+            var result = tags_inserted.replace(regx_user,'<span class="content-user">$1</span>');
+            content[i].innerHTML = result;
+        }
+    }
+
 
     function addTabListener() {
         var tabLinks = document.getElementsByClassName('tab-links')[0];
