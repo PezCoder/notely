@@ -192,6 +192,8 @@ header {
             cursor: pointer;
         }
         #notify-panel{
+            //visiility to solve the click issue on tabs
+            visibility: hidden;
             border-radius:3px;
           @include shadow(2px, 4px);
             position:absolute;
@@ -223,6 +225,7 @@ header {
                 }
         }
         #notify-panel.smoothUp{
+            visibility: visible;
             top:$header-height+20px;
             opacity:1;
         }

@@ -1,19 +1,21 @@
 (function() {
-    var tag
-    window.onload = function() {
+
+    $(document).on("ready page:load",function() {
         addTabListener();
         handleNotifications();
         // fix the button click issue
-    };
+    });
 
     function addTabListener() {
         var tabLinks = document.getElementsByClassName('tab-links')[0];
-        tabLinks.addEventListener('click', handleTabs, false);
+        if(tabLinks){
+            tabLinks.addEventListener('click', handleTabs, false);
+        }
     }
 
     function handleTabs(e) {
         var target = e.target;
-        if (target.tagName == "A" && !target.classList.contains('active')) {
+        if (!target.classList.contains('active')) {
             // if it's not active and it's a link tab
             var allLinks = target.parentNode.children;
             //highlight the clicked tab
@@ -44,6 +46,7 @@
                 }
             }
         }
+        e.preventDefault();
     }
 
     function handleNotifications() {
@@ -58,6 +61,8 @@
                 this.classList.add('clicked');
                 notify_box.classList.add('smoothUp');
             }
+            // in jquery return false do 2 things.. e.preventDefaut & e.stopPropagation (i.e bubbling)
+            return false;
         };
         //notification accordion
         var notifications = document.getElementsByClassName('each-request');
