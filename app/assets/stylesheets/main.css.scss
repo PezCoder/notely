@@ -1,6 +1,12 @@
 @import url("https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css");
 @import "normalize";
 @import url(http://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700);
+@import url(http://weloveiconfonts.com/api/?family=entypo);
+[class*="entypo-"]:before {
+  font-family: 'entypo', sans-serif;
+  font-size:20px;
+}
+
 
 @mixin shadow($offset, $blur) {
     -webkit-box-shadow: $offset $offset $blur grey;
@@ -25,6 +31,7 @@
      -o-transform:rotate($angle);   
      transform:rotate($angle);   
 }
+
 
 //font-weight
 $thin: 100;
@@ -55,7 +62,7 @@ $middle-padding-t: 40px;
 //colors
 $main-color: #2470ef;
 $bold-heading: #2b51a4;
-$complement: #f8981d;
+$complement: #FFAA10;
 $work-area: #fafafa;
 $hr: #eeeeee;
 $light-text: #C6B1B1;
@@ -125,21 +132,39 @@ ul li {
         }
         a {
             text-align: right;
-            color: white;
+            color: #eee;
             font-weight: $light;
+            @include transition(all,0.2s,ease);
+            right:0;
+            position:relative;
         }
+        a:hover{
+            right:6px;
+            color:$complement;
+            i,span{
+                color:$complement;
+            }
+        }
+
         .bold-link {
             color: $bold-heading;
             font-weight: $medium;
         }
     }
-    //fix fa icons position
+    //fix glyphs icons position
     .each-list-set {
-        .fa {
+        .glyphs{
+            display:inline-block;
+            width:19px;
             position: relative;
             top: 0px;
-            margin-left: 4px;
+            margin-left:4px;
         }
+        span.glyphs{
+            // entypo icons needs to be moved down
+            top:2px;
+        }
+
     }
 }
 
@@ -159,7 +184,7 @@ header {
         float: right;
         height: $header-height;
     }
-    a.header-link {
+    .header-link {
         padding-top: $header-height / 4;
         padding-right: $header-height / 4;
         float:left;
@@ -167,8 +192,8 @@ header {
         margin-right: 40px;
         color: $main-color;
     }
-    a.header-link:active{
-         color:$bold-heading;   
+    .header-link:hover{
+         color:$complement;   
     }
     
     .notification{
@@ -180,6 +205,7 @@ header {
             padding-bottom: $header-height /3;
             padding-left:$header-height/4;
         }   
+
         #bell.clicked{
             background-color:$main-color;
             color:white;
@@ -203,7 +229,7 @@ header {
             background-color:white;
             border:1px solid $main-color;
             font-size: 13px;
-            transition: all 0.3s cubic-bezier(.61, .44, .3, 1.45);
+            @include transition(all,0.3s,cubic-bezier(.61, .44, .3, 1.45));
             opacity: 0;
 
             .big-bell{
@@ -236,15 +262,27 @@ header {
             letter-spacing: 1px;
             border-bottom: 1px solid $hr;
         }
-        .up-arrow{
-            position:absolute;
-            right:50px;
-            top:-15px;
+        .up-arrow,.up-white-arrow {
+            position: absolute;
             width: 0;
             height: 0;
+        }
+        .up-arrow{
+            z-index:0;
+            right: 50px;
+            top: -15px;
             border-left: 12px solid transparent;
             border-right: 12px solid transparent;
-            border-bottom: 15px solid $main-color;
+            border-bottom: 15px solid $main-color; 
+        }
+        .up-white-arrow{
+            //white arrow over the blue to create a blue outline effect
+            z-index:1;
+            top:-13px;
+            right:50px;
+            border-left: 12px solid transparent;
+            border-right: 12px solid transparent;
+            border-bottom: 15px solid white;    
         }
             
         .each-request{
@@ -294,14 +332,14 @@ header {
                 padding:5px 6px;
                 background-color:$success;
                 border:2px solid white;
-                transition:all 0.3s ease;
+                @include transition(all,0.3s,ease);
                 &:hover{ border:2px solid $success-dark;}
             }
             .reject{
                 padding:5px 7px;
                  background-color:$delete;
                 border:2px solid white;
-                transition:all 0.3s ease;
+                @include transition(all,0.3s,ease);
                 &:hover{ border:2px solid $delete-dark;}
             }
             &:last-child{
@@ -315,7 +353,7 @@ header {
 .middle-container {
     position:relative;
     display:block;
-    min-width: $middle-width;
+    max-width: $middle-width;
     padding: $middle-padding-t $middle-padding-l;
     padding-right: $middle-padding-r;
     float: left;
@@ -357,8 +395,14 @@ header {
             color: $posted-color;
         }
         i.fa {
+            @include transition(all,0.3s,ease);
             margin-right: 15px;
             color:$posted-color;
+        }
+        a:hover{
+            i{
+                color:black;
+            }
         }
     }
 
@@ -470,11 +514,11 @@ main {
             padding:20px 22px;
             border-radius: 200px;
             @include shadow(1px, 2px);   
-            transition:all 0.1s ease-in;
+            @include transition(all,0.1s,ease);
         }
         
         .edit{
-            transition:all 0.1s ease-in;
+            @include transition(all,0.1s,ease);
             background-color:rgba($main-color,0.85);
             &:hover{
                 background-color:rgba($main-color,1);

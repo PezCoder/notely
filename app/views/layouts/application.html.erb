@@ -16,6 +16,7 @@
              <div class="notification">
                 <a class="header-link" id="bell"><i class="fa fa-lg fa-bell-o"></i></a>
                 <div id="notify-panel">
+                    <div class="up-white-arrow"></div>
                     <div class="up-arrow"></div>
                     <div class="notify-header">
                         Notifications
@@ -72,27 +73,27 @@
         <nav>
             <ul>
                 <div class="each-list-set">
-                    <li><a href="#" class="bold-link">General</a></li>
+                    <li><span class="bold-link">General</span></li>
                     <li><%= link_to user_notes_path(session[:id]) do %>
-                            My Notes <i class="fa fa-lg fa-book"></i>
+                            <span class="text">My Notes </span><span class="entypo-book-open glyphs"></span>
                         <% end %>
                     </li>
-                    <li><a href="#">Create Note <i class="fa fa-lg fa-pencil-square-o"></i></a></li>
-                    <li><a href="#">Archives <i class="fa fa-lg fa-archive"></i></a></li>
+                    <li><a href="#"><span class="text">Create Note </span><span class="entypo-pencil glyphs"></span></a></li>
+                    <li><a href="#"><span class="text">Archives </span><span class="entypo-archive glyphs"></span></a></li>
                 </div>
                 <div class="each-list-set">
-                    <li><a href="#" class="bold-link">Settings</a>
+                    <li><span class="bold-link">Settings</span>
                         <!--                 <i class="fa fa-lg fa-cog"></i>-->
                     </li>
-                    <li><a href="#">Note </a></li>
-                    <li><a href="#">Profile </a></li>
+                    <li><a href="#"><span class="text">Note </span><span class="entypo-doc-text glyphs"></span></a></li>
+                    <li><a href="#"><span class="text">Profile </span><span class="entypo-user glyphs"></span></a></li>
                 </div>
                 <div class="each-list-set">
-                    <li><a href="#" class="bold-link">Contact</a> </li>
-                    <li><a href="http://github.com/PezCoder">Github</a> <i class="fa fa-lg fa-github"></i></li>
-                    <li><a href="#">LinkedIn</a> <i class="fa fa-lg fa-linkedin"></i></li>
-                    <li><a href="http://facebook.com/rahul11061995">Facebook</a> <i class="fa fa-lg fa-facebook-official"></i></li>
-                    <li><a href="#">Email</a> <i class="fa fa-lg fa-envelope"></i></li>
+                    <li><span class="bold-link">Contact</span> </li>
+                    <li><a href="http://github.com/PezCoder"><span class="text">Github </span><i class="fa fa-lg fa-github-alt glyphs"></i></a></li>
+                    <li><a href="#"><span class="text">LinkedIn </span><i class="fa fa-lg fa-linkedin glyphs"></i></a></li>
+                    <li><a href="http://facebook.com/rahul11061995"><span class="text">Facebook </span><i class="fa fa-lg fa-facebook-official glyphs"></i></a></li>
+                    <li><a href="#"><span class="text">Email </span><i class="fa fa-lg fa-envelope glyphs"></i></a></li>
                 </div>
             </ul>
         </nav>
