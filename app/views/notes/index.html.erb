@@ -1,38 +1,16 @@
 <!-- ALL NOTES ARE SHOWN HERE --> 
 <section class="middle-container">
 	<div class="create-note">
-		<%= form_for :note,:url=>user_notes_path(session[:id],@note) do |f| %>
+		<%= form_for :note,:url=>user_notes_path(session[:id],@note),:html=>{remote: true,id: 'create-note-form'} do |f| %>
 			<%= f.text_area :content,placeholder: "Note down anything here..",cols: 30,rows: 5,id: "new-note" %>
 			<%= f.button "Add note" %>
 		<% end %>
 	</div>
-	<% @notes.each do |note| %>
-		<section class="each-note">
-		    <div class="content">
-		        <%= note.content %>
-		        &#8211; <span class="content-user">
-					<% note.collaborations.each do |collab| %>
-						<% if collab.is_admin %>
-							@<%= collab.user.username %>
-						<% end %>
-					<% end %>
-				</span>	
-		    </div>
-		    <div class="content-options">  
-		        <%= link_to user_note_path(session[:id],note) do %>
-					<i class="fa fa-lg fa-expand"></i>
-		        <% end %>
-				<%= link_to edit_user_note_path(session[:id],note) do %>
-					<i class="fa fa-lg fa-pencil"></i>
-				<% end %>
-				<%= link_to user_note_path(session[:id],note),:method=>"delete",data: "Are you sure ?" do %>
-					<i class="fa fa-lg fa-trash-o"></i>
-				<% end %>
-		        <span class="post-date"><i>Posted <%= time_ago_in_words(note.created_at) %> ago.</i></span>
-		    </div>
-		</section>
-	<% end %>
-
+	<div id="all-notes">
+		<% @notes.each do |note| %>
+			<%= render(:partial=>'each_note',:locals=>{:note=>note}) %>
+		<% end %>
+	</div>
 </section>
 <!-- right container for tags & users & search -->
 <section class="right-container">
@@ -47,14 +25,10 @@
         </div>
         <div class="tab-content">
             <div class="tags visible" id="tags">
-	            <% @tags.each do |tag| %>
-					<%= link_to "#"+tag[0],user_notes_path(session[:id],:filter_tagname=>tag[0]) %>
-				<% end %>
+                <%= render(:partial=>'tags',:locals=>{:tags=>@tags}) %>
             </div>
             <div class="users" id="users">
-				<% @users.each do |user| %>
-					<%= link_to "@"+user[0],user_notes_path(session[:id],:filter_user=>user[0]) %>
-				<% end %>
+				<%= render(:partial=>'users',:locals=>{:users=>@users}) %>
             </div>
         </div>
     </div>

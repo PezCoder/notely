@@ -1,0 +1,3 @@
+<% @tags.each do |tag| %>
+	<%= link_to "#"+tag[0],user_notes_path(session[:id],:filter_tagname=>tag[0]) %>
+<% end %>

@@ -4,14 +4,14 @@ class NotesController < ApplicationController
   before_action :check_logged_in,:get_notifications
   #check for privileges before updation of note
   before_action :check_user_privileges,:only=>[:update]
-
+  respond_to :html,:js
   def index
     user = User.find_by_id(session[:id])
     @note = Note.new
     #If tags are searched
-    if(params[:filter_tagnames])
+    if(params[:filter_tagname])
       # find tag
-      tag = user.tags.find_by_tagname(params[:filter_tagnames])
+      tag = user.tags.find_by_tagname(params[:filter_tagname])
       #Find notes related to this tag
       @notes = tag.notes.recent_notes
     elsif params[:filter_user]
@@ -38,22 +38,22 @@ class NotesController < ApplicationController
 
   def create
     user = User.find_by_id(session[:id])
-    note = Note.new(get_user_params)
-    if note.save
+    @note = Note.new(get_user_params)
+    if @note.save
       # Extract tags
       tags = get_tags(nil)
       unless tags.empty?
         #save tags
-        save_tags([user],tags,note)
+        save_tags([user],tags,@note)
       end
 
-      Collaboration.create(:user=>user,:note=>note,:is_admin=>true)
+      Collaboration.create(:user=>user,:note=>@note,:is_admin=>true)
       # === Modified above collaboration to integrate Notifications === #
       users = get_users(nil)
-      generate_notifications(users,note) unless users.empty?
-
+      generate_notifications(users,@note) unless users.empty?
       flash[:notice]="Note added."
-      redirect_to(user_notes_path(session[:id]))
+      @tags = get_suggested_tags
+      @users = get_suggested_users
     else
       flash[:alert]="Error occured while saving note.. !"
       redirect_to(user_notes_path(session[:id]))

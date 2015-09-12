@@ -1,0 +1,3 @@
+<% @users.each do |user| %>
+	<%= link_to "@"+user[0],user_notes_path(session[:id],:filter_user=>user[0]) %>
+<% end %>
