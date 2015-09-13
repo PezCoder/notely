@@ -1,0 +1,7 @@
+$("#each-note-<%= @note.id %>").fadeOut(400);
+setTimeout(function(){
+	$("#each-note-<%= @note.id %>").remove();
+},1000);
+
+$("#tags").html("<%= escape_javascript(render(:partial=>'tags',:locals=>{:tags=>@tags})) %>");
+$("#users").html("<%= escape_javascript(render(:partial=>'users',:locals=>{:users=>@users})) %>");

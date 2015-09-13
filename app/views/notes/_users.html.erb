@@ -1,3 +1,6 @@
 <% @users.each do |user| %>
-	<%= link_to "@"+user[0],user_notes_path(session[:id],:filter_user=>user[0]) %>
+	<%= link_to user_notes_path(session[:id],:filter_user=>user[0]) do %>
+		<span class="username">@<%= user[0]%></span>
+		<span class="usercount"><%= user[1] %></span>
+	<% end %>
 <% end %>

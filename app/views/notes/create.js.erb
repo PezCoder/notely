@@ -1,3 +1,5 @@
 $("<%= escape_javascript(render(:partial=>'each_note',:locals=>{:note=>@note})) %>").prependTo("#all-notes").hide().fadeIn(1000);
 $("#tags").html("<%= escape_javascript(render(:partial=>'tags',:locals=>{:tags=>@tags})) %>");
-$("#users").html("<%= escape_javascript(render(:partial=>'users',:locals=>{:users=>@users})) %>");
+var all_notes = document.querySelector('#all-notes');
+var first_note = all_notes.children[0];
+loadContentColors([first_note]);

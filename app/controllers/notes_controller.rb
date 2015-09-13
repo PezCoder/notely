@@ -4,7 +4,7 @@ class NotesController < ApplicationController
   before_action :check_logged_in,:get_notifications
   #check for privileges before updation of note
   before_action :check_user_privileges,:only=>[:update]
-  respond_to :html,:js
+
   def index
     user = User.find_by_id(session[:id])
     @note = Note.new
@@ -27,7 +27,7 @@ class NotesController < ApplicationController
       # No search 
       @notes = user.notes.recent_notes
     end
-    # User's most frequently used tags
+    # User's most frequently used tags & users
     @tags = get_suggested_tags
     @users = get_suggested_users
   end
@@ -52,8 +52,13 @@ class NotesController < ApplicationController
       users = get_users(nil)
       generate_notifications(users,@note) unless users.empty?
       flash[:notice]="Note added."
+      # User's most frequently used tags
       @tags = get_suggested_tags
       @users = get_suggested_users
+      respond_to do |format|
+        format.html { redirect_to(user_notes_path(session[:id])) }
+        format.js
+      end
     else
       flash[:alert]="Error occured while saving note.. !"
       redirect_to(user_notes_path(session[:id]))
@@ -93,10 +98,17 @@ class NotesController < ApplicationController
   end
 
   def destroy
-    note = Note.find_by_id(params[:id])
-    note.destroy
+    @note = Note.find_by_id(params[:id])
+    @note.destroy
     flash[:notice]="Note disposed."
-    redirect_to(user_notes_path(session[:id]))
+    # update new tags & users with ajax 
+    @tags = get_suggested_tags
+    @users = get_suggested_users
+    respond_to do |format|
+      format.html { redirect_to(user_notes_path(session[:id])) }
+      format.js
+    end
+
   end
 
 

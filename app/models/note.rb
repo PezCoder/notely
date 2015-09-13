@@ -16,8 +16,13 @@ class Note < ActiveRecord::Base
 	after_update :touch_tags
 	private
 	def destroy_related_tags
-		self.tags.each do |tag|
-			tag.destroy
+		users = self.users
+		tags = self.tags
+		users.each do |user|
+			tags.each do |tag|
+				handler = TagsHandler.where(:user=>user,:tag=>tag,:note=>self)
+				handler[0].destroy
+			end
 		end
 	end
 

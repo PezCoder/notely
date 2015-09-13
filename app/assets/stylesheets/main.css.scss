@@ -72,6 +72,7 @@ $success:#A7CF54;
 $success-dark:#89AB4D;
 $delete:#E45050;
 $delete-dark:#BA3934;
+$hover-bg:$work-area;
 
 //each note measurements
 $en-m-t: 32px;
@@ -290,9 +291,9 @@ header {
             
         .each-request{
             &:hover{
-                 background-color: #F6F6F6;  
+                 background-color: $hover-bg;  
                 .accept,.reject{
-                     border:2px solid #F6F6F6;
+                     border:2px solid $hover-bg;
                 }
             }
             position:relative;
@@ -480,29 +481,39 @@ main {
             }
         }
         .tab-content {
+            overflow: hidden;
             min-height: 200px;
-            padding: 22px 30px;
+            padding:11px 0px;
             a {
-                margin-bottom: 11px;
                 display: block;
+                padding:11px 30px;
+            }
+            a:hover{
+                background-color:$hover-bg;   
+            }
+            .tagcount,.usercount{
+                display:inline-block;
+                float:right;
             }
             .tags a {
+                @include transition(all,0.1s,ease);
                 color: $tag-color;
                 &:hover{
-                    color:$complement;
+                    background-color:$hover-bg;
                 }
                 &:active{
-                    color:$bold-complement;
+                    color:$complement;
                 }
             }
 
             .users a {
+                @include transition(all,0.1s,ease);
                 color: $user-color;
                 &:hover{
-                    color:$complement;
+                    background-color:$hover-bg;
                 }
                 &:active{
-                    color:$bold-complement;
+                    color:$complement;
                 }
             }
 
