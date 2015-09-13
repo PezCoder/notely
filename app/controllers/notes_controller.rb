@@ -13,7 +13,11 @@ class NotesController < ApplicationController
       # find tag
       tag = user.tags.find_by_tagname(params[:filter_tagname])
       #Find notes related to this tag
-      @notes = tag.notes.recent_notes
+      @notes = []
+      handlers = TagsHandler.where(:user=>user,:tag=>tag).recent_handlers
+      handlers.each do |handler|
+        @notes << handler.note
+      end
     elsif params[:filter_user]
       @notes = []
       user.notes.each do |note|
@@ -174,7 +178,8 @@ class NotesController < ApplicationController
         result = user.tags.find_by_tagname(tag)
         if result.nil?
           #new tag so add it for that note
-          new_tag = Tag.new(:tagname=>tag)
+          #Since we want Tag table to be unique so find if there is any tagname there else create new one
+          new_tag = Tag.find_by_tagname(tag) || Tag.new(:tagname=>tag)
         else
           # give new_tag the already existed tag 
           if old_tag = note.tags.find_by_tagname(tag)
@@ -192,6 +197,8 @@ class NotesController < ApplicationController
   end
 
   def update_tags(note,tags)
+    user = User.find_by_id(session[:id])
+    handlers = TagsHandler.where(:note=>note,:user=>user)
     #delete tags that are not present after updation
     old_tags = []
     note.tags.each do |tag|
@@ -202,8 +209,10 @@ class NotesController < ApplicationController
     delete_tags = old_tags - new_tags
     unless delete_tags.empty?
       delete_tags.each do |tagname| 
-        tag = note.tags.find_by_username(tagname)
-        tag.destroy
+        #find tags associated with that note (don't use note.tags)
+        handlers.each do |handler|
+          handler.destroy if handler.tag.tagname==tagname
+        end
       end
     end
     #add the new tags
@@ -213,6 +222,14 @@ class NotesController < ApplicationController
       save_tags(c_users,add_tags,note)
     end
 
+    #don't forget to touch old tags handlers for better recommendations :)
+    old_tags.each do |old_tag|
+      #update all those user-note-tags relationship
+      handlers.each do |handler|
+        handler.touch if handler.tag.tagname==old_tag
+      end
+    end
+    
   end
   def get_users(content)
     content||=params[:note][:content]
@@ -277,10 +294,15 @@ class NotesController < ApplicationController
     tagnames = {}
     #tagname = {tagname,occurence}
     puts user.tags.inspect
-    tags = user.tags.recent_tags
+    tags = []
+    handlers = TagsHandler.where(:user=>user).recent_handlers
+    handlers.each do |handler|
+      tags << handler.tag
+    end
     tags.each do |tag|
       puts "#{tag.notes.inspect}"
-       tagnames[tag.tagname]=tag.notes.count
+      #count that user's tag's notes.. 
+      tagnames[tag.tagname]=TagsHandler.where(:user=>user,:tag=>tag).count
     end
     #Sort in most occurence first & returned multi dim array
     return tagnames.sort{|val1, val2| val2[1]<=>val1[1]}

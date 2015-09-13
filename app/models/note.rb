@@ -9,7 +9,7 @@ class Note < ActiveRecord::Base
 
 	validates :content,presence: true
 
-	scope :recent_notes,lambda { order("notes.created_at DESC") }
+	scope :recent_notes,lambda { order("notes.updated_at DESC") }
 
 	#active record callbacks
 	before_destroy :destroy_related_tags,:destroy_related_notifications,:destroy_its_collabs
@@ -17,10 +17,13 @@ class Note < ActiveRecord::Base
 	private
 	def destroy_related_tags
 		users = self.users
-		tags = self.tags
 		users.each do |user|
-			tags.each do |tag|
+			tag_handlers = TagsHandler.where(:user=>user,:note=>self)
+			tag_handlers.each do |tag_handler|
+				tag = tag_handler.tag
+				puts ">>>> #{user.username}-#{tag.tagname}- $$$$$#{self.content}$$$$$ <<<<<<<"
 				handler = TagsHandler.where(:user=>user,:tag=>tag,:note=>self)
+				puts ">>>>>>> #{handler.length} >> #{handler[0]}"
 				handler[0].destroy
 			end
 		end
