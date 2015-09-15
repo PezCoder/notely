@@ -1,0 +1,3 @@
+$("#all-notes").html("<%= escape_javascript(render(:partial=>'notes')) %>");
+$("#tags").html("<%= escape_javascript(render(:partial=>'tags',:locals=>{:tags=>@tags})) %>");
+loadContentColors();

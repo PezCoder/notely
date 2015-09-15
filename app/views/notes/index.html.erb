@@ -7,13 +7,7 @@
 		<% end %>
 	</div>
 	<div id="all-notes">
-        <% if @notes.count ==0 && params[:search] %>
-            <h2>No notes are found.</h2>
-        <% else %>
-    		<% @notes.each do |note| %>
-    			<%= render(:partial=>'each_note',:locals=>{:note=>note}) %>
-    		<% end %>
-        <% end %>
+		<%= render(:partial=>'notes') %>
 	</div>
 </section>
 <!-- right container for tags & users & search -->

@@ -14,7 +14,7 @@ class NotesController < ApplicationController
     #If tags are filtered
     if(params[:filter_tagname])
       #Find notes related to this tag
-      @notes = notes_by_tagname(params[:filter_tagname])
+      @notes = notes_by_tagnames([params[:filter_tagname]])
     elsif params[:filter_user]
       @notes = []
       user.notes.each do |note|
@@ -37,7 +37,7 @@ class NotesController < ApplicationController
       # No search 
       @notes = user.notes.recent_notes
     end
-
+    respond_to :html,:js
   end
 
   def show
@@ -380,7 +380,13 @@ class NotesController < ApplicationController
     note_ids = []
     tagnames.each do |tagname|
       # find tag object
-      tag = user.tags.find_by_tagname(tagname[0])
+      if tagname.class == "Array"
+        #then it's a hash so search operation
+        tag = user.tags.find_by_tagname(tagname[0])
+      else
+        #it's a string so we are filtering here :)
+        tag = user.tags.find_by_tagname(tagname)  
+      end
       handlers = TagsHandler.where(:user=>user,:tag=>tag).recent_handlers
       handlers.each do |handler|
         note = handler.note
@@ -393,4 +399,17 @@ class NotesController < ApplicationController
     end
     return notes
   end
+
+  # def filter_by_tagname(user,tagname)
+  #   tag = user.tags.find_by_tagname(tagname)
+  #     handlers = TagsHandler.where(:user=>user,:tag=>tag).recent_handlers
+  #     handlers.each do |handler|
+  #       note = handler.note
+  #       unless note_ids.find(){|id| id==note.id}
+  #         #if note not already found
+  #         notes << handler.note
+  #         note_ids << note.id
+  #       end
+  #     end
+  # end
 end

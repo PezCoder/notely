@@ -3,7 +3,16 @@ $(document).on("ready page:load", function() {
     addTabListener();
     handleNotifications();
     sweetDeleteAlert();
+    ajaxSearch();
 });
+function ajaxSearch(){
+    // on keyup of input
+    $("#search_form input").keyup(function(){
+        //generate ajax request for action of form, .serialize() serialize the parameters of the form
+        $.get($("#search_form").action,$("#search_form").serialize(),null,"script");
+        return false;
+    });
+}
 
 function sweetDeleteAlert() {
     //Override the default confirm dialog by rails
