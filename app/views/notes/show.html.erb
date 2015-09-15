@@ -12,7 +12,7 @@
 			<%= link_to edit_user_note_path(session[:id],@note),class: "edit" do %>
 				<i class="fa fa-3x fa-pencil"></i>
 			<% end %>
-			<%= link_to user_note_path(session[:id],@note),class: "delete",:method=>"delete",data: "Are you sure ?" do %>
+			<%= link_to user_note_path(session[:id],@note),class: "delete",:method=>"delete",data:{confirm:"Are you sure?"} do %>
 				<i class="fa fa-3x fa-trash-o"></i>
 			<% end %>
 		</div>

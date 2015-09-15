@@ -7,16 +7,22 @@
 		<% end %>
 	</div>
 	<div id="all-notes">
-		<% @notes.each do |note| %>
-			<%= render(:partial=>'each_note',:locals=>{:note=>note}) %>
-		<% end %>
+        <% if @notes.count ==0 && params[:search] %>
+            <h2>No notes are found.</h2>
+        <% else %>
+    		<% @notes.each do |note| %>
+    			<%= render(:partial=>'each_note',:locals=>{:note=>note}) %>
+    		<% end %>
+        <% end %>
 	</div>
 </section>
 <!-- right container for tags & users & search -->
 <section class="right-container">
     <div class="search">
-        <input type="search" placeholder="Search Tags/Users.. ">
-        <i class="fa fa-lg fa-search"></i>
+        <%= form_tag user_notes_path(session[:id]),:method=>"get",id: "search_form" do %>
+            <%= text_field_tag :search,params[:search],placeholder: "Search Tags/Users..." %>
+            <i class="fa fa-lg fa-search"></i>
+        <% end %>
     </div>
     <div class="search-results">
         <div class="tab-links">

@@ -8,16 +8,13 @@ class NotesController < ApplicationController
   def index
     user = User.find_by_id(session[:id])
     @note = Note.new
-    #If tags are searched
+    # User's most frequently used tags & users
+    @tags = get_suggested_tags
+    @users = get_suggested_users
+    #If tags are filtered
     if(params[:filter_tagname])
-      # find tag
-      tag = user.tags.find_by_tagname(params[:filter_tagname])
       #Find notes related to this tag
-      @notes = []
-      handlers = TagsHandler.where(:user=>user,:tag=>tag).recent_handlers
-      handlers.each do |handler|
-        @notes << handler.note
-      end
+      @notes = notes_by_tagname(params[:filter_tagname])
     elsif params[:filter_user]
       @notes = []
       user.notes.each do |note|
@@ -27,13 +24,20 @@ class NotesController < ApplicationController
           end
         end
       end
+    elsif params[:search]
+      unless params[:search].strip==""
+        #get all tags that contains this searched tagname
+        @tags = get_suggested_tags(params[:search])
+        #get all notes of all each of those tags
+        @notes = notes_by_tagnames(@tags)
+      else
+        @notes = user.notes.recent_notes
+      end
     else
       # No search 
       @notes = user.notes.recent_notes
     end
-    # User's most frequently used tags & users
-    @tags = get_suggested_tags
-    @users = get_suggested_users
+
   end
 
   def show
@@ -287,7 +291,7 @@ class NotesController < ApplicationController
     end
   end
 
-  def get_suggested_tags
+  def get_suggested_tags(search_tagname=nil)
     # note: Tags are already unique 
     # tagnames with most occurences first
     user = User.find_by_id(session[:id])
@@ -302,7 +306,14 @@ class NotesController < ApplicationController
     tags.each do |tag|
       puts "#{tag.notes.inspect}"
       #count that user's tag's notes.. 
-      tagnames[tag.tagname]=TagsHandler.where(:user=>user,:tag=>tag).count
+      if search_tagname
+        if search_tagname.strip=="" || tag.tagname.downcase.include?(search_tagname.downcase) 
+          tagnames[tag.tagname]=TagsHandler.where(:user=>user,:tag=>tag).count 
+        end
+      else 
+        tagnames[tag.tagname]=TagsHandler.where(:user=>user,:tag=>tag).count 
+      end
+
     end
     #Sort in most occurence first & returned multi dim array
     return tagnames.sort{|val1, val2| val2[1]<=>val1[1]}
@@ -356,5 +367,30 @@ class NotesController < ApplicationController
   def get_notifications
     user = User.find_by_id(session[:id])
     @notifications = user.notifications.recent_notifications
+  end
+
+  def notes_by_tagnames(tagnames)
+    user = User.find_by_id(session[:id])
+    #tagnames is a hash {nameoftag => countOfNotes}
+    if(tagnames.empty?)
+      return []
+    end
+    notes = []
+    #to not show any copies of same notes
+    note_ids = []
+    tagnames.each do |tagname|
+      # find tag object
+      tag = user.tags.find_by_tagname(tagname[0])
+      handlers = TagsHandler.where(:user=>user,:tag=>tag).recent_handlers
+      handlers.each do |handler|
+        note = handler.note
+        unless note_ids.find(){|id| id==note.id}
+          #if note not already found
+          notes << handler.note
+          note_ids << note.id
+        end
+      end
+    end
+    return notes
   end
 end
