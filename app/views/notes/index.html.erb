@@ -1,9 +1,9 @@
 <!-- ALL NOTES ARE SHOWN HERE --> 
 <section class="middle-container">
-	<div class="create-note">
+	<div id="create-note">
 		<%= form_for :note,:url=>user_notes_path(session[:id],@note),:html=>{remote: true,id: 'create-note-form'} do |f| %>
 			<%= f.text_area :content,placeholder: "Note down anything here..",cols: 30,rows: 5,id: "new-note" %>
-			<%= f.button "Add note" %>
+			<%= f.button "Publish Note" %>
 		<% end %>
 	</div>
 	<div id="all-notes">

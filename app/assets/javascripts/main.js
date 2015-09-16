@@ -4,7 +4,41 @@ $(document).on("ready page:load", function() {
     handleNotifications();
     sweetDeleteAlert();
     ajaxSearch();
+    $("#new-note").autogrow();
+    slideButtonDown();
+    documentListeners();
 });
+function documentListeners(){
+    //to retreat the animation when document is clicked
+    document.onclick = function(e){
+        console.log(e.target.id);
+        if(e.target.id !== "new-note"){
+            // when anything other than textarea is clicked button is hidden back..
+            $("#create-note button").removeClass('active');
+            $("#all-notes").removeClass('active');
+        }
+        // hide notification & mark bell as clicked when document is clicked 
+        $("#bell").removeClass('clicked');
+        $("#notify-panel").removeClass('smoothUp');
+    }
+}
+function slideButtonDown(){
+    var buttonClicked = false;
+    $("#new-note").focus(function(e){
+        $("#create-note button").addClass('active'); 
+        $("#all-notes").addClass('active');
+    });
+
+    $("#create-note button").click(function(e){
+            setTimeout(function(){
+                //if button clicked then delay the hiding time
+                $("#create-note button").removeClass('active');
+                $("#all-notes").removeClass('active');
+            },1000);
+            e.stopPropagation();
+    });
+
+}
 function ajaxSearch(){
     // on keyup of input
     $("#search_form input").keyup(function(){
@@ -120,7 +154,7 @@ function handleTabs(e) {
 function handleNotifications() {
     // on bell clicking show it
     var bell = document.getElementById('bell');
-    bell.onclick = function() {
+    bell.onclick = function(e) {
         var notify_box = document.getElementById('notify-panel');
         if (this.classList.contains('clicked')) {
             this.classList.remove('clicked');
@@ -130,7 +164,7 @@ function handleNotifications() {
             notify_box.classList.add('smoothUp');
         }
         // in jquery return false do 2 things.. e.preventDefaut & e.stopPropagation (i.e bubbling)
-        return false;
+        e.stopPropagation();
     };
     //notification accordion
     var notifications = document.getElementsByClassName('each-request');

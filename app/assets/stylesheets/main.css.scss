@@ -17,6 +17,14 @@
     box-shadow: $offset $offset $blur grey;
 }
 
+@mixin customShadow($x,$y,$blur,$color){
+    -webkit-box-shadow:$x $y $blur $color;
+    -moz-box-shadow:$x $y $blur $color;
+    -ms-box-shadow:$x $y $blur $color;
+    -o-box-shadow:$x $y $blur $color;
+    box-shadow:$x $y $blur $color;
+}
+
 @mixin transition($prop,$time,$animateStyle){
     -webkit-transition: $prop $time $animateStyle;
     -moz-transition: $prop $time $animateStyle;
@@ -64,7 +72,7 @@ $middle-padding-t: 40px;
 $main-color: #2470ef;
 $bold-heading: #0643AA;
 $complement: #f8981d;
-$bold-complement: #FFCC6F;
+$bold-complement:#de8109;
 $work-area: #fafafa;
 $hr: #eeeeee;
 $light-text: #C6B1B1;
@@ -115,7 +123,7 @@ ul li {
     #notely {
         width: $left-width * 3 / 4;
         margin: 0 auto;
-        font-weight: $thin;
+        font-weight: $light;
         text-align: center;
         padding-bottom: $logo-pad-b;
         padding-top: $logo-pad-t;
@@ -175,7 +183,7 @@ ul li {
 
 header {
     @include shadow(1px,2px);
-    z-index:1;
+    z-index:100;
     position: fixed;
     background-color: white;
     left: $left-width;
@@ -235,7 +243,6 @@ header {
             font-size: 13px;
             @include transition(all,0.3s,cubic-bezier(.61, .44, .3, 1.45));
             opacity: 0;
-
             .big-bell{
                 text-align: center;
                 padding:30px 0px 0px 10px;
@@ -272,7 +279,7 @@ header {
             height: 0;
         }
         .up-arrow{
-            z-index:0;
+            z-index:50;
             right: 50px;
             top: -15px;
             border-left: 12px solid transparent;
@@ -281,7 +288,7 @@ header {
         }
         .up-white-arrow{
             //white arrow over the blue to create a blue outline effect
-            z-index:1;
+            z-index:51;
             top:-13px;
             right:50px;
             border-left: 12px solid transparent;
@@ -362,16 +369,64 @@ header {
     padding-right: $middle-padding-r;
     float: left;
     //text area
-    .create-note {
+    #create-note {
         position: relative;
         #new-note {
-            width: 100%;
+            border:1px solid $hr;
+            position: relative;
+            width: 99.9%;
             height: 112px;
-            @include shadow(2px, 8px);
             font-weight: $light;
             padding: 26px 30px;
+            outline:none;
+            z-index: 1;
+            @include shadow(1px, 2px);
+            &:focus{
+             @include customShadow(0px,0px,5px,$complement);
+            }
         }
     }
+    //publish button 
+    button{
+        outline: 0;
+        opacity: 1;
+        visibility: hidden;
+        position:absolute;
+        bottom: 20px;
+        z-index: 0;
+        width:100%;
+        font-size: 18px;
+        border:0;
+        background-color: $complement;
+        color:white;
+        font-weight: $light;
+        padding:8px 10px;
+        border-radius: 0 0 3px 3px;
+        border:1px solid $bold-complement;
+        @include transition(all,0.3s,cubic-bezier(.27, 1.42, .55, 1.04));
+        
+        &.active{
+            visibility: visible;
+           //move button down 
+            bottom:-37px; 
+            z-index:0;
+            opacity: 1;
+            @include customShadow(0px,1px,3px,grey);
+        }
+        &:active{
+            // when clicked
+            background-color:$bold-complement;
+        }
+    } 
+    // move container when text-area focused
+    #all-notes{
+        position:relative;
+        top:0px;
+        @include transition(all,0.3s,ease);
+    }
+    #all-notes.active{
+        top:37px;
+    }  
     //each note
     .each-note {
         border-radius: 2px;
@@ -415,7 +470,7 @@ header {
 main {
     margin-top: $header-height;
     margin-left: $left-width;
-    overflow:auto;
+    overflow: hidden;
     background-image :url(images/cubes.png);
     background-repeat: repeat;
     background-attachment: fixed;

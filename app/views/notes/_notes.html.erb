@@ -2,29 +2,6 @@
             <h2>No notes are found.</h2>
 <% else %>
 	<% @notes.each do |note| %>
-		<section class="each-note" id="each-note-<%= note.id %>">
-		    <div class="content">
-		        <%= note.content %>
-		        &#8211; <span class="content-user">
-					<% note.collaborations.each do |collab| %>
-						<% if collab.is_admin %>
-							@<%= collab.user.username %>
-						<% end %>
-					<% end %>
-				</span>	
-		    </div>
-		    <div class="content-options">  
-		        <%= link_to user_note_path(session[:id],note) do %>
-					<i class="fa fa-lg fa-expand"></i>
-		        <% end %>
-				<%= link_to edit_user_note_path(session[:id],note) do %>
-					<i class="fa fa-lg fa-pencil"></i>
-				<% end %>
-				<%= link_to user_note_path(session[:id],note),method: "delete", data: {confirm: 'are you sure?'}, remote: true do %>
-					<i class="fa fa-lg fa-trash-o"></i>
-				<% end %>
-		        <span class="post-date"><i>Posted <%= time_ago_in_words(note.created_at) %> ago.</i></span>
-		    </div>
-		</section>
+		<%= render(:partial=>"each_note",:locals=>{:note=>note}) %>
 	<% end %>
 <% end %>
