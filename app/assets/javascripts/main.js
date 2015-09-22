@@ -13,13 +13,20 @@ $(document).on("ready page:load", function() {
 });
 
 function ajaxTagSuggestions(){
-    // suggest tags when user create new note
+    // suggest tags when user create new note in textarea
     var hashPressed = false;
     var createNote = document.getElementById('new-note');
     var url = document.getElementById('suggest-tags-submit').href;
-    var tagsArea = document.getElementById('suggest-tags-area');
+    createNote.onkeypress = function(e){
+        //this is just a fix for fast typing # detection 
+        if(e.keyIdentifier==="End"){
+            hashPressed = true;
+        }
+    }
     createNote.onkeyup = function(e){
         if(e.keyIdentifier==="U+0033" && e.shiftKey===true){
+            // this doesn't include the shift followed by 3 i.e fast typing
+            // fixed it using onkeypress\
             hashPressed = true;
         }
         if(hashPressed===true){
@@ -27,7 +34,7 @@ function ajaxTagSuggestions(){
             if(e.keyIdentifier==="U+0020" || this.value==""){
                 // space so ends the suggestion
                 hashPressed= false;
-                tagsArea.innerHTML="";
+                hideSuggestionBox();
             }
         }
         if(hashPressed){
@@ -48,11 +55,38 @@ function ajaxTagSuggestions(){
             }
         }
     };
+
+    // add the tag for the respective span clicked
+    $("#suggest-tags-area").click(function(e){
+        if(e.target.nodeName==="SPAN"){
+            var target = e.target;
+            console.log("clicked");
+            var tagname = target.innerText + " ";
+            var content = createNote.value;
+            // remove last #tag
+            content = content.substring(0,content.lastIndexOf('#'));
+            // add the new tagname
+            content += tagname;
+            //finally set that content
+            createNote.value = content;
+            //refocus the area
+            createNote.focus();
+            //hide the suggestions
+            hideSuggestionBox();
+        }
+    });
+}
+function hideSuggestionBox(){
+    //helper function to hide the suggestion box 
+    $('#suggest-tags-area').fadeOut();
+    setTimeout(function(){
+        $('#suggest-tags-area').html("");
+    },200);
 }
 function documentListeners(){
     //to retreat the animation when document is clicked
     document.onclick = function(e){
-        if(e.target.id !== "new-note"){
+        if(e.target.id !== "new-note" && e.target.id!=="suggest-tags-area" && e.target.className!=="each-tag-suggestion"){
             // when anything other than textarea is clicked button is hidden back..
             $("#create-note button").removeClass('active');
             $("#all-notes").removeClass('active');

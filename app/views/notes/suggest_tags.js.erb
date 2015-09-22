@@ -1,1 +1,10 @@
-$("#suggest-tags-area").html("<%= escape_javascript(render(:partial=>'suggest_tags',:locals=>{:tags=>@tags})) %>").show();
+if(!<%= @tags.empty? %>){
+	// give the textarea some space
+	var newNote = document.getElementById('new-note');
+	newNote.style.paddingBottom="40px";
+	// fade into view the suggested tags
+	$("#suggest-tags-area").html("<%= escape_javascript(render(:partial=>'suggest_tags',:locals=>{:tags=>@tags})) %>").fadeIn();
+}else{
+	// if no tags hide the box
+	hideSuggestionBox();
+}

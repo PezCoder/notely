@@ -157,9 +157,12 @@ class NotesController < ApplicationController
 
   def suggest_tags
     #get the tags starting with this
-    @tags = get_suggested_tags(params[:tagname])
+    #true is the only_starts_with parameter so it only filters the one's that starts with the sent substr
+    @tags = get_suggested_tags(params[:tagname],true)
     respond_to :js
   end
+
+
 # PRIVATE FUNCTIONS
   private
 
@@ -296,7 +299,7 @@ class NotesController < ApplicationController
     end
   end
 
-  def get_suggested_tags(search_tagname=nil)
+  def get_suggested_tags(search_tagname=nil,only_starting_with=false)
     # note: Tags are already unique 
     # tagnames with most occurences first
     user = User.find_by_id(session[:id])
@@ -312,8 +315,16 @@ class NotesController < ApplicationController
       puts "#{tag.notes.inspect}"
       #count that user's tag's notes.. 
       if search_tagname
-        if search_tagname.strip=="" || tag.tagname.downcase.include?(search_tagname.downcase) 
-          tagnames[tag.tagname]=TagsHandler.where(:user=>user,:tag=>tag).count 
+        #only_starting_with is for returning the one's that just starts with the tagname passed
+        if only_starting_with 
+          if search_tagname.strip=="" || check_if_starts_with(tag.tagname.downcase,search_tagname.downcase)
+            tagnames[tag.tagname]=TagsHandler.where(:user=>user,:tag=>tag).count 
+          end
+        else
+          #all the tagnames that contains the tagname passed
+          if search_tagname.strip=="" || tag.tagname.downcase.include?(search_tagname.downcase) 
+            tagnames[tag.tagname]=TagsHandler.where(:user=>user,:tag=>tag).count 
+          end
         end
       else 
         tagnames[tag.tagname]=TagsHandler.where(:user=>user,:tag=>tag).count 
@@ -322,6 +333,17 @@ class NotesController < ApplicationController
     end
     #Sort in most occurence first & returned multi dim array
     return tagnames.sort{|val1, val2| val2[1]<=>val1[1]}
+  end
+
+  def check_if_starts_with(str,substr)
+    #helper function for the above get_suggested_tag function
+    # return true if str contains substr & starts with it
+    substr.length.times do |i|
+      if str[i]!=substr[i]
+        return false
+      end
+    end
+    return true
   end
 
   def get_suggested_users
