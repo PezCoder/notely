@@ -4,7 +4,12 @@
 		<%= form_for :note,:url=>user_notes_path(session[:id],@note),:html=>{remote: true,id: 'create-note-form'} do |f| %>
 			<%= f.text_area :content,placeholder: "Note down anything here..",cols: 30,rows: 5,id: "new-note" %>
 			<%= f.button "Publish Note" %>
-		<% end %>
+            <!-- suggest tags to user -->
+        <% end %>
+        <%= link_to "junk",suggest_user_path(session[:id]),id: 'suggest-tags-submit',style: "display:none;" %>
+        <div id="suggest-tags-area">
+        i'm here
+        </div>
 	</div>
 	<div id="all-notes">
 		<%= render(:partial=>'notes') %>

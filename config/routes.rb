@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   	member do 
   		get :accept,to:'notes#accept_notification'
   		get :reject,to:'notes#reject_notification'
+      get :suggest,to:'notes#suggest_tags'
   	end	
   end
   

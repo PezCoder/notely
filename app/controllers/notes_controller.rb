@@ -25,6 +25,7 @@ class NotesController < ApplicationController
         end
       end
     elsif params[:search]
+      #right search bar that searches for tags
       unless params[:search].strip==""
         #get all tags that contains this searched tagname
         @tags = get_suggested_tags(params[:search])
@@ -154,7 +155,11 @@ class NotesController < ApplicationController
     redirect_to user_notes_path(session[:id]) 
   end
 
-
+  def suggest_tags
+    #get the tags starting with this
+    @tags = get_suggested_tags(params[:tagname])
+    respond_to :js
+  end
 # PRIVATE FUNCTIONS
   private
 

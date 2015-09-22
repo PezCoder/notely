@@ -1,3 +1,5 @@
+//Well the doc is mix of jquery & javascript as I first decided to use pure js
+// but later while creating ajax request .. It's a lot easier with jquery :P
 $(document).on("ready page:load", function() {
     loadContentColors();
     addTabListener();
@@ -7,11 +9,49 @@ $(document).on("ready page:load", function() {
     $("#new-note").autogrow();
     slideButtonDown();
     documentListeners();
+    ajaxTagSuggestions();
 });
+
+function ajaxTagSuggestions(){
+    // suggest tags when user create new note
+    var hashPressed = false;
+    var createNote = document.getElementById('new-note');
+    var url = document.getElementById('suggest-tags-submit').href;
+    var tagsArea = document.getElementById('suggest-tags-area');
+    createNote.onkeyup = function(e){
+        if(e.keyIdentifier==="U+0033" && e.shiftKey===true){
+            hashPressed = true;
+        }
+        if(hashPressed===true){
+            //if hash is already pressed & we gave a space or the content is empty
+            if(e.keyIdentifier==="U+0020" || this.value==""){
+                // space so ends the suggestion
+                hashPressed= false;
+                tagsArea.innerHTML="";
+            }
+        }
+        if(hashPressed){
+            var tagname = this.value.substring(this.value.lastIndexOf("#")+1,
+                this.value.length);
+            // send this tagname & return the results in the div tag
+            if(tagname!==""){
+                $.ajax({
+                    type:'GET',
+                    url:url,
+                    dataType:'json',
+                    data:{
+                        "tagname":tagname
+                    },
+                    //this is imp.. or the response won't be processed as js
+                    dataType: 'script'
+                });
+            }
+        }
+    };
+}
 function documentListeners(){
     //to retreat the animation when document is clicked
     document.onclick = function(e){
-        console.log(e.target.id);
         if(e.target.id !== "new-note"){
             // when anything other than textarea is clicked button is hidden back..
             $("#create-note button").removeClass('active');
@@ -90,7 +130,6 @@ function sweetDeleteAlert() {
 }
 
 function loadContentColors(myContent) {
-    console.log(myContent);
     //sets color for tags(blue) & cusers (pink)
     var content = myContent || document.getElementsByClassName('content');
     for (var i = 0; i < content.length; i++) {
@@ -131,14 +170,11 @@ function handleTabs(e) {
 
         }
         //display correct content
-        console.log(target.parentNode);
         var contentsParent = document.getElementsByClassName('tab-content')[0];
         var contents = contentsParent.children;
         var href = target.href;
         var id = href.substr(href.indexOf('#') + 1);
-        console.log(id);
         var contentToDisplay = document.getElementById(id);
-        console.log(contentToDisplay);
         for (var i = 0; i < contents.length; i++) {
             if (contents[i] === contentToDisplay) {
                 contentToDisplay.classList.add('visible');
