@@ -1,13 +1,11 @@
 <section class="each-note" id="each-note-<%= note.id %>">
     <div class="content">
-        <%= note.content %>
-        &#8211; <span class="content-user">
+        <div class="content-note"><%= note.content %> &#8211; <span class="content-user">
 			<% note.collaborations.each do |collab| %>
 				<% if collab.is_admin %>
 					@<%= collab.user.username %>
 				<% end %>
-			<% end %>
-		</span>	
+			<% end %></span></div>
     </div>
     <div class="content-options">  
         <%= link_to user_note_path(session[:id],note) do %>
