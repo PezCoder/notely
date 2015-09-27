@@ -369,9 +369,9 @@ header {
     padding-right: $middle-padding-r;
     float: left;
     //text area
-    #create-note {
+    #create-note,#edit-note {
         position: relative;
-        #new-note {
+        #new-note,#editor {
             border:1px solid $hr;
             position: relative;
             width: 99.9%;
@@ -385,36 +385,36 @@ header {
              @include customShadow(0px,0px,5px,$complement);
             }
         }
-        #suggest-tags-area{
-            min-height: 25px;
-            display:none;
-            width: 99.6%;
-            border:0;
-            position: absolute;
-            bottom:4px;
-            border-radius:0 0 2px 2px;
-            padding:4px;
-            right:0;
-            left:0;
-            background-color:$work-area;
-            z-index:5;
-            border-top:1px solid $hr;
-            span{
-                display:inline-block;
-                 background-color:rgba($main-color,0.8);
-                color:$work-area;
-                border-radius:4px;
-                padding:3px 6px;
-                margin-left:10px;
-                cursor:pointer;
-            }
-            span:hover{
-                background-color:$main-color;
-            }
+    }
+    #suggest-tags-area{
+        min-height: 25px;
+        display:none;
+        width: 99.6%;
+        border:0;
+        position: absolute;
+        bottom:4px;
+        border-radius:0 0 2px 2px;
+        padding:4px;
+        right:0;
+        left:0;
+        background-color:$work-area;
+        z-index:5;
+        border-top:1px solid $hr;
+        span{
+            display:inline-block;
+             background-color:rgba($main-color,0.8);
+            color:$work-area;
+            border-radius:4px;
+            padding:3px 6px;
+            margin-left:10px;
+            cursor:pointer;
+        }
+        span:hover{
+            background-color:$main-color;
         }
     }
     //publish button 
-    button{
+    #publish-note{
         outline: 0;
         opacity: 1;
         visibility: hidden;

@@ -77,33 +77,46 @@ class NotesController < ApplicationController
 
   def edit
     @note = Note.find_by_id(params[:id])
+    respond_to :html,:js
   end
 
   def update
-    note = Note.find_by_id(params[:id])
+    @note = Note.find_by_id(params[:id])
     user = User.find_by_id(session[:id])
 
-    if note.update_attributes(get_user_params)
+    if @note.update_attributes(get_user_params)
       #updating the collab users as well as tags
       if check_if_admin
         #if admin also update the collab users
         users = get_users(nil)
-        update_collab_users(users,note)
+        update_collab_users(users,@note)
       end
-      flash[:notice]="Note updated."
-      redirect_to(user_notes_path(session[:id]))
-
       #Update the tags to all the users that are collaborated
       # Extract tags
       tags = get_tags(nil)
       #delete tags that are not present after updation
-      update_tags(note,tags)
+      update_tags(@note,tags)
 
+      # @tags for updating the tags on the fly
+      @tags = get_suggested_tags
+      flash[:notice]="Note updated."
+      # Hanlde ajax request
+      respond_to do |format|
+        format.html{ redirect_to(user_notes_path(session[:id])) }
+        format.js
+      end  
+      
     else
       flash[:alert]="Error occured while updating note.. !"
       @note = Note.find_by_id(params[:id])
-      render('edit')
+      #proper redirection acc to ajax request
+      respond_to do |format|
+        format.html{ render('edit') }
+        format.js
+      end
+      
     end
+
   end
 
   def destroy
@@ -217,16 +230,6 @@ class NotesController < ApplicationController
       old_tags<<tag.tagname
     end
     new_tags = tags
-    #destroy whatever tags are not present now
-    delete_tags = old_tags - new_tags
-    unless delete_tags.empty?
-      delete_tags.each do |tagname| 
-        #find tags associated with that note (don't use note.tags)
-        handlers.each do |handler|
-          handler.destroy if handler.tag.tagname==tagname
-        end
-      end
-    end
     #add the new tags
     add_tags = new_tags-old_tags
     unless add_tags.empty?
@@ -238,10 +241,23 @@ class NotesController < ApplicationController
     old_tags.each do |old_tag|
       #update all those user-note-tags relationship
       handlers.each do |handler|
+        puts(">>> Old Tag " + old_tag);
+        puts(">>> Handler\n #{handler}");
         handler.touch if handler.tag.tagname==old_tag
       end
     end
     
+    #destroy whatever tags are not present now
+    delete_tags = old_tags - new_tags
+    unless delete_tags.empty?
+      delete_tags.each do |tagname| 
+        #find tags associated with that note (don't use note.tags)
+        handlers.each do |handler|
+          handler.destroy if handler.tag.tagname==tagname
+        end
+      end
+    end
+
   end
   def get_users(content)
     content||=params[:note][:content]

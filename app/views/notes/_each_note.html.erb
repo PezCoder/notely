@@ -13,7 +13,7 @@
         <%= link_to user_note_path(session[:id],note) do %>
 			<i class="fa fa-lg fa-expand"></i>
         <% end %>
-		<%= link_to edit_user_note_path(session[:id],note) do %>
+		<%= link_to edit_user_note_path(session[:id],note),remote: true do %>
 			<i class="fa fa-lg fa-pencil"></i>
 		<% end %>
 		<%= link_to user_note_path(session[:id],note),method: "delete", data: {confirm: 'are you sure?'}, remote: true do %>

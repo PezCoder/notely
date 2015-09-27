@@ -1,0 +1,14 @@
+//selector query for note we are edititng
+var note_selector = "#each-note-<%= @note.id %>";
+//insert it before the stuff
+$("#edit-note").before("<%= escape_javascript(render(:partial=>'each_note',:locals=>{:note=>@note})) %>");
+//litte animation 
+$(note_selector).hide();
+$("#edit-note").slideUp(300).remove();
+$(note_selector).fadeIn(400);
+// update the tags
+$("#tags").html("<%= escape_javascript(render(:partial=>'tags',:locals=>{:tags=>@tags})) %>");
+
+//send the content for colors
+var updatedNote = document.getElementById(note_selector.substr(1)).children[0];
+loadContentColors([updatedNote]);

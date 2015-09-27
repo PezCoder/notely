@@ -10,9 +10,20 @@ $(document).on("ready page:load", function() {
     slideButtonDown();
     documentListeners();
     ajaxTagSuggestions();
+    quickEditNote();
 });
-
+function quickEditNote(){
+    "use strict";
+    //replaces the note that is dbl clicked with the edit form 
+    var each_note = document.getElementsByClassName('content');
+    for(var i=0;i<each_note.length;i++){
+        each_note[i].ondblclick = function(){
+            console.log('double clicked id' + this.parentNode.id);
+        };
+    }
+}
 function ajaxTagSuggestions(){
+    "use strict";
     // suggest tags when user create new note in textarea
     var hashPressed = false;
     var createNote = document.getElementById('new-note');
@@ -77,6 +88,7 @@ function ajaxTagSuggestions(){
     });
 }
 function hideSuggestionBox(){
+    "use strict";
     //helper function to hide the suggestion box 
     $('#suggest-tags-area').fadeOut();
     setTimeout(function(){
@@ -84,6 +96,7 @@ function hideSuggestionBox(){
     },200);
 }
 function documentListeners(){
+    "use strict";
     //to retreat the animation when document is clicked
     document.onclick = function(e){
         if(e.target.id !== "new-note" && e.target.id!=="suggest-tags-area" && e.target.className!=="each-tag-suggestion"){
@@ -97,6 +110,7 @@ function documentListeners(){
     }
 }
 function slideButtonDown(){
+    "use strict";
     var buttonClicked = false;
     $("#new-note").focus(function(e){
         $("#create-note button").addClass('active'); 
@@ -114,6 +128,7 @@ function slideButtonDown(){
 
 }
 function ajaxSearch(){
+    "use strict";
     // on keyup of input
     $("#search_form input").keyup(function(){
         //generate ajax request for action of form, .serialize() serialize the parameters of the form
@@ -123,6 +138,7 @@ function ajaxSearch(){
 }
 
 function sweetDeleteAlert() {
+    "use strict";
     //Override the default confirm dialog by rails
     $.rails.allowAction = function(link) {
             if (link.data("confirm") == undefined) {
@@ -164,6 +180,7 @@ function sweetDeleteAlert() {
 }
 
 function loadContentColors(myContent) {
+    "use strict";
     //sets color for tags(blue) & cusers (pink)
     var content = myContent || document.getElementsByClassName('content');
     for (var i = 0; i < content.length; i++) {
@@ -182,6 +199,7 @@ function loadContentColors(myContent) {
 
 
 function addTabListener() {
+    "use strict";
     var tabLinks = document.getElementsByClassName('tab-links')[0];
     if (tabLinks) {
         tabLinks.addEventListener('click', handleTabs, false);
@@ -189,6 +207,7 @@ function addTabListener() {
 }
 
 function handleTabs(e) {
+    "use strict";
     var target = e.target;
     if (!target.classList.contains('active')) {
         // if it's not active and it's a link tab
@@ -222,6 +241,7 @@ function handleTabs(e) {
 }
 
 function handleNotifications() {
+    "use strict";
     // on bell clicking show it
     var bell = document.getElementById('bell');
     bell.onclick = function(e) {
