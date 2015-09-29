@@ -1,17 +1,59 @@
 //Well the doc is mix of jquery & javascript as I first decided to use pure js
 // but later while creating ajax request .. It's a lot easier with jquery :P
 $(document).on("ready page:load", function() {
-    loadContentColors();
-    addTabListener();
-    handleNotifications();
-    sweetDeleteAlert();
-    ajaxSearch();
-    $("#new-note").autogrow();
-    slideButtonDown();
-    documentListeners();
-    ajaxTagSuggestions();
-    quickEditNote();
+    var landing = document.getElementById('landing-page');
+    if(landing){
+        handleInputStyleLoginPage();
+    }else{
+        loadContentColors();
+        addTabListener();
+        handleNotifications();
+        sweetDeleteAlert();
+        ajaxSearch();
+        $("#new-note").autogrow();
+        slideButtonDown();
+        documentListeners();
+        ajaxTagSuggestions();
+        quickEditNote();
+    }
 });
+
+function handleInputStyleLoginPage(){
+    //the label moving around animation as we focus the input text on login page
+    var group = document.getElementsByClassName('input-group');
+    console.log(group);
+    for (var i = 0; i < group.length; i++) {
+        group[i].onclick = addLabelActiveClass; // group listenere ends
+        var input = group[i].getElementsByTagName('input')[0];
+        input.onblur = removeLabelActiveClass;
+        input.onfocus = callLabelActiveClass;
+    } //end for loop
+}
+    function callLabelActiveClass() {
+        console.log("active");
+        addLabelActiveClass.call(this.parentNode);
+    }
+
+    function addLabelActiveClass() {
+        console.log("clicked");
+        var label = this.getElementsByTagName('label')[0];
+        var input = this.getElementsByTagName('input')[0];
+        if (!label.classList.contains('active')) {
+            label.classList.add('active');
+            input.focus();
+        }
+    }
+
+    function removeLabelActiveClass() {
+        //only move label back if input is empty
+        console.log("blurred");
+        if (this.value === "") {
+            var label = this.parentNode.children[0];
+            if (label.classList.contains('active')) {
+                label.classList.remove('active');
+            }
+        }
+    }
 function quickEditNote(){
     "use strict";
     //replaces the note that is dbl clicked with the edit form 
@@ -27,46 +69,47 @@ function ajaxTagSuggestions(){
     // suggest tags when user create new note in textarea
     var hashPressed = false;
     var createNote = document.getElementById('new-note');
-    var url = document.getElementById('suggest-tags-submit').href;
-    createNote.onkeypress = function(e){
-        //this is just a fix for fast typing # detection 
-        if(e.keyIdentifier==="End"){
-            hashPressed = true;
+    if(createNote){
+        var url = document.getElementById('suggest-tags-submit').href;
+        createNote.onkeypress = function(e){
+            //this is just a fix for fast typing # detection 
+            if(e.keyIdentifier==="End"){
+                hashPressed = true;
+            }
         }
+        createNote.onkeyup = function(e){
+            if(e.keyIdentifier==="U+0033" && e.shiftKey===true){
+                // this doesn't include the shift followed by 3 i.e fast typing
+                // fixed it using onkeypress\
+                hashPressed = true;
+            }
+            if(hashPressed===true){
+                //if hash is already pressed & we gave a space or the content is empty
+                if(e.keyIdentifier==="U+0020" || this.value==""){
+                    // space so ends the suggestion
+                    hashPressed= false;
+                    hideSuggestionBox();
+                }
+            }
+            if(hashPressed){
+                var tagname = this.value.substring(this.value.lastIndexOf("#")+1,
+                    this.value.length);
+                // send this tagname & return the results in the div tag
+                if(tagname!==""){
+                    $.ajax({
+                        type:'GET',
+                        url:url,
+                        dataType:'json',
+                        data:{
+                            "tagname":tagname
+                        },
+                        //this is imp.. or the response won't be processed as js
+                        dataType: 'script'
+                    });
+                }
+            }
+        };
     }
-    createNote.onkeyup = function(e){
-        if(e.keyIdentifier==="U+0033" && e.shiftKey===true){
-            // this doesn't include the shift followed by 3 i.e fast typing
-            // fixed it using onkeypress\
-            hashPressed = true;
-        }
-        if(hashPressed===true){
-            //if hash is already pressed & we gave a space or the content is empty
-            if(e.keyIdentifier==="U+0020" || this.value==""){
-                // space so ends the suggestion
-                hashPressed= false;
-                hideSuggestionBox();
-            }
-        }
-        if(hashPressed){
-            var tagname = this.value.substring(this.value.lastIndexOf("#")+1,
-                this.value.length);
-            // send this tagname & return the results in the div tag
-            if(tagname!==""){
-                $.ajax({
-                    type:'GET',
-                    url:url,
-                    dataType:'json',
-                    data:{
-                        "tagname":tagname
-                    },
-                    //this is imp.. or the response won't be processed as js
-                    dataType: 'script'
-                });
-            }
-        }
-    };
-
     // add the tag for the respective span clicked
     $("#suggest-tags-area").click(function(e){
         if(e.target.nodeName==="SPAN"){
@@ -250,19 +293,21 @@ function handleNotifications() {
     "use strict";
     // on bell clicking show it
     var bell = document.getElementById('bell');
-    bell.onclick = function(e) {
-        var notify_box = document.getElementById('notify-panel');
-        if (this.classList.contains('clicked')) {
-            this.classList.remove('clicked');
-            notify_box.classList.remove('smoothUp');
-        } else {
-            this.classList.add('clicked');
-            notify_box.classList.add('smoothUp');
-        }
-        // in jquery return false do 2 things.. e.preventDefaut & e.stopPropagation (i.e bubbling)
-        e.stopPropagation();
-        return false;
-    };
+    if(bell){
+        bell.onclick = function(e) {
+            var notify_box = document.getElementById('notify-panel');
+            if (this.classList.contains('clicked')) {
+                this.classList.remove('clicked');
+                notify_box.classList.remove('smoothUp');
+            } else {
+                this.classList.add('clicked');
+                notify_box.classList.add('smoothUp');
+            }
+            // in jquery return false do 2 things.. e.preventDefaut & e.stopPropagation (i.e bubbling)
+            e.stopPropagation();
+            return false;
+        };
+    }
     //notification accordion
     var notifications = document.getElementsByClassName('each-request');
     for (var i = 0; i < notifications.length; i++) {

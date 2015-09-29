@@ -1,8 +1,25 @@
-<div class="access login">
-	<%= form_tag(login_attempt_path) do %>
-	<h3>SIGN IN</h3>
-		<%= text_field_tag(:username,nil,placeholder: "Username..")%><br>
-		<%= password_field_tag(:password,nil,placeholder: "Password..")%><br>
-		<%= button_tag("Login") %>
-	<% end %>
+<div id="landing-page">
+	<div class="background">
+	  <div class="content">
+		  <div class="login-page">
+		    <div class="title">Notely</div>
+		    <h1>Login Here !</h1>
+			<%= form_tag(login_attempt_path) do %>
+		     	<div class="input-group">
+			     	<label for="username">Username</label>
+			      	<%= text_field_tag(:username,nil,id:"username")%>
+			    </div>
+			     <div class="input-group">
+			      	<label for="password">Password</label>
+					<%= password_field_tag(:password,nil,id:"password")%>
+			     </div>
+			     <%= button_tag "Login",class:"login",data: {disable_with: "<i class='fa fa-spinner fa-pulse'></i> Signing in..."} %>
+		    <% end %>
+		      <a href="#">Help, I forgot my login details → </a>
+		   </div>
+	  </div>
+	</div>
 </div>
+<!-- REGISTER FORM 
+<button class="register">Register</button>
+-->

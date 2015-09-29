@@ -1,12 +1,13 @@
-@import url("https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css");
 @import "normalize";
 @import "sweetalert";
 @import url(http://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700);
+@import url("https://fonts.googleapis.com/css?family=Dancing+Script");
 @import url(http://weloveiconfonts.com/api/?family=entypo);
 [class*="entypo-"]:before {
   font-family: 'entypo', sans-serif;
   font-size:20px;
 }
+
 
 
 @mixin shadow($offset, $blur) {
@@ -81,7 +82,7 @@ $success-dark:#89AB4D;
 $delete:#E45050;
 $delete-dark:#BA3934;
 $hover-bg:$work-area;
-
+$placeholder:rgb(127,127,127);
 //each note measurements
 $en-m-t: 32px;
 $bottom-bar-bg: #f8fafa;
@@ -92,6 +93,8 @@ $posted-color: rgba(#666262, 0.6);
 //right section
 $right-width: 1366px- ($left-width - $middle-width);
 
+//fonts 
+$notely-font:'Dancing Script', cursive;
 * {
     box-sizing: border-box;
     font-family: 'Roboto', sans-serif;
@@ -121,14 +124,16 @@ ul li {
     color: white;
     //logo
     #notely {
-        width: $left-width * 3 / 4;
+        position:relative;
+        font-family: $notely-font;
+        width: $left-width * 3 / 5;
         margin: 0 auto;
         font-weight: $light;
+        font-size:70px;
         text-align: center;
         padding-bottom: $logo-pad-b;
         padding-top: $logo-pad-t;
-        font-size: 50pt;
-        border-bottom: 1px solid white;
+        border-bottom:2px solid white;
     }
     //list navigation
     ul {
@@ -665,4 +670,174 @@ main::after {
         }
         
     }/* end floating options */
+}
+
+
+/* LOGIN LANDING PAGE LAYOUT */
+#landing-page{
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    .background{
+      width:100%;
+      position:relative;
+       height:100%;
+      padding-top:90px;
+    }
+    .background:before{
+        background-image:url("notely_bg.jpg");
+        background-position: center;
+        background-size: cover;
+      content:"";
+      position:absolute;
+      top:0;
+      left:0;
+      width:100%;
+      height:100vh;
+      z-index:0;
+      -webkit-filter:blur(8px);
+      background-repeat: no-repeat;
+      
+    }
+
+    .content{
+        width:300px;
+        position:relative;
+        z-index:20;
+        background-color:white;
+      border-radius:3px;
+      padding:60px 50px 50px 50px;
+      margin:0px auto;
+    }
+
+    form{
+      position:relative;
+      z-index:1;
+      width:200px;
+      
+    }
+    h1{
+      color:rgba(0,0,0,0.8);
+        position:relative;
+      z-index:1;
+      width:200px;
+      margin-bottom:17px;
+      margin-top:28px;
+      font-weight:300;
+      font-family:roboto;
+      text-align:center;
+
+    }
+    button{
+      margin-top:10px;
+      border:0;
+      outline:0;
+      padding:7px 16px;
+        font-family:roboto;
+      font-size:16px;
+      font-weight:300;
+    }
+    button:hover{
+      cursor:pointer;
+    }
+    .register{
+        display:none;
+      background-color:rgba(0,0,0,0);
+      position:relative;
+      left:20px;
+      color:$main-color;
+      border:1px solid $main-color;
+      transition:all 0.3s ease-in;
+    }
+    .register:hover{
+      background-color:$main-color;
+      color:white;
+      opacity:0.7;
+    }
+    .title{
+      position:absolute;
+      top:0;
+      font-family: $notely-font;
+      font-size:35px;
+      background-color:$main-color;
+      padding:34px 16px;
+      color:white;
+      top:-52px;
+      left:95px;
+      border-radius:100%;
+    }
+    .login{
+        width:103%;
+        border-radius:3px;
+      font-weight:300;
+      background-color:$success;
+      border:1px solid $success;
+      opacity:1;
+      transition:all 0.3s ease;
+       color: white;  /* Fallback: assume this color ON TOP of image */
+      
+    }
+    .login,.register{
+         padding:9px 20px;   
+    }
+    .login:hover{
+      opacity:0.8;
+    }
+    .login:active{
+        border:1px solid $success-dark;
+    }
+
+    a{
+        display:block;
+        margin-top:15px;
+        font-size:14px;
+        color:$placeholder;
+    }
+    a:hover{
+         text-decoration: underline;
+    }
+}
+.input-group label {
+    display: block;
+    position: absolute;
+    color: $placeholder;
+    font-size: 16px;
+    top: 20px;
+    left: 10px;
+    transition: all 0.3s ease;
+}
+    
+.input-group .active {
+    font-size: 12px;
+    top: -10px;
+    left: 0;
+    font-weight: 700;
+    color: rgba($main-color,0.8);
+}
+
+.input-group {
+    margin-top: 15px;
+    display: inline-block;
+    position: relative;
+}
+
+label:hover {
+    cursor: text;
+}
+
+.input-group input {
+    transition: all 0.3s ease;
+    font-size: 16px;
+    padding:8px 10px;
+    border-radius:3px;
+    outline:0;
+    border:1px solid #ddd;
+    margin-top:10px;
+    margin-bottom: 10px;
+}
+
+.input-group input:focus {
+    border:1px solid $main-color;
 }

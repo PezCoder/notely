@@ -3,15 +3,14 @@
 <head>
   <title>Notely</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+
   <%= csrf_meta_tags %>
 </head>
 <body> 
-
+<% if session[:id].present? %>
     <header>
-    <% if session[:id].present? %>
         <div class="right-links">
              <div class="notification">
                 <a class="header-link" id="bell"><i class="fa fa-lg fa-bell-o"></i></a>
@@ -65,8 +64,6 @@
             <%= link_to "@"+session[:username],root_path,class: "header-link" %>
             <%= link_to "Logout",logout_path,class: "header-link" %>
         </div>
-
-     <% end %>
     </header>
     <aside class="left-container">
         <p id="notely">Notely</p>
@@ -98,6 +95,7 @@
             </ul>
         </nav>
     </aside>
+<% end %>
     <main>
 		<%= yield %>
     </main>

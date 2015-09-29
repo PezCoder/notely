@@ -1,5 +1,5 @@
 class AccessController < ApplicationController
-	layout false
+	layout 'application'
 	def login 
 		#show login page
 	end
