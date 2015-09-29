@@ -1,6 +1,6 @@
 <div class="notes edit" id="edit-note">
 	<%= form_for note,:url=>user_note_path(session[:id],note),remote: true do |f| %>
 		<%= f.text_area :content,placeholder: "Edit your note.. ",cols: 30,rows: 5,id: "editor" %>
-		<%= f.button "Update Note" %>
+		<%= f.button "Update Note",class:'update-btn' %>
 	<% end %>
 </div>

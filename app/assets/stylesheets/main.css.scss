@@ -472,6 +472,7 @@ header {
             white-space: normal;
         }
         .content-note{
+            color:rgba(black,0.87);
              white-space: pre-wrap; 
         }
             
@@ -502,10 +503,15 @@ header {
 main {
     margin-top: $header-height;
     margin-left: $left-width;
-    overflow: hidden;
     background-image :url(images/cubes.png);
     background-repeat: repeat;
     background-attachment: fixed;
+}
+//clearfix
+main::after {
+  content:"";
+  display:table;
+  clear:both;
 }
 
 .right-container {

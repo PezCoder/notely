@@ -108,6 +108,12 @@ function documentListeners(){
         $("#bell").removeClass('clicked');
         $("#notify-panel").removeClass('smoothUp');
     }
+    //fix as the notification was closing on clicking inside it
+    $("#notify-panel").click(function(){
+        //stop triggering of document listener inside notify-panel
+        return false;
+    });
+    
 }
 function slideButtonDown(){
     "use strict";
@@ -255,6 +261,7 @@ function handleNotifications() {
         }
         // in jquery return false do 2 things.. e.preventDefaut & e.stopPropagation (i.e bubbling)
         e.stopPropagation();
+        return false;
     };
     //notification accordion
     var notifications = document.getElementsByClassName('each-request');
@@ -298,7 +305,7 @@ function handleNotifications() {
                 var arrow = target.getElementsByTagName('i')[0];
                 arrow.classList.add('active');
             }
-
+            e.stopPropagation();
         }; //end onclick
     }
 }
