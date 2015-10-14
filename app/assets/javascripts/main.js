@@ -55,12 +55,26 @@ function handleInputStyleLoginPage(){
         }
     }
 function quickEditNote(){
+    //Yet to be implemented .... 
     "use strict";
     //replaces the note that is dbl clicked with the edit form 
     var each_note = document.getElementsByClassName('content');
     for(var i=0;i<each_note.length;i++){
         each_note[i].ondblclick = function(){
-            console.log('double clicked id' + this.parentNode.id);
+            var parent = this.parentNode;
+            var id=parent.id.substr(parent.id.lastIndexOf('-')+1);
+            var url = parent.children[1].getElementsByClassName('edit-link')[0].href;
+            console.log(url);
+            console.log(id);
+            $.ajax({
+                type:'GET',
+                url:url,
+                data:{
+                    "id":id
+                },
+                //this is imp.. or the response won't be processed as js
+                dataType: 'script'
+            });
         };
     }
 }

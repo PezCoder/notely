@@ -1,6 +1,7 @@
 var selector = "#each-note-<%= @note.id %>";
-var height = $(selector).css('height')
-var extendedHeight = parseInt(height.substr(0,height.indexOf('px'))) + 25 + "px";
+var height = $(selector).css('height');
+//just correcting the height 
+var extendedHeight = parseInt(height.substr(0,height.indexOf('px'))) -20 + "px";
 
 $(selector)
 	.replaceWith("<%= j render(:partial=>'edit_note',:locals=>{:note=>@note}) %>");

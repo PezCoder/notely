@@ -105,7 +105,8 @@ a {
 }
 
 html, body {
-    background-color: $work-area;
+    // background-color: $work-area;
+    background-color:#F6F9FA;
 }
 
 ul li {
@@ -125,7 +126,7 @@ ul li {
     //logo
     #notely {
         position:relative;
-        font-family: $notely-font;
+        font-family: $notely-font,Verdana;
         width: $left-width * 3 / 5;
         margin: 0 auto;
         font-weight: $light;
@@ -368,29 +369,62 @@ header {
 
 .middle-container {
     position:relative;
-    display:block;
-    max-width: $middle-width;
+    display:flex;
+    flex-direction: column;
+    width:100%;
+    min-width: 450px;
+    max-width:$middle-width;
     padding: $middle-padding-t $middle-padding-l;
     padding-right: $middle-padding-r;
     float: left;
     //text area
     #create-note,#edit-note {
         position: relative;
-        #new-note,#editor {
-            border:1px solid $hr;
-            position: relative;
-            width: 99.9%;
-            height: 112px;
-            font-weight: $light;
-            padding: 26px 30px 30px 30px;
-            outline:none;
-            z-index: 1;
-            @include shadow(1px, 2px);
-            &:focus{
-             @include customShadow(0px,0px,5px,$complement);
-            }
+    }
+    #new-note,#editor {
+        position: relative;
+        width: 99.9%;
+        font-weight: $light;
+        outline:none;
+        z-index: 1;
+    }
+    #new-note{
+        padding:26px 30px 30px 30px;
+        height: 112px;
+        border:1px solid $hr;
+        @include shadow(1px, 2px);
+        &:focus{
+         @include customShadow(0px,0px,5px,$complement);
         }
     }
+    
+    .edit{
+        padding:15px;
+        background-color:#eeeeee;
+    }
+
+    #editor{
+        padding:26px;
+        height:auto;
+        border-radius:1px;
+        background-color:white;
+        color: lighten(#000,0.7);
+        -webkit-box-shadow: 0px 0px 5px $complement inset;
+    }
+    
+    .update-btn{
+        background-color:$success;
+        color:white;
+        padding: 7px 28px;
+        border: 0;
+        @include shadow(1px,2px);
+        margin-top:2px;
+        border-radius: 0 7px 0 7px;
+        &:hover{
+            background-color:$success-dark;
+        }
+    }
+
     #suggest-tags-area{
         min-height: 25px;
         display:none;
@@ -450,6 +484,7 @@ header {
             background-color:$bold-complement;
         }
     } 
+
     // move container when text-area focused
     #all-notes{
         position:relative;
@@ -759,7 +794,7 @@ main::after {
     .title{
       position:absolute;
       top:0;
-      font-family: $notely-font;
+      font-family: $notely-font,Verdana;
       font-size:35px;
       background-color:$main-color;
       padding:34px 16px;

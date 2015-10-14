@@ -8,13 +8,13 @@
 			<% end %></span></div>
     </div>
     <div class="content-options">  
-        <%= link_to user_note_path(session[:id],note) do %>
+        <%= link_to user_note_path(session[:id],note),class: 'expand-link' do %>
 			<i class="fa fa-lg fa-expand"></i>
         <% end %>
-		<%= link_to edit_user_note_path(session[:id],note),remote: true do %>
+		<%= link_to edit_user_note_path(session[:id],note),remote: true,class: 'edit-link' do %>
 			<i class="fa fa-lg fa-pencil"></i>
 		<% end %>
-		<%= link_to user_note_path(session[:id],note),method: "delete", data: {confirm: 'are you sure?'}, remote: true do %>
+		<%= link_to user_note_path(session[:id],note),method: "delete", data: {confirm: 'are you sure?'}, remote: true,class: 'remove-link' do %>
 			<i class="fa fa-lg fa-trash-o"></i>
 		<% end %>
         <span class="post-date"><i>Posted <%= time_ago_in_words(note.created_at) %> ago.</i></span>
