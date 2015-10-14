@@ -12,3 +12,4 @@ $("#tags").html("<%= escape_javascript(render(:partial=>'tags',:locals=>{:tags=>
 //send the content for colors
 var updatedNote = document.getElementById(note_selector.substr(1)).children[0];
 loadContentColors([updatedNote]);
+quickEditNote([updatedNote]);

@@ -54,11 +54,11 @@ function handleInputStyleLoginPage(){
             }
         }
     }
-function quickEditNote(){
-    //Yet to be implemented .... 
+function quickEditNote(element){
     "use strict";
     //replaces the note that is dbl clicked with the edit form 
-    var each_note = document.getElementsByClassName('content');
+    //element is used when note is loaded with ajax .. so to add this functionality even needs to be set again
+    var each_note = element || document.getElementsByClassName('content');
     for(var i=0;i<each_note.length;i++){
         each_note[i].ondblclick = function(){
             var parent = this.parentNode;
