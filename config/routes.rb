@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   get '/login',to: 'access#login'
   post '/login_attempt',to: 'access#login_attempt'
   get '/logout',to: 'access#logout'
-
+  get '/register',to: 'users#new'
   root "notes#index"
 
 end

@@ -751,8 +751,8 @@ main::after {
         position:relative;
         z-index:20;
         background-color:white;
-      border-radius:3px;
-      padding:60px 50px 50px 50px;
+      border-radius:6px;
+      padding:60px 50px 30px 50px;
       margin:0px auto;
     }
 
@@ -762,7 +762,7 @@ main::after {
       width:200px;
       
     }
-    h1{
+    h1,h2{
       color:rgba(0,0,0,0.8);
         position:relative;
       z-index:1;
@@ -786,20 +786,6 @@ main::after {
     button:hover{
       cursor:pointer;
     }
-    .register{
-        display:none;
-      background-color:rgba(0,0,0,0);
-      position:relative;
-      left:20px;
-      color:$main-color;
-      border:1px solid $main-color;
-      transition:all 0.3s ease-in;
-    }
-    .register:hover{
-      background-color:$main-color;
-      color:white;
-      opacity:0.7;
-    }
     .title{
       position:absolute;
       top:0;
@@ -812,8 +798,8 @@ main::after {
       left:95px;
       border-radius:100%;
     }
-    .login{
-        width:103%;
+    .login,.register{
+        width:100%;
         border-radius:3px;
       font-weight:300;
       background-color:$success;
@@ -826,24 +812,121 @@ main::after {
     .login,.register{
          padding:9px 20px;   
     }
-    .login:hover{
+    .login:hover,.register:hover{
       opacity:0.8;
     }
     .login:active{
         border:1px solid $success-dark;
     }
 
+    .register{
+        //register button
+        background-color:$complement;
+        border:1px solid $complement;
+    }
+    .register:active{
+        border:1px solid $bold-complement;
+    }
     /* Forgot details */
-    a{
-        display:block;
-        margin-top:26px;
+    .go-over-link,.have-an-account{
+        display:inline-block;
         font-size:14px;
         color:$placeholder;
+        margin-bottom:4px;
     }
-    a:hover{
+    .go-over-link:hover{
          text-decoration: underline;
+   }
+    .login-page .go-over-link{
+        margin-top:26px;
     }
+    .go-over-link.back-sign-up{
+        margin-top: 15px;
+        color:lighten($main-color,5%);
+    }
+    .register-page .go-over-link{
+        color:$main-color;
+        margin-left:3px;
+    }
+    .register-content{
+        //whole content of regitration form
+        padding-left:35px;
+        padding-right:35px;
+        padding-bottom:13px;
+        top:-28px;
+        left:-400px;
+        width:330px;
+        .title{
+          width:100px;
+          height:100px;
+          position:absolute;
+          font-size:30px;
+          padding:31px 16px;
+          top:-52px;
+          left:330px/2 - 50px;
+        }
+        form{
+            width:auto;
+        }
+        h2{
+            text-align: center;
+            width:100%;
+            margin-top:12px;
+            margin-bottom: 20px;
+        }
+        .input-group{
+            width:100%;
+        }
+        input{
+            width:100%;
+        }
+
+    }
+    .facebook-login,.google-login{
+        margin-top:10px;
+        width:100%;
+        background-color:#3b5998;
+        color:white;
+        padding-left:0;
+        padding-right:0;
+        height:40px;
+        border:1px solid #3b5998;
+        i{
+            display:inline-block;
+            margin-right:7px;
+        }
+        border-radius:2px;
+    }
+    .facebook-login:active{
+        border:1px solid darken(#3b5998,30%);
+    }
+    .google-login{
+        border:1px solid #dc4e41;
+        background-color:#dc4e41;
+        i{
+            position:relative;
+            left:-14px;
+            margin-right:-8px;
+        }
+    }
+    .google-login:active{
+        border:1px solid darken(#dc4e41,30%);
+    }
+    button:hover{
+        opacity:0.9;
+    }
+    .have-account-container{
+        text-align: center;
+    }
+    .or{
+        color:$placeholder;
+        text-align:center;
+        margin-bottom: 0;
+        font-style: italic;
+    }
+
 }
+
 .input-group label {
     display: block;
     position: absolute;
@@ -863,7 +946,8 @@ main::after {
 }
 
 .input-group {
-    margin-top: 15px;
+    width:100%;
+    margin-top: 10px;
     display: inline-block;
     position: relative;
 }
