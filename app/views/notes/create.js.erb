@@ -4,6 +4,10 @@ var all_notes = document.querySelector('#all-notes');
 var first_note = all_notes.children[0];
 loadContentColors([first_note]);
 
+//empty the textbox after creation
+var textBox = document.getElementById('new-note');
+
+textBox.value='';
 //insert error messages accordingly
 <% if !flash[:notice].blank? %>
     $("#flash").html("<div class='notice'><%= escape_javascript(flash[:notice]) %></div>");
