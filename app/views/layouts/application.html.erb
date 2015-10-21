@@ -99,5 +99,24 @@
     <main>
 		<%= yield %>
     </main>
+    <div class="flash" id="flash">
+        <% if !flash[:notice].blank? %>
+            <div class="notice">
+               <%= flash[:notice] %>
+            </div>
+        <% end %>
+
+        <% if !flash[:alert].blank? %>
+            <div class="error">
+                <%= flash[:alert] %>
+            </div>
+        <% end %>
+
+        <% if !flash[:warning].blank? %>
+            <div class="warning">
+                <%= flash[:warning] %>
+            </div>
+        <% end %>
+    </div>
 </body>
 </html>
