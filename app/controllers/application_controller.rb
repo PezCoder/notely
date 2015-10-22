@@ -25,4 +25,10 @@ class ApplicationController < ActionController::Base
     return false
   end
 
+#moved this here so that user can access notifications everywhere
+  def get_notifications
+    user = User.find_by_id(session[:id])
+    @notifications = user.notifications.recent_notifications
+  end
+
 end

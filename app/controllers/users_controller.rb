@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
 	layout 'application'
 	
-	before_action :check_logged_in,:only=>[:show,:edit,:update,:destroy]
+	before_action :check_logged_in,:get_notifications,:only=>[:edit,:update,:destroy]
 	def index
 		@users = User.recent_users
 	end
@@ -35,7 +35,7 @@ class UsersController < ApplicationController
 		user = User.find_by_id(params[:id])
 		if user.update_attributes(get_user_params)
 			flash[:notice]="Profile updated succesfully."
-			redirect_to user
+			redirect_to edit_user_path(user.id)
 		else
 			flash[:alert]="Error while updating profile ! Please, Try again later."
 			@user = User.find_by_id(params[:id])
@@ -46,7 +46,9 @@ class UsersController < ApplicationController
 	def destroy
 		user = User.find_by_id(params[:id])
 		user.destroy
-		flash[:notice]="Your account has been deleted !"
+		flash[:notice]="Your account has been deleted !"		
+		session[:id]=nil
+		session[:username]=nil
 		redirect_to root_path
 	end
 

@@ -1,7 +1,33 @@
-<div class="users edit">
-	<h4>Edit Profile</h4>
-	<%= form_for @user do |f| %>
-		<%= render :partial=>"/shared/user_form",:locals=>{:f=>f,:new_user=>false} %>
-		<%= f.button "Update profile" %>
-	<% end %>
+<div class="edit-profile-container">
+    <h1>My Account Details</h1>
+    <div class="edit-user">
+        <h2>#Edit Details</h2>
+        <%= form_for @user,:html=>{class: 'form-wrapper'} do |f| %>
+            <div class="edit-input-group">
+                <label for="username">USERNAME</label>
+                <%= f.text_field :username,placeholder:"Username..",disable:true,id:'username' %>
+            </div>
+            <div class="edit-input-group">
+                <label for="password">PASSWORD</label>
+                <%= f.password_field :password,placeholder: "Your new password..",id:'password' %>
+            </div>
+            <div class="edit-input-group">
+                <label for="email">EMAIL</label>
+                <%= f.text_field :email,placeholder: "Your email address..",id:'email' %>
+            </div>
+            <%= f.button id:'update-user-btn' do %>
+							<span class="entypo-user glyphs"> Update Profile
+            <% end %>
+        <% end %>
+    </div>
+    <div class="delete-user">
+	        <h2>#Delete My Account</h2>
+	        <div class="form-wrapper">
+	            <p>Deleting your account will remove your profile &amp; all your notes as well.
+	                <br> You won't be able to recover it later.</p>
+	            <%= link_to user_path session[:id],method: "delete", data: {confirm: 'Are you sure?'},id: 'delete-user-btn' do %>
+				<i class="fa fa-lg fa-trash-o"></i> Yes, Delete it !
+			<% end %>
+			</div>
+    </div>
 </div>

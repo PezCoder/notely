@@ -83,7 +83,9 @@
                         <!--                 <i class="fa fa-lg fa-cog"></i>-->
                     </li>
                     <li><a href="#"><span class="text">Note </span><span class="entypo-doc-text glyphs"></span></a></li>
-                    <li><a href="#"><span class="text">Profile </span><span class="entypo-user glyphs"></span></a></li>
+                    <li><%= link_to edit_user_path(session[:id]) do %>
+                    <span class="text">Profile </span><span class="entypo-user glyphs"></span>
+                    <% end %></li>
                 </div>
                 <div class="each-list-set">
                     <li><span class="bold-link">Contact</span> </li>

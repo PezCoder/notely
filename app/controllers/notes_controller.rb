@@ -407,11 +407,6 @@ class NotesController < ApplicationController
     end
   end
 
-  def get_notifications
-    user = User.find_by_id(session[:id])
-    @notifications = user.notifications.recent_notifications
-  end
-
   def notes_by_tagnames(tagnames)
     user = User.find_by_id(session[:id])
     #tagnames is a hash {nameoftag => countOfNotes}
