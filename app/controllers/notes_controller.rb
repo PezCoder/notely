@@ -401,7 +401,12 @@ class NotesController < ApplicationController
       else
         flash[:warning]="You don't have permission to modify collaborated users !"
         @note = note
-        render('edit')
+        respond_to do |format|
+          #if html request then load the edit page
+          format.html { render('edit') }
+          #update the flash to display permission error
+          format.js { render('update_flash')}
+        end
         return false   
       end
     end

@@ -1,7 +1,8 @@
 class UsersController < ApplicationController
 	layout 'application'
 	
-	before_action :check_logged_in,:get_notifications,:only=>[:edit,:update,:destroy]
+	before_action :check_logged_in,:only=>[:edit,:update,:destroy]
+	before_action :get_notifications,:only=>[:edit]
 	def index
 		@users = User.recent_users
 	end
@@ -16,13 +17,12 @@ class UsersController < ApplicationController
 	end
 
 	def create 
-		user = User.new(get_user_params)
-		if user.save
+		@user = User.new(get_user_params)
+		if @user.save
 			flash[:notice]="Your account is created succesfully."
-			redirect_to user_notes_path(user.id)
+			redirect_to user_notes_path(@user.id)
 		else
 			flash[:alert]="Error while creating account ! Please try again later. "
-			@user = User.new
 			render('new')
 		end
 	end

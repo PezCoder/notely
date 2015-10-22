@@ -18,9 +18,9 @@
 			    </div>
 			     <div class="input-group">
 		      	 <label for="password">Password</label>
-						 <%= password_field_tag(:password,nil,id:"password")%>
+						 <%= f.password_field :password,id:"password" %>
 			     </div>
-			     <%= f.button "Create my account",class:"register",data: {disable_with: "<i class='fa fa-spinner fa-pulse'></i> Just a moment..."} %>
+			     <button type="submit" class="register" data-disable-with="<i class='fa fa-spinner fa-pulse'></i> Just a moment...">Create my account</button>
 		    <% end %>
 		    <div class="have-account-container">
 		      <p class="have-an-account">Have an account? </p><%= link_to "Log In →", login_path,class: 'go-over-link' %>

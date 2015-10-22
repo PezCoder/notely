@@ -9,16 +9,3 @@ $("#editor").css({
 	"height":extendedHeight
 });
 $("#editor").autogrow();
-
-
-//insert error messages accordingly
-<% if !flash[:notice].blank? %>
-    $("#flash").html("<div class='notice'><%= escape_javascript(flash[:notice]) %></div>");
-    <%= flash[:notice] = nil %>
-<% elsif !flash[:alert].blank? %>
-    $("#flash").html("<div class='error'><%= escape_javascript(flash[:alert]) %></div>");
-    <%= flash[:alert]=nil %>
-<% elsif !flash[:warning].blank? %>
-    $("#flash").html("<div class='warning'><%= escape_javascript(flash[:warning]) %></div>");
-    <%= flash[:warning] = nil %>
-<% end %>
