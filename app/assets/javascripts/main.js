@@ -113,7 +113,6 @@ function ajaxTagSuggestions(){
                     $.ajax({
                         type:'GET',
                         url:url,
-                        dataType:'json',
                         data:{
                             "tagname":tagname
                         },
@@ -218,10 +217,20 @@ function sweetDeleteAlert() {
         //Display the confirmation dialog
     $.rails.showConfirmationDialog = function(link) {
         var message = link.data("confirm");
-        
+        var myText = "You will not be able to recover this note!";
+        var confirmMessage = "Your note has been deleted.";
+        var cancelMessage =  "Your note is safe :)";
+        console.log(typeof link.data('ifuser'));
+        if(link.data('ifuser')===true){
+            // if user is deleted then construct the message acc to it
+            console.log("User account deletion");
+            myText = "You will not be able to recover this account!";
+            confirmMessage = "Your account has been removed.";
+            cancelMessage = "Phew! That was close. :)";
+        }
         swal({
             title: "Are you sure?",
-            text: "You will not be able to recover this note!",
+            text: myText,
             type: "warning",
             showCancelButton: true,
             confirmButtonColor: "#DD6B55",
@@ -231,12 +240,12 @@ function sweetDeleteAlert() {
             closeOnCancel: false
         }, function(isConfirm) {
             if (isConfirm) {
-                swal("Deleted!", "Your note has been deleted.", "success");
+                swal("Deleted!", confirmMessage, "success");
                 setTimeout(function(){
                     $.rails.confirmed(link);
                 },1000);
             } else {
-                swal("Cancelled", "Your note is safe :)", "error");
+                swal("Cancelled",cancelMessage, "error");
             }
         });
     }
