@@ -15,8 +15,15 @@ $(document).on("ready page:load", function() {
         documentListeners();
         ajaxTagSuggestions();
         quickEditNote();
+        linkToCreateNote();
     }
 });
+
+function linkToCreateNote(){
+    $("#link-create-note").click(function(){
+        $("#new-note").focus();
+    });
+}
 
 function handleInputStyleLoginPage(){
     //the label moving around animation as we focus the input text on login page
@@ -155,7 +162,14 @@ function documentListeners(){
     "use strict";
     //to retreat the animation when document is clicked
     document.onclick = function(e){
-        if(e.target.id !== "new-note" && e.target.id!=="suggest-tags-area" && e.target.className!=="each-tag-suggestion"){
+        console.info(e.target.parentNode);
+        if(e.target.id !== "new-note" 
+            && e.target.id!=="suggest-tags-area" 
+            && e.target.className!=="each-tag-suggestion" 
+            //button shouldn't go back when create-note link nav is clicked
+            && e.target.id!=="link-create-note" 
+            && e.target.parentNode.id!=="link-create-note"
+        ){
             // when anything other than textarea is clicked button is hidden back..
             $("#create-note button").removeClass('active');
             $("#all-notes").removeClass('active');
