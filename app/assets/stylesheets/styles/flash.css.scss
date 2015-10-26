@@ -1,0 +1,95 @@
+/* Flash Messages */
+
+#flash {
+    display: inline-block;
+    position: fixed;
+    bottom: 10%;
+    right: 6%;
+    z-index: 1000;
+    height: $flash-height;
+    line-height: $flash-height;
+    .notice,
+    .error,
+    .warning {
+        /* popping in & out animatin */
+        -webkit-transform: scale(0);
+        transform: scale(0);
+        -webkit-animation: popInOut 4s;
+        animation: popInOut 5s;
+        text-align: center;
+        background-color: white;
+        padding: 3px 7px;
+        border-radius: 4px;
+        max-width: 260px;
+    }
+    .notice {
+        border: 2px solid $notice-color;
+        color: $notice-color;
+        @include customShadow(0px, 1px, 4px, $notice-color);
+    }
+    .error {
+        border: 2px solid $error-color;
+        color: $error-color;
+        @include customShadow(0px, 1px, 4px, $error-color);
+    }
+    .warning {
+        border: 2px solid $warning-color;
+        color: $warning-color;
+        @include customShadow(0px, 1px, 4px, $warning-color);
+    }
+}
+
+/* Flash messages to pop in & then out */
+@-webkit-keyframes popInOut {
+    0% {
+        transform: scale(0);
+        -webkit-transform: scale(0);
+    }
+    7% {
+        transform: scale(1.05);
+        -webkit-transform: scale(1.05);
+    }
+    9% {
+        transform: scale(0.95);
+        -webkit-transform: scale(0.95);
+    }
+    12% {
+        transform: scale(1);
+        -webkit-transform: scale(1);
+    }
+    95% {
+        transform: scale(1);
+        -webkit-transform: scale(1);
+    }
+    100% {
+        transform: scale(0);
+        -webkit-transform: scale(0);
+    }
+}
+
+@keyframes popInOut {
+    0% {
+        transform: scale(0);
+        -webkit-transform: scale(0);
+    }
+    7% {
+        transform: scale(1.05);
+        -webkit-transform: scale(1.05);
+    }
+    9% {
+        transform: scale(0.95);
+        -webkit-transform: scale(0.95);
+    }
+    12% {
+        transform: scale(1);
+        -webkit-transform: scale(1);
+    }
+    95% {
+        transform: scale(1);
+        -webkit-transform: scale(1);
+    }
+    100% {
+        transform: scale(0);
+        -webkit-transform: scale(0);
+    }
+}

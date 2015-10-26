@@ -1,0 +1,32 @@
+@mixin shadow($offset, $blur) {
+    -webkit-box-shadow: $offset $offset $blur grey;
+    -moz-box-shadow: $offset $offset $blur grey;
+    -ms-box-shadow: $offset $offset $blur grey;
+    -o-box-shadow: $offset $offset $blur grey;
+    box-shadow: $offset $offset $blur grey;
+}
+
+@mixin customShadow($x, $y, $blur, $color) {
+    -webkit-box-shadow: $x $y $blur $color;
+    -moz-box-shadow: $x $y $blur $color;
+    -ms-box-shadow: $x $y $blur $color;
+    -o-box-shadow: $x $y $blur $color;
+    box-shadow: $x $y $blur $color;
+}
+
+@mixin transition($prop, $time, $animateStyle) {
+    -webkit-transition: $prop $time $animateStyle;
+    -moz-transition: $prop $time $animateStyle;
+    -ms-transition: $prop $time $animateStyle;
+    -o-transition: $prop $time $animateStyle;
+    transition: $prop $time $animateStyle;
+}
+
+@mixin rotate($angle) {
+    -webkit-transform: rotate($angle);
+    -moz-transform: rotate($angle);
+    -ms-transform: rotate($angle);
+    -o-transform: rotate($angle);
+    transform: rotate($angle);
+}
+

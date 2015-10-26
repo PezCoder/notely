@@ -1,0 +1,52 @@
+
+//font-weight
+$thin: 100;
+$light: 300;
+$normal: 400;
+$medium: 500;
+$bold: 700;
+
+/* For left Container */
+
+//width and paddings
+$left-width: 270px;
+$logo-pad-b: 14px;
+$logo-pad-t: 66px;
+$li-margin-r: 37px;
+$li-margin-t: 10px;
+$list-seperation: 15px;
+$header-height: 50px;
+//middle section
+$middle-width: 720px;
+$middle-padding-l: 81px;
+$middle-padding-r: 61px;
+$middle-padding-t: 40px;
+//colors
+$main-color: #2470ef;
+$bold-heading: #0643AA;
+$complement: #f8981d;
+$bold-complement:#de8109;
+$work-area: #fafafa;
+$hr: #eeeeee;
+$light-text: #C6B1B1;
+$success:#A7CF54;
+$success-dark:#89AB4D;
+$delete:#E45050;
+$delete-dark:#BA3934;
+$hover-bg:$work-area;
+$placeholder:rgb(127, 127, 127);
+//flash messages color & dimestions
+$flash-height: 40px;
+$notice-color: rgb(86, 214, 116);
+$error-color: rgb(221, 68, 68);
+$warning-color: rgb(184, 188, 82);
+//each note measurements
+$en-m-t: 32px;
+$bottom-bar-bg: #f8fafa;
+$user-color: #fb3f93;
+$tag-color: $main-color;
+$posted-color: rgba(#666262, 0.6);
+//right section
+$right-width: 1366px- ($left-width - $middle-width);
+//fonts 
+$notely-font:'Dancing Script';

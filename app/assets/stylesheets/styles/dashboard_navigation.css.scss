@@ -1,0 +1,72 @@
+
+.left-container {
+    //positions
+    position: fixed;
+    width: $left-width;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    //color & design
+    background-color: $main-color;
+    color: white;
+    //logo
+    #notely {
+        position: relative;
+        font-family: $notely-font, "Roboto", "Verdana";
+        width: $left-width * 3 / 5;
+        margin: 0 auto;
+        font-weight: $light;
+        font-size: 70px;
+        text-align: center;
+        padding-bottom: $logo-pad-b;
+        padding-top: $logo-pad-t;
+        border-bottom: 2px solid white;
+    }
+    //list navigation
+    ul {
+        padding-top: $list-seperation;
+        .each-list-set {
+            margin-top: 30px;
+        }
+        li {
+            margin-top: $li-margin-t;
+            text-align: right;
+            margin-right: $li-margin-r;
+        }
+        a {
+            text-align: right;
+            color: #eee;
+            font-weight: $light;
+            @include transition(all, 0.2s, ease);
+            right: 0;
+            position: relative;
+        }
+        a:hover {
+            right: 6px;
+            color: $complement;
+            i,
+            span {
+                color: $complement;
+            }
+        }
+        .bold-link {
+            color: $bold-heading;
+            font-weight: $medium;
+        }
+    }
+    //fix glyphs icons position
+    .each-list-set {
+        .glyphs {
+            display: inline-block;
+            width: 19px;
+            position: relative;
+            top: 0px;
+            margin-left: 4px;
+        }
+        span.glyphs {
+            // entypo icons needs to be moved down
+            top: 2px;
+        }
+    }
+}
+

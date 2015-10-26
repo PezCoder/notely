@@ -1,0 +1,107 @@
+/* Edit profile page */
+.edit-profile-container {
+    padding: 30px 50px;
+    .form-wrapper {
+        margin-top: 17px;
+        padding-left: 15px;
+    }
+    /* My account details heading */
+    h1 {
+        margin-bottom: 0;
+        display: inline-block;
+        font-weight: $normal;
+        color: $main-color;
+        margin-top:10px;
+    }
+    /* edit details & delte my account heading */
+    h2{
+        margin-bottom: 0;
+        font-weight: $light;
+    }
+    .edit-user {
+        border-left:1px solid $complement;
+        h2 {
+            color: $complement;
+        }
+    }
+    
+    label {
+        color: $placeholder;
+        font-weight: 500;
+        display: block;
+        font-size: 14px;
+    }
+    input {
+        width:100%;
+        max-width:263px;
+        margin-top: 5px;
+        padding: 6px 12px;
+        font-size: 16px;
+        outline: 0;
+        border: 1px solid $placeholder;
+        border-radius: 5px;
+    }
+    input:focus {
+        @include customShadow(0,
+        0,
+        8px,
+        $main-color);
+        border: 1px solid $main-color;
+    }
+    div.edit-input-group {
+        margin-top: 17px;
+        &:first-child{
+            margin-top:0;
+            border:1px solid red;
+        }
+    }
+    .delete-user {
+        border-left:1px solid red;
+        margin-top:30px;
+        h2 {
+            color: red;
+        }
+        p{
+            margin-bottom: 0;
+            margin-top:0;
+        }
+    }
+    .edit-user,.delete-user{
+        padding-left:17px;
+    }
+}
+#update-user-btn,#delete-user-btn{
+    @include shadow(1px,4px);
+    margin-top:10px;
+    display:inline-block;
+    padding:7px 10px;
+    outline:0;
+    border-radius: 3px;        
+    color: white;
+    font-weight: $light;
+    &:active{
+        @include shadow(1px,1px);
+    }
+}
+#update-user-btn{
+    background-color: $complement;
+    border: 1px solid $complement;
+    &:hover{
+        background-color:lighten($complement,5%);
+    }
+    &:active{
+        border:1px solid $bold-complement;
+        background-color:$bold-complement;
+    }
+}
+#delete-user-btn{
+    background-color: lighten(red,5%);
+    border: 1px solid lighten(red,5%);
+    &:hover{
+        background-color:lighten(red,10%);
+    }
+    &:active{
+        background-color:red;
+        border:1px solid red;
+    }
+}

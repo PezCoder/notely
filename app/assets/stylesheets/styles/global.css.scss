@@ -1,0 +1,63 @@
+* {
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+a {
+    text-decoration: none;
+}
+
+html,
+body {
+    // background-color: $work-area;
+    background-color: #F6F9FA;
+}
+
+ul li {
+    list-style: none;
+}
+
+/* Login & register input boxes on login page */
+.input-group label {
+    display: block;
+    position: absolute;
+    color: $placeholder;
+    font-size: 16px;
+    top: 20px;
+    left: 10px;
+    transition: all 0.3s ease;
+}
+
+.input-group .active {
+    font-size: 12px;
+    top: -10px;
+    left: 0;
+    font-weight: 700;
+    color: rgba($main-color, 0.8);
+}
+
+.input-group {
+    width: 100%;
+    margin-top: 10px;
+    display: inline-block;
+    position: relative;
+}
+
+label:hover {
+    cursor: text;
+}
+
+.input-group input {
+    transition: all 0.3s ease;
+    font-size: 16px;
+    padding: 8px 10px;
+    border-radius: 3px;
+    outline: 0;
+    border: 1px solid #ddd;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.input-group input:focus {
+    border: 1px solid $main-color;
+}

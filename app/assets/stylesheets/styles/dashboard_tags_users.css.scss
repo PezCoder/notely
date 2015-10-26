@@ -1,0 +1,115 @@
+.right-container {
+    position: fixed;
+    right: 0;
+    padding-top: $middle-padding-t;
+    padding-right: $middle-padding-l;
+    float: right;
+    width: $right-width;
+}
+/* input search box */
+.search {
+    width: 260px;
+    position: relative;
+    input {
+        box-sizing: border-box;
+        width: 100%;
+        padding: 11px 33px 11px 15px;
+        @include shadow(1px, 2px);
+        outline: 0;
+        border: 1px solid $hr;
+        border-radius: 2px;
+        font-weight: $light;
+    }
+    /* Search glyphicon */
+    .fa {
+        position: absolute;
+        left: 225px;
+        top: 14px;
+        opacity: 0.5;
+    }
+}
+/* Tabs & Users switcher */
+.search-results {
+    width: 260px;
+    @include shadow(1px, 2px);
+    background-color: white;
+    border: 1px solid $hr;
+    margin-top: 22px;
+    border-radius: 2px;
+    /* Header of tablinks */
+    .tab-links {
+        position: relative;
+        padding-left: 2px;
+        padding-right: 2px;
+        border-bottom: 1px solid $hr;
+        a {
+            font-weight: $normal;
+            color: $light-text;
+            padding: 12px 1px 12px 1px;
+            text-align: center;
+            display: inline-block;
+        }
+        a:first-child {
+            width: 40%;
+        }
+        a:nth-child(2) {
+            width: 58%;
+        }
+        a.active {
+            border-bottom: 1px solid $main-color;
+            font-weight: $bold;
+            color: $main-color;
+        }
+    }
+    
+    /* Content for tabs & users */
+    .tab-content {
+        max-height: 300px;
+        overflow: auto;
+        min-height: 200px;
+        padding: 11px 0px;
+        a {
+            display: block;
+            padding: 11px 30px;
+        }
+        a:hover {
+            background-color: $hover-bg;
+        }
+        .tagcount,
+        .usercount {
+            display: inline-block;
+            float: right;
+        }
+        /* Tags content */
+        .tags a {
+            @include transition(all, 0.1s, ease);
+            color: $tag-color;
+            &:hover {
+                background-color: $hover-bg;
+            }
+            &:active {
+                color: $complement;
+            }
+        }
+        /* Users Content */
+        .users a {
+            @include transition(all, 0.1s, ease);
+            color: $user-color;
+            &:hover {
+                background-color: $hover-bg;
+            }
+            &:active {
+                color: $complement;
+            }
+        }
+        div {
+            display: none;
+        }
+        .visible {
+            display: block;
+        }
+    }
+}
+
+
+/* end search-results */

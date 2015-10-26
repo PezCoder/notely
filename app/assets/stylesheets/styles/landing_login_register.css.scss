@@ -1,0 +1,214 @@
+/* LOGIN & Register LANDING PAGE LAYOUT */
+
+#landing-page {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    /* Notely Circled title */
+    .title {
+        /* fix for width & height when font is not loaded */
+        width: 100px;
+        height: 100px;
+        position: absolute;
+        font-family: $notely-font, 'roboto', Verdana;
+        font-size: 30px;
+        background-color: lighten($main-color, 5%);
+        padding: 31px 16px;
+        color: white;
+        top: -52px;
+        left: 95px;
+        border-radius: 100%;
+    }
+
+    .background {
+        width: 100%;
+        position: relative;
+        height: 100%;
+        padding-top: 90px;
+    }
+    .background:before {
+        background-image: url("notely_bg.jpg");
+        background-position: center;
+        background-size: cover;
+        content: "";
+        position: absolute;
+        top: -7px;
+        left: -7px;
+        width: 101%;
+        height: 102vh;
+        z-index: 0;
+        -webkit-filter: blur(8px);
+        background-repeat: no-repeat;
+    }
+    /* Box that contains login & register form */
+    .content {
+        width: 300px;
+        position: relative;
+        z-index: 20;
+        background-color: white;
+        border-radius: 6px;
+        padding: 60px 50px 30px 50px;
+        margin: 0px auto;
+    }
+    form {
+        position: relative;
+        z-index: 1;
+        width: 200px;
+    }
+    h1,
+    h2 {
+        color: rgba(0, 0, 0, 0.8);
+        position: relative;
+        z-index: 1;
+        width: 200px;
+        margin-bottom: 17px;
+        margin-top: 28px;
+        font-weight: 300;
+        font-family: roboto;
+        text-align: center;
+    }
+    button {
+        margin-top: 10px;
+        border: 0;
+        outline: 0;
+        padding: 7px 16px;
+        font-family: roboto;
+        font-size: 16px;
+        font-weight: 300;
+    }
+    button:hover {
+        cursor: pointer;
+    }
+    /* These are login & register buttons */
+    .login,
+    .register {
+        width: 100%;
+        border-radius: 3px;
+        font-weight: 300;
+        background-color: $success;
+        border: 1px solid $success;
+        opacity: 1;
+        transition: all 0.3s ease;
+        color: white;
+        /* Fallback: assume this color ON TOP of image */
+    }
+    .login,
+    .register {
+        padding: 9px 20px;
+    }
+    .login:hover,
+    .register:hover {
+        opacity: 0.8;
+    }
+    .login:active {
+        border: 1px solid $success-dark;
+    }
+    .register {
+        //register button
+        background-color: $complement;
+        border: 1px solid $complement;
+    }
+    .register:active {
+        border: 1px solid $bold-complement;
+    }
+    /* Forgot details */
+    .go-over-link,
+    .have-an-account {
+        display: inline-block;
+        font-size: 14px;
+        color: $placeholder;
+        margin-bottom: 4px;
+    }
+    .go-over-link:hover {
+        text-decoration: underline;
+    }
+    .login-page .go-over-link {
+        margin-top: 26px;
+    }
+    .go-over-link.back-sign-up {
+        margin-top: 15px;
+        color: lighten($main-color, 5%);
+    }
+    .register-page .go-over-link {
+        color: $main-color;
+        margin-left: 3px;
+    }
+    .register-content {
+        //whole content of regitration form
+        padding-left: 35px;
+        padding-right: 35px;
+        padding-bottom: 13px;
+        top: -28px;
+        left: -400px;
+        width: 330px;
+        .title {
+            position: absolute;
+            padding: 31px 16px;
+            top: -52px;
+            left: 330px/2 - 50px;
+        }
+        form {
+            width: auto;
+        }
+        h2 {
+            text-align: center;
+            width: 100%;
+            margin-top: 12px;
+            margin-bottom: 20px;
+        }
+        .input-group {
+            width: 100%;
+        }
+        input {
+            width: 100%;
+        }
+    }
+    .facebook-login,
+    .google-login {
+        margin-top: 10px;
+        width: 100%;
+        background-color: #3b5998;
+        color: white;
+        padding-left: 0;
+        padding-right: 0;
+        height: 40px;
+        border: 1px solid #3b5998;
+        i {
+            display: inline-block;
+            margin-right: 7px;
+        }
+        border-radius:2px;
+    }
+    .facebook-login:active {
+        border: 1px solid darken(#3b5998, 30%);
+    }
+    .google-login {
+        border: 1px solid #dc4e41;
+        background-color: #dc4e41;
+        i {
+            position: relative;
+            left: -14px;
+            margin-right: -8px;
+        }
+    }
+    .google-login:active {
+        border: 1px solid darken(#dc4e41, 30%);
+    }
+    button:hover {
+        opacity: 0.9;
+    }
+    .have-account-container {
+        text-align: center;
+    }
+    .or {
+        color: $placeholder;
+        text-align: center;
+        margin-bottom: 0;
+        font-style: italic;
+    }
+
+
+
+}

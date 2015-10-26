@@ -1,0 +1,209 @@
+/* This main contains both Notes & tags_users 
+   i.e it contains both second and third column
+*/
+
+main {
+    margin-top: $header-height;
+    margin-left: $left-width;
+    background-image: url(images/cubes.png);
+    background-repeat: repeat;
+    background-attachment: fixed;
+}
+
+//clearfix
+main::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.middle-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-width: 450px;
+    max-width: $middle-width;
+    padding: $middle-padding-t $middle-padding-l;
+    padding-right: $middle-padding-r;
+    float: left;
+    .edit {
+        //edit box container
+        padding: 15px;
+        background-color: #eeeeee;
+    }
+    .update-btn {
+        @include transition(all, 0.3s, ease);
+        outline: 0;
+        background-color: $success;
+        color: white;
+        padding: 7px 28px;
+        @include shadow(1px, 2px);
+        margin-top: 2px;
+        border-radius: 0 7px 0 7px;
+        border: 1px solid $success-dark;
+        &:hover {
+            background-color: darken($success, 5%);
+        }
+        &:active {
+            background-color: $success-dark;
+        }
+    }
+    //each note
+    .each-note {
+        border-radius: 2px;
+        border: 1px solid $hr;
+        margin-top: $en-m-t;
+        background-color: white;
+        @include shadow(1px, 2px);
+    }
+    /* Content inside each note */
+    .content {
+        padding: 26px 30px;
+        .content-tag {
+            color: $tag-color;
+        }
+        .content-user {
+            color: $user-color;
+            white-space: normal;
+        }
+        .content-note {
+            color: rgba(black, 0.87);
+            white-space: pre-wrap;
+        }
+    }
+    /* Options like edit delete expand glyphicons */
+    .content-options {
+        border-top: 1px solid $hr;
+        background-color: $bottom-bar-bg;
+        padding: 9px 26px 9px 26px;
+        span {
+            //posted ago time
+            float: right;
+            color: $posted-color;
+        }
+        i.fa {
+            @include transition(all, 0.3s, ease);
+            margin-right: 15px;
+            color: $posted-color;
+        }
+        a:hover {
+            i {
+                color: black;
+            }
+        }
+    }
+}
+
+//text area
+#create-note,
+#edit-note {
+    position: relative;
+}
+
+#new-note,
+#editor {
+    position: relative;
+    width: 99.9%;
+    font-weight: $light;
+    outline: none;
+    z-index: 1;
+}
+
+#new-note {
+    padding: 26px 30px 30px 30px;
+    height: 112px;
+    border: 1px solid $hr;
+    @include shadow(1px, 2px);
+    &:focus {
+        @include customShadow(0px, 0px, 5px, $complement);
+    }
+}
+
+#editor {
+    //text area of when edited
+    padding: 26px;
+    height: auto;
+    border-radius: 1px;
+    background-color: white;
+    color: lighten(#000, 0.7);
+    -webkit-box-shadow: 0px 0px 5px $complement inset;
+}
+
+//publish button 
+#publish-note {
+    left: 0;
+    outline: 0;
+    opacity: 1;
+    visibility: hidden;
+    position: absolute;
+    bottom: 20px;
+    z-index: 0;
+    width: 100%;
+    font-size: 18px;
+    border: 0;
+    background-color: $complement;
+    color: white;
+    font-weight: $light;
+    padding: 8px 10px;
+    border-radius: 0 0 3px 3px;
+    border: 1px solid $bold-complement;
+    @include transition(all, 0.3s, cubic-bezier(.27, 1.42, .55, 1.04));
+    &:hover {
+        background-color: darken($complement, 5%);
+    }
+    &.active {
+        visibility: visible;
+        //move button down 
+        bottom: -37px;
+        z-index: 0;
+        opacity: 1;
+        @include customShadow(0px, 1px, 3px, grey);
+    }
+    &:active {
+        // when clicked
+        background-color: $bold-complement;
+    }
+}
+
+
+/* Tags suggestions inside text-area create note */
+
+#suggest-tags-area {
+    min-height: 25px;
+    display: none;
+    width: 99.6%;
+    border: 0;
+    position: absolute;
+    bottom: 4px;
+    border-radius: 0 0 2px 2px;
+    padding: 4px;
+    right: 0;
+    left: 0;
+    background-color: $work-area;
+    z-index: 5;
+    border-top: 1px solid $hr;
+    span {
+        display: inline-block;
+        background-color: rgba($main-color, 0.8);
+        color: $work-area;
+        border-radius: 4px;
+        padding: 3px 6px;
+        margin-left: 10px;
+        cursor: pointer;
+    }
+    span:hover {
+        background-color: $main-color;
+    }
+}
+
+// move container when text-area focused
+#all-notes {
+    position: relative;
+    top: 0px;
+    @include transition(all, 0.3s, ease);
+}
+
+#all-notes.active {
+    top: 37px;
+}
