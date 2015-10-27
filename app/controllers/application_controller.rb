@@ -8,8 +8,8 @@ class ApplicationController < ActionController::Base
   	if session[:id] && session[:username]
   		return true
   	else 
-  		flash[:warning]="Please login !"
-  		redirect_to login_path
+  		#flash[:warning]="Please login !"
+  		redirect_to register_path
   		return false
   	end
   end

@@ -6,6 +6,10 @@
     left: 0;
     right: 0;
     bottom: 0;
+
+    @include respond-to(tablet) {
+        overflow:auto;
+    }
     /* Notely Circled title */
     .title {
         /* fix for width & height when font is not loaded */
@@ -143,6 +147,7 @@
         padding-bottom: 13px;
        // left: percentage(-400/1366);
         width: 330px;
+
         .title {
             position: absolute;
             padding: 31px 16px;
