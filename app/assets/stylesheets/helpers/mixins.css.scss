@@ -22,43 +22,67 @@
     transition: $prop $time $animateStyle;
 }
 
-@mixin rotate($angle) {
-    -webkit-transform: rotate($angle);
-    -moz-transform: rotate($angle);
-    -ms-transform: rotate($angle);
-    -o-transform: rotate($angle);
-    transform: rotate($angle);
+// generic transform
+@mixin transform($transforms) {
+    -moz-transform: $transforms;
+    -o-transform: $transforms;
+    -ms-transform: $transforms;
+    -webkit-transform: $transforms;
+    transform: $transforms;
+}
+
+// rotate
+@mixin rotate ($deg) {
+    @include transform(rotate($deg));
+}
+@mixin scale($scale) {
+   @include transform(scale($scale));
+} 
+@mixin translate($x, $y) {
+    @include transform(translate($x, $y));
 }
 
 //convert & include font-size in em
-@mixin em($pixel){
+@mixin em($pixel) {
     font-size: ($pixel/16) * 1em;
 }
 
+
 /* Responsive media queres mixin for ease */
-$break-small: 343px;
+//343px
+$break-small: 400px;
 //$break-large: 1024px;
 $break-small-medium:682px;
 $break-medium: 770px;
 $break-large:1076px;
 @mixin respond-to($media) {
-  @if $media == mobile {
-    @media only screen and (max-width: $break-small) { @content; }
-  }
-  @else if $media == landscape{
-    @media only screen and (max-width: $break-small-medium - 1) { @content; }
-  }   
-  @else if $media == lgmobile{
-    @media only screen and (max-width: $break-medium - 1) { @content; }
-  }  
-  @else if $media == tablet{
-    @media only screen and (max-width: $break-large - 1) { @content; }
-  }
-  @else if $media == pc{
-    @media only screen and (min-width: $break-large) { @content; }
-  }
+    @if $media==mobile {
+        @media only screen and (max-width: $break-small) {
+            @content;
+        }
+    }
+    @else if $media==landscape {
+        @media only screen and (max-width: $break-small-medium - 1) {
+            @content;
+        }
+    }
+    @else if $media==lgmobile {
+        @media only screen and (max-width: $break-medium - 1) {
+            @content;
+        }
+    }
+    @else if $media==tablet {
+        @media only screen and (max-width: $break-large - 1) {
+            @content;
+        }
+    }
+    @else if $media==pc {
+        @media only screen and (min-width: $break-large) {
+            @content;
+        }
+    }
 }
 
-@function percent($target,$container){
+@function percent($target, $container) {
     @return ($target/$container)*100%;
 }

@@ -17,6 +17,9 @@ main {
     @include respond-to(landscape) {
         flex-direction: column;
     }
+        @include respond-to(lgmobile) {
+            margin-top:$header-dbheight;
+        }
 }
 
 //clearfix
@@ -98,8 +101,9 @@ main::after {
             @include respond-to(mobile) {
                 float: none;
                 display: block;
-                margin-top: 7px;
                 clear: both;
+                margin-top: 13px;
+                margin-left: 27px;
             }
         }
         a {

@@ -16,9 +16,16 @@ $(document).on("ready page:load", function() {
         ajaxTagSuggestions();
         quickEditNote();
         linkToCreateNote();
+        navbarToggle();
     }
 });
 
+function navbarToggle(){
+    $("#nav-toggle").click(function(){
+        $(this).toggleClass('active');
+        $('.left-container').toggleClass('active');
+    })
+}
 function linkToCreateNote(){
     $("#link-create-note").click(function(){
         $("#new-note").focus();
@@ -28,7 +35,6 @@ function linkToCreateNote(){
 function handleInputStyleLoginPage(){
     //the label moving around animation as we focus the input text on login page
     var group = document.getElementsByClassName('input-group');
-    console.log(group);
     for (var i = 0; i < group.length; i++) {
         group[i].onclick = addLabelActiveClass; // group listenere ends
         var input = group[i].getElementsByTagName('input')[0];
@@ -37,12 +43,10 @@ function handleInputStyleLoginPage(){
     } //end for loop
 }
     function callLabelActiveClass() {
-        console.log("active");
         addLabelActiveClass.call(this.parentNode);
     }
 
     function addLabelActiveClass() {
-        console.log("clicked");
         var label = this.getElementsByTagName('label')[0];
         var input = this.getElementsByTagName('input')[0];
         if (!label.classList.contains('active')) {
@@ -53,7 +57,6 @@ function handleInputStyleLoginPage(){
 
     function removeLabelActiveClass() {
         //only move label back if input is empty
-        console.log("blurred");
         if (this.value === "") {
             var label = this.parentNode.children[0];
             if (label.classList.contains('active')) {
@@ -71,8 +74,6 @@ function quickEditNote(element){
             var parent = this.parentNode;
             var id=parent.id.substr(parent.id.lastIndexOf('-')+1);
             var url = parent.children[1].getElementsByClassName('edit-link')[0].href;
-            console.log(url);
-            console.log(id);
             $.ajax({
                 type:'GET',
                 url:url,
@@ -134,7 +135,6 @@ function ajaxTagSuggestions(){
     $("#suggest-tags-area").click(function(e){
         if(e.target.nodeName==="SPAN"){
             var target = e.target;
-            console.log("clicked");
             var tagname = target.innerText + " ";
             var content = createNote.value;
             // remove last #tag
@@ -162,7 +162,6 @@ function documentListeners(){
     "use strict";
     //to retreat the animation when document is clicked
     document.onclick = function(e){
-        console.info(e.target.parentNode);
         if(e.target.id !== "new-note" 
             && e.target.id!=="suggest-tags-area" 
             && e.target.className!=="each-tag-suggestion" 
@@ -234,10 +233,8 @@ function sweetDeleteAlert() {
         var myText = "You will not be able to recover this note!";
         var confirmMessage = "Your note has been deleted.";
         var cancelMessage =  "Your note is safe :)";
-        console.log(typeof link.data('ifuser'));
         if(link.data('ifuser')===true){
             // if user is deleted then construct the message acc to it
-            console.log("User account deletion");
             myText = "You will not be able to recover this account!";
             confirmMessage = "Your account has been removed.";
             cancelMessage = "Phew! That was close. :)";

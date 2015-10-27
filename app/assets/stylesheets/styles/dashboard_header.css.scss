@@ -1,25 +1,53 @@
-
 header {
     @include shadow(1px, 2px);
     z-index: 100;
     position: fixed;
     background-color: white;
-    left: percent($left-width,$width);
+    left: percent($left-width, $width);
     top: 0;
     right: 0;
     height: $header-height;
     border-bottom: 1px solid $hr;
-
     /* Media Queries */
-    @include respond-to(tablet){
-        left:0;
-    }  
-
-
+    @include respond-to(tablet) {
+        left: 0;
+    }
+    @include respond-to(lgmobile) {
+        flex-direction: column;
+        height: $header-dbheight;
+    }
+    #brand {
+        //notely written on the middle of header
+        display: inline-block;
+        width: 50%;
+        font-family: $notely-font, "Roboto", "Verdana";
+        text-align: center;
+        font-size: 2em;
+        color: $main-color;
+        padding-left: 45px;
+        padding-top: 4px;
+        justify-content: center;
+        visibility: hidden;
+        @include respond-to(tablet) {
+            width: 60%;
+            visibility: visible;
+        }
+        @include respond-to(lgmobile) {
+            width: 80%;
+        }
+    }
     .right-links {
         display: inline-block;
         float: right;
         height: $header-height;
+        @include respond-to(lgmobile) {
+            float: none;
+            width: 100%;
+            justify-content: center;
+            display: flex;
+            background-color: $main-color;
+            margin-top: 10px;
+        }
     }
     .header-link {
         padding-top: $header-height / 4;
@@ -28,6 +56,12 @@ header {
         display: inline-block;
         margin-right: 40px;
         color: $main-color;
+        @include respond-to(lgmobile) {
+            color: white;
+        }
+        @include respond-to(tablet) {
+            margin-right: 20px;
+        }
     }
     .header-link:hover {
         color: $complement;
@@ -41,29 +75,43 @@ header {
     #bell.clicked {
         background-color: $main-color;
         color: white;
+        @include respond-to(lgmobile) {
+            background-color: white;
+            color: $main-color;
+        }
         i {
             color: white;
+            @include respond-to(lgmobile) {
+                color:$main-color;
+            }
         }
     }
     i {
         color: $main-color;
         cursor: pointer;
+        @include respond-to(lgmobile) {
+            color: white;
+        }
     }
 }
 
 
- /* Notifications */
+/* Notifications */
+
 .notification {
     position: relative;
     float: left;
     display: inline-block;
-    
     /* Just the arrow outline for notification box */
     .up-arrow,
     .up-white-arrow {
         position: absolute;
         width: 0;
         height: 0;
+         @include respond-to(lgmobile){
+            right:auto;
+            left:30px;
+        }
     }
     .up-arrow {
         z-index: 50;
@@ -72,6 +120,7 @@ header {
         border-left: 12px solid transparent;
         border-right: 12px solid transparent;
         border-bottom: 15px solid $main-color;
+
     }
     .up-white-arrow {
         //white arrow over the blue to create a blue outline effect
@@ -156,6 +205,14 @@ header {
     @include shadow(2px, 4px);
     position: absolute;
     right: 0;
+
+    @include respond-to(tablet) {
+        right:-18px;
+    }
+    @include respond-to(lgmobile) {
+        left:$left-shift;
+        right:auto;
+    }
     top: $header-height+20px+40px;
     width: 300px;
     background-color: white;
@@ -179,12 +236,14 @@ header {
         padding-bottom: 30px;
     }
 }
+
 //fade in up animation on bell clicked
 #notify-panel.smoothUp {
     visibility: visible;
     top: $header-height+20px;
     opacity: 1;
 }
+
 //notification panel header
 .notify-header {
     color: $main-color;
@@ -192,4 +251,69 @@ header {
     font-weight: $medium;
     letter-spacing: 1px;
     border-bottom: 1px solid $hr;
+}
+
+
+/* Hamburger Menu for nav toggle */
+
+#nav-toggle {
+    cursor: hover;
+    display: inline-block;
+    width: 33px;
+    height: 30px;
+    padding-top: 13px;
+    position: relative;
+    top: 8px;
+    left: 32px;
+}
+
+#nav-toggle span,
+#nav-toggle span:before,
+#nav-toggle span:after {
+    cursor: pointer;
+    border-radius: 1px;
+    height: 4px;
+    width: 30px;
+    background: $complement;
+    position: absolute;
+    display: none;
+    content: '';
+    @include transition(all, 0.5s, ease-in-out);
+    @include respond-to(tablet) {
+        display: block;
+    }
+     @include respond-to(lgmobile) {
+        width:27px;
+        height:3px;
+     }
+}
+
+#nav-toggle.active {
+    span {
+        background-color: transparent;
+    }
+    span:before,
+    span:after {
+        top: 0;
+    }
+    span:before {
+        @include rotate(45deg);
+    }
+    span:after {
+        @include rotate(-45deg);
+    }
+}
+
+#nav-toggle span:before {
+    top: -9px;
+    @include respond-to(lgmobile) {
+        top:-7px;
+    }
+}
+
+#nav-toggle span:after {
+    bottom: -9px;
+    @include respond-to(lgmobile) {
+        bottom:-7px;
+    }
 }

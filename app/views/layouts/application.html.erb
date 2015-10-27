@@ -11,8 +11,10 @@
 <body> 
 <% if session[:id].present? %>
     <header>
+        <a id="nav-toggle"><span></span></a>
+        <a id="brand">Notely</a>
         <div class="right-links">
-             <div class="notification">
+            <div class="notification">
                 <a class="header-link" id="bell"><i class="fa fa-lg fa-bell-o"></i></a>
                 <div id="notify-panel">
                     <div class="up-white-arrow"></div>

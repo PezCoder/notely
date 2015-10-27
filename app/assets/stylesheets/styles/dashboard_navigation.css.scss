@@ -1,6 +1,5 @@
 
 .left-container {
-
     //positions
     position: fixed;
     width: percent($left-width,$width);
@@ -10,12 +9,27 @@
     //color & design
     background-color: $main-color;
     color: white;
-
-
+    /* Slide out navigation */
+    @include transition(transform,0.5s,ease-in-out);
     /* Media Queries */
     @include respond-to(tablet){
-        display:none;
+        @include translate(-100%,0);
+        min-width: 223px;
+        z-index: 2;
+        overflow:auto;
+        &.active{
+            @include customShadow(2px,2px,5px,grey);
+            @include translate(0,0);
+        }
     }    
+     @include respond-to(lgmobile){
+        top:$header-dbheight;
+        z-index:102;
+     }
+    @include respond-to(mobile){
+        right:0;
+        width:100vw;    
+    }
 
     //logo
     #notely {
@@ -28,11 +42,26 @@
         text-align: center;
         padding-bottom: percent($logo-pad-b,$left-width);
         padding-top: percent($logo-pad-t,$left-width);
+        
+        @include respond-to(lgmobile) {
+            padding-top: percent($logo-pad-t,$left-width);
+        }
         border-bottom: 2px solid white;
+
+        @include respond-to(mobile){
+            font-size:3.5em;
+            width:50%;
+        }
+
     }
+
     //list navigation
     ul {
         padding-top: $list-seperation;
+        @include respond-to(mobile){
+           margin-top:0;
+           padding-top:0;
+        }
         .each-list-set {
             margin-top: percent(30px,$left-width);
         }
@@ -78,4 +107,3 @@
         }
     }
 }
-
