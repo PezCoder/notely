@@ -1,5 +1,5 @@
 <% if @notes.count ==0 && params[:search] %>
-            <h2>No notes are found.</h2>
+    <h2 class="notes-count-zero">No notes are found.</h2>
 <% else %>
 	<% @notes.each do |note| %>
 		<%= render(:partial=>"each_note",:locals=>{:note=>note}) %>

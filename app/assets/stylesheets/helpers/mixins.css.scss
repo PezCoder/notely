@@ -35,9 +35,11 @@
 @mixin rotate ($deg) {
     @include transform(rotate($deg));
 }
+
 @mixin scale($scale) {
-   @include transform(scale($scale));
-} 
+    @include transform(scale($scale));
+}
+
 @mixin translate($x, $y) {
     @include transform(translate($x, $y));
 }
@@ -49,6 +51,7 @@
 
 
 /* Responsive media queres mixin for ease */
+
 //343px
 $break-small: 400px;
 //$break-large: 1024px;
@@ -57,27 +60,27 @@ $break-medium: 770px;
 $break-large:1076px;
 @mixin respond-to($media) {
     @if $media==mobile {
-        @media only screen and (max-width: $break-small) {
+        @media (max-width: $break-small) {
             @content;
         }
     }
     @else if $media==landscape {
-        @media only screen and (max-width: $break-small-medium - 1) {
+        @media (max-width: $break-small-medium - 1) {
             @content;
         }
     }
     @else if $media==lgmobile {
-        @media only screen and (max-width: $break-medium - 1) {
+        @media (max-width: $break-medium - 1) {
             @content;
         }
     }
     @else if $media==tablet {
-        @media only screen and (max-width: $break-large - 1) {
+        @media (max-width: $break-large - 1) {
             @content;
         }
     }
     @else if $media==pc {
-        @media only screen and (min-width: $break-large) {
+        @media (min-width: $break-large) {
             @content;
         }
     }

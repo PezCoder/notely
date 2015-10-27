@@ -7,9 +7,9 @@ main {
     display: flex;
     margin-top: $header-height;
     margin-left: percent($left-width, $width);
-    background-image: url(images/cubes.png);
-    background-repeat: repeat;
-    background-attachment: fixed;
+    // background-image: url(images/cubes.png);
+    // background-repeat: repeat;
+    // background-attachment: fixed;
     /* Media Queries */
     @include respond-to(tablet) {
         margin-left: 0;
@@ -231,6 +231,10 @@ main::after {
     position: relative;
     top: 0px;
     @include transition(all, 0.3s, ease);
+    .notes-count-zero{
+        font-weight: 300;
+        margin-top:20px;
+    }
 }
 
 #all-notes.active {
