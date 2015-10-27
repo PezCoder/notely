@@ -13,7 +13,7 @@
         height: 100px;
         position: absolute;
         font-family: $notely-font, 'roboto', Verdana;
-        font-size: 30px;
+        @include em(30);
         background-color: lighten($main-color, 5%);
         padding: 31px 16px;
         color: white;
@@ -65,8 +65,7 @@
         width: 200px;
         margin-bottom: 17px;
         margin-top: 28px;
-        font-weight: 300;
-        font-family: roboto;
+        font-weight: $light;
         text-align: center;
     }
     button {
@@ -74,9 +73,8 @@
         border: 0;
         outline: 0;
         padding: 7px 16px;
-        font-family: roboto;
-        font-size: 16px;
-        font-weight: 300;
+        @include em(16);
+        font-weight: $light;
     }
     button:hover {
         cursor: pointer;
@@ -86,7 +84,7 @@
     .register {
         width: 100%;
         border-radius: 3px;
-        font-weight: 300;
+        font-weight: $light;
         background-color: $success;
         border: 1px solid $success;
         opacity: 1;
@@ -117,7 +115,7 @@
     .go-over-link,
     .have-an-account {
         display: inline-block;
-        font-size: 14px;
+        @include em(14);
         color: $placeholder;
         margin-bottom: 4px;
     }
@@ -137,11 +135,13 @@
     }
     .register-content {
         //whole content of regitration form
+        position:absolute;
+        left:8%;
+        top:68px;
         padding-left: 35px;
         padding-right: 35px;
         padding-bottom: 13px;
-        top: -28px;
-        left: -400px;
+       // left: percentage(-400/1366);
         width: 330px;
         .title {
             position: absolute;

@@ -19,14 +19,14 @@
 <section class="right-container">
     <div class="search">
         <%= form_tag user_notes_path(session[:id]),:method=>"get",id: "search_form" do %>
-            <%= text_field_tag :search,params[:search],placeholder: "Search Tags/Users..." %>
+            <%= text_field_tag :search,params[:search],placeholder: "Search Tags.." %>
             <i class="fa fa-lg fa-search"></i>
         <% end %>
     </div>
     <div class="search-results">
         <div class="tab-links">
-            <a href="#tags" class="active">Tags</a>
-            <a href="#users">Collab. Users</a>
+            <a href="#tags" class="active tag-tab">Tags</a>
+            <a href="#users" class="user-tab">Collab. Users</a>
         </div>
         <div class="tab-content">
             <div class="tags visible" id="tags">

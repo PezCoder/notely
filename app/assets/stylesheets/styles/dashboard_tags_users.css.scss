@@ -1,14 +1,21 @@
 .right-container {
-    position: fixed;
-    right: 0;
-    padding-top: $middle-padding-t;
-    padding-right: $middle-padding-l;
-    float: right;
-    width: $right-width;
+    display: flex;
+    flex-direction: column;
+    padding-top: percent($middle-padding-t, $main-width);
+    padding-right: percent($middle-padding-l, $main-width);
+    width: percent($right-width, $main-width);
+
+    @include respond-to(landscape) {
+        display: none;
+    }
 }
+
+
 /* input search box */
+
 .search {
-    width: 260px;
+    max-width: 260px;
+    width: auto;
     position: relative;
     input {
         box-sizing: border-box;
@@ -23,14 +30,19 @@
     /* Search glyphicon */
     .fa {
         position: absolute;
-        left: 225px;
+        //left: 225px;
+        right: 16px;
         top: 14px;
         opacity: 0.5;
     }
 }
+
+
 /* Tabs & Users switcher */
+
 .search-results {
-    width: 260px;
+    max-width: 260px;
+    width: auto;
     @include shadow(1px, 2px);
     background-color: white;
     border: 1px solid $hr;
@@ -41,6 +53,9 @@
         position: relative;
         padding-left: 2px;
         padding-right: 2px;
+     @include respond-to(lgmobile) {
+                padding:0;
+            }
         border-bottom: 1px solid $hr;
         a {
             font-weight: $normal;
@@ -50,18 +65,32 @@
             display: inline-block;
         }
         a:first-child {
+            //tab tag
             width: 40%;
+            @include respond-to(lgmobile) {
+                width: 100%;
+                text-align: center;
+            }
         }
         a:nth-child(2) {
+            //user-tab
             width: 58%;
+            @include respond-to(lgmobile) {
+                width: 100%;
+                text-align: center;
+            }
         }
+
         a.active {
             border-bottom: 1px solid $main-color;
             font-weight: $bold;
             color: $main-color;
+            @include respond-to(lgmobile) {
+                border-left:2px solid $main-color;
+                border-bottom:0;
+            }
         }
     }
-    
     /* Content for tabs & users */
     .tab-content {
         max-height: 300px;
@@ -110,6 +139,7 @@
         }
     }
 }
+
 
 
 /* end search-results */

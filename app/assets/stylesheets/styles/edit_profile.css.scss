@@ -1,6 +1,6 @@
 /* Edit profile page */
 .edit-profile-container {
-    padding: 30px 50px;
+    padding: percent(30px,$middle-width) percent(50px,$middle-width);
     .form-wrapper {
         margin-top: 17px;
         padding-left: 15px;
@@ -11,7 +11,7 @@
         display: inline-block;
         font-weight: $normal;
         color: $main-color;
-        margin-top:10px;
+        margin-top:percent(10px,$middle-width);
     }
     /* edit details & delte my account heading */
     h2{
@@ -27,18 +27,19 @@
     
     label {
         color: $placeholder;
-        font-weight: 500;
+        font-weight: $medium;
         display: block;
-        font-size: 14px;
+        //font-size: 14px;
+        @include em(14);
     }
     input {
         width:100%;
         max-width:263px;
         margin-top: 5px;
         padding: 6px 12px;
-        font-size: 16px;
+        @include em(16);
         outline: 0;
-        border: 1px solid $placeholder;
+        border: 1px solid #aaa;
         border-radius: 5px;
     }
     input:focus {
@@ -48,6 +49,7 @@
         $main-color);
         border: 1px solid $main-color;
     }
+    
     div.edit-input-group {
         margin-top: 17px;
         &:first-child{
@@ -57,7 +59,7 @@
     }
     .delete-user {
         border-left:1px solid red;
-        margin-top:30px;
+        margin-top:percent(30px,631px);
         h2 {
             color: red;
         }
@@ -67,7 +69,7 @@
         }
     }
     .edit-user,.delete-user{
-        padding-left:17px;
+        padding-left:percent(17px,631px);
     }
 }
 #update-user-btn,#delete-user-btn{

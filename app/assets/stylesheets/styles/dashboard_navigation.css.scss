@@ -1,32 +1,40 @@
 
 .left-container {
+
     //positions
     position: fixed;
-    width: $left-width;
+    width: percent($left-width,$width);
     top: 0;
     bottom: 0;
     left: 0;
     //color & design
     background-color: $main-color;
     color: white;
+
+
+    /* Media Queries */
+    @include respond-to(tablet){
+        display:none;
+    }    
+
     //logo
     #notely {
         position: relative;
         font-family: $notely-font, "Roboto", "Verdana";
-        width: $left-width * 3 / 5;
+        width: percent($left-width * 3 / 5,$left-width);
         margin: 0 auto;
         font-weight: $light;
-        font-size: 70px;
+        @include em(70);
         text-align: center;
-        padding-bottom: $logo-pad-b;
-        padding-top: $logo-pad-t;
+        padding-bottom: percent($logo-pad-b,$left-width);
+        padding-top: percent($logo-pad-t,$left-width);
         border-bottom: 2px solid white;
     }
     //list navigation
     ul {
         padding-top: $list-seperation;
         .each-list-set {
-            margin-top: 30px;
+            margin-top: percent(30px,$left-width);
         }
         li {
             margin-top: $li-margin-t;

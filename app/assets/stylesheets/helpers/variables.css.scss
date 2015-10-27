@@ -1,3 +1,5 @@
+//base width on which website is made
+$width:1366px;
 
 //font-weight
 $thin: 100;
@@ -16,6 +18,8 @@ $li-margin-r: 37px;
 $li-margin-t: 10px;
 $list-seperation: 15px;
 $header-height: 50px;
+//main that contains both middle & right container
+$main-width:1096px;
 //middle section
 $middle-width: 720px;
 $middle-padding-l: 81px;
@@ -47,6 +51,6 @@ $user-color: #fb3f93;
 $tag-color: $main-color;
 $posted-color: rgba(#666262, 0.6);
 //right section
-$right-width: 1366px- ($left-width - $middle-width);
+$right-width: 376px;
 //fonts 
 $notely-font:'Dancing Script';

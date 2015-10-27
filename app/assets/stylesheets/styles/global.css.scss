@@ -1,6 +1,5 @@
 * {
     box-sizing: border-box;
-    font-family: 'Roboto', sans-serif;
 }
 
 a {
@@ -9,6 +8,7 @@ a {
 
 html,
 body {
+    font: normal 100% 'Roboto', sans-serif;
     // background-color: $work-area;
     background-color: #F6F9FA;
 }
@@ -22,17 +22,17 @@ ul li {
     display: block;
     position: absolute;
     color: $placeholder;
-    font-size: 16px;
+    @include em(16);
     top: 20px;
     left: 10px;
     transition: all 0.3s ease;
 }
 
 .input-group .active {
-    font-size: 12px;
+    @include em(12);
     top: -10px;
     left: 0;
-    font-weight: 700;
+    font-weight: $bold;
     color: rgba($main-color, 0.8);
 }
 
@@ -49,7 +49,7 @@ label:hover {
 
 .input-group input {
     transition: all 0.3s ease;
-    font-size: 16px;
+    @include em(16);
     padding: 8px 10px;
     border-radius: 3px;
     outline: 0;

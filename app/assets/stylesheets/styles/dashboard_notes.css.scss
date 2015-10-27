@@ -3,11 +3,20 @@
 */
 
 main {
+    //by default flex direction row
+    display: flex;
     margin-top: $header-height;
-    margin-left: $left-width;
+    margin-left: percent($left-width, $width);
     background-image: url(images/cubes.png);
     background-repeat: repeat;
     background-attachment: fixed;
+    /* Media Queries */
+    @include respond-to(tablet) {
+        margin-left: 0;
+    }
+    @include respond-to(landscape) {
+        flex-direction: column;
+    }
 }
 
 //clearfix
@@ -22,11 +31,13 @@ main::after {
     display: flex;
     flex-direction: column;
     width: 100%;
-    min-width: 450px;
-    max-width: $middle-width;
-    padding: $middle-padding-t $middle-padding-l;
-    padding-right: $middle-padding-r;
-    float: left;
+    // min-width: 450px;
+    max-width: percent($middle-width, $main-width);
+    padding: percent($middle-padding-t, $main-width) percent($middle-padding-l, $main-width);
+    padding-right: percent($middle-padding-r, $main-width);
+    @include respond-to(landscape) {
+        max-width: 100%;
+    }
     .edit {
         //edit box container
         padding: 15px;
@@ -53,7 +64,7 @@ main::after {
     .each-note {
         border-radius: 2px;
         border: 1px solid $hr;
-        margin-top: $en-m-t;
+        margin-top: percent($en-m-t, $middle-width);
         background-color: white;
         @include shadow(1px, 2px);
     }
@@ -77,14 +88,28 @@ main::after {
         border-top: 1px solid $hr;
         background-color: $bottom-bar-bg;
         padding: 9px 26px 9px 26px;
-        span {
+        .post-date {
             //posted ago time
             float: right;
             color: $posted-color;
+            @include respond-to(landscape) {
+                font-size: 0.9em;
+            }
+            @include respond-to(mobile) {
+                float: none;
+                display: block;
+                margin-top: 7px;
+                clear: both;
+            }
+        }
+        a {
+            @include respond-to(landscape) {
+                margin-left: 31px;
+            }
         }
         i.fa {
             @include transition(all, 0.3s, ease);
-            margin-right: 15px;
+            margin-right: 20px;
             color: $posted-color;
         }
         a:hover {
@@ -140,7 +165,7 @@ main::after {
     bottom: 20px;
     z-index: 0;
     width: 100%;
-    font-size: 18px;
+    @include em(18);
     border: 0;
     background-color: $complement;
     color: white;
