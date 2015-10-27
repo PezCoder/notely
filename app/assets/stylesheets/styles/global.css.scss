@@ -61,3 +61,13 @@ label:hover {
 .input-group input:focus {
     border: 1px solid $main-color;
 }
+.back-link{
+    display:block;
+    color:$complement;
+    &:hover{
+        text-decoration: underline;
+    }
+    &:active{
+        color:$bold-complement;
+    }
+}

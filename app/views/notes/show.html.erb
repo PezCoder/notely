@@ -1,5 +1,6 @@
 <section class="middle-container show-note">
-	<div class="each-note">
+	<%= link_to "← Back to notes",user_notes_path(session[:id]),class: 'back-link' %>
+	<div class="each-note" id="each-note-<%= @note.id %>">
 	   <div class="content">
 			<%= @note.content %>
 			- <span class="content-user">
@@ -9,9 +10,9 @@
 			</span>	
 		</div>
 		<div class="floating-options">
-			<%= link_to edit_user_note_path(session[:id],@note),class: "edit" do %>
-				<i class="fa fa-3x fa-pencil"></i>
-			<% end %>
+		<%= link_to edit_user_note_path(session[:id],@note),remote: true,class: 'edit' do %>
+			<i class="fa fa-3x fa-pencil"></i>
+		<% end %>
 			<%= link_to user_note_path(session[:id],@note),class: "delete",:method=>"delete",data:{confirm:"Are you sure?"} do %>
 				<i class="fa fa-3x fa-trash-o"></i>
 			<% end %>

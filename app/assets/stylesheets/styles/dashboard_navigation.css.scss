@@ -23,6 +23,7 @@
         }
     }    
      @include respond-to(lgmobile){
+        background-color: $light-main-color;
         top:$header-dbheight;
         z-index:102;
      }
@@ -44,13 +45,14 @@
         padding-top: percent($logo-pad-t,$left-width);
         
         @include respond-to(lgmobile) {
-            padding-top: percent($logo-pad-t,$left-width);
+            padding-top: percent($logo-pad-t/4,$left-width);
         }
         border-bottom: 2px solid white;
 
         @include respond-to(mobile){
             font-size:3.5em;
             width:50%;
+            padding-top: percent($logo-pad-t/4,$left-width);
         }
 
     }
@@ -90,6 +92,9 @@
         .bold-link {
             color: $bold-heading;
             font-weight: $medium;
+            @include respond-to(lgmobile){
+                color:lighten($bold-heading,7%);
+            }
         }
     }
     //fix glyphs icons position
