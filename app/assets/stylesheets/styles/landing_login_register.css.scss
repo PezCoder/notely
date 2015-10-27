@@ -6,9 +6,8 @@
     left: 0;
     right: 0;
     bottom: 0;
-
     @include respond-to(tablet) {
-        overflow:auto;
+        overflow: auto;
     }
     /* Notely Circled title */
     .title {
@@ -25,7 +24,6 @@
         left: 95px;
         border-radius: 100%;
     }
-
     .background {
         width: 100%;
         position: relative;
@@ -139,15 +137,17 @@
     }
     .register-content {
         //whole content of regitration form
-        position:absolute;
-        left:8%;
-        top:68px;
+        position: absolute;
+        left: 8%;
+        top: 68px;
         padding-left: 35px;
         padding-right: 35px;
         padding-bottom: 13px;
-       // left: percentage(-400/1366);
+        @include respond-to(tablet) {
+            left: 0;
+        }
+        // left: percentage(-400/1366);
         width: 330px;
-
         .title {
             position: absolute;
             padding: 31px 16px;
@@ -213,7 +213,4 @@
         margin-bottom: 0;
         font-style: italic;
     }
-
-
-
 }
