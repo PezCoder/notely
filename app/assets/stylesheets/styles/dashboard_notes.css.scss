@@ -73,7 +73,7 @@ main::after {
     }
     /* Content inside each note */
     .content {
-        padding: 26px 30px;
+        padding: 26px percent(30px,569px);
         .content-tag {
             color: $tag-color;
         }
@@ -88,9 +88,10 @@ main::after {
     }
     /* Options like edit delete expand glyphicons */
     .content-options {
+        overflow: auto;
         border-top: 1px solid $hr;
         background-color: $bottom-bar-bg;
-        padding: 9px 26px 9px 26px;
+        padding: 9px percent(26px,569px) 9px percent(26px,569px);
         .post-date {
             //posted ago time
             float: right;
@@ -99,16 +100,18 @@ main::after {
                 font-size: 0.9em;
             }
             @include respond-to(mobile) {
-                float: none;
-                display: block;
-                clear: both;
-                margin-top: 13px;
-                margin-left: 27px;
+                margin-top: 11px;
+            }
+        }
+        a:first-child{
+            @include respond-to(landscape){
+                margin-left:20px;
             }
         }
         a {
+            //each link containing edit,update,delete glyps
             @include respond-to(landscape) {
-                margin-left: 31px;
+              margin-right:20px;
             }
         }
         i.fa {
@@ -140,7 +143,7 @@ main::after {
 }
 
 #new-note {
-    padding: 26px 30px 30px 30px;
+    padding: percent(26px,571px) percent(30px,571px) percent(30px,571px) percent(30px,571px);
     height: 112px;
     border: 1px solid $hr;
     @include shadow(1px, 2px);
@@ -151,7 +154,7 @@ main::after {
 
 #editor {
     //text area of when edited
-    padding: 26px;
+    padding: percent(26px,539px);
     height: auto;
     border-radius: 1px;
     background-color: white;
