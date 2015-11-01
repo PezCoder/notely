@@ -64,6 +64,10 @@
             text-align: center;
             display: inline-block;
         }
+        a:hover{
+            border-bottom:2px solid $hr;
+            color:darken($light-text,5%);
+        }
         a:first-child {
             //tab tag
             width: 40%;
@@ -82,7 +86,7 @@
         }
 
         a.active {
-            border-bottom: 1px solid $main-color;
+            border-bottom: 2px solid $main-color;
             font-weight: $bold;
             color: $main-color;
             @include respond-to(lgmobile) {
@@ -138,8 +142,14 @@
             display: block;
         }
     }
+    .placeholder-text{
+        color: #aaa;
+        @include em(22);
+        font-weight: 100;
+        text-align: center;
+        padding: 25px;
+    }
 }
-
 
 
 /* end search-results */

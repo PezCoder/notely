@@ -1,6 +1,6 @@
 /* Edit profile page */
 .edit-profile-container {
-    padding: percent(30px,$middle-width) percent(50px,$middle-width);
+    padding: percent(17px,$middle-width) percent(50px,$middle-width);
     .form-wrapper {
         margin-top: 17px;
         padding-left: 15px;
@@ -19,7 +19,7 @@
         font-weight: $light;
     }
     .edit-user {
-        border-left:1px solid $complement;
+        border-left:2px solid $complement;
         h2 {
             color: $complement;
         }
@@ -58,7 +58,7 @@
         }
     }
     .delete-user {
-        border-left:1px solid red;
+        border-left:2px solid red;
         margin-top:percent(30px,631px);
         h2 {
             color: red;

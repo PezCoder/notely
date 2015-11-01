@@ -6,9 +6,8 @@
     left: 0;
     right: 0;
     bottom: 0;
-
     @include respond-to(tablet) {
-        overflow:auto;
+        overflow: auto;
     }
     /* Notely Circled title */
     .title {
@@ -25,7 +24,6 @@
         left: 95px;
         border-radius: 100%;
     }
-
     .background {
         width: 100%;
         position: relative;
@@ -33,10 +31,11 @@
         padding-top: 90px;
     }
     .background:before {
-        @include respond-to(landscape){
-           background-image:none;
+        @include respond-to(landscape) {
+            background-image: none;
         }
-        background-image: url("notely_bg.jpg");
+        //image url helps even when the image name is appended with hash while precompiling
+        background-image: image-url("notely_bg.jpg");
         background-position: center;
         background-size: cover;
         content: "";
@@ -58,9 +57,11 @@
         border-radius: 6px;
         padding: 60px 50px 30px 50px;
         margin: 0px auto;
-
-        @include respond-to(landscape){
-            @include customShadow(1px,1px,2px,$landing-content-border);
+        @include respond-to(landscape) {
+            @include customShadow(1px,
+            1px,
+            2px,
+            $landing-content-border);
             border: 1px solid $landing-content-border;
         }
     }
@@ -147,20 +148,14 @@
     }
     .register-content {
         //whole content of regitration form
-        position:absolute;
-        left:8%;
-        top:68px;
+        position: relative;
+        top: -27px;
+           left: 0;
+            right: 0;
         padding-left: 35px;
         padding-right: 35px;
         padding-bottom: 13px;
-
-            @include respond-to(tablet) {
-                left:0;
-                right:0;
-            }
-       // left: percentage(-400/1366);
         width: 330px;
-
         .title {
             position: absolute;
             padding: 31px 16px;
@@ -226,7 +221,37 @@
         margin-bottom: 0;
         font-style: italic;
     }
-
-
-
+    .tips {
+        font-family: $quote-font;
+        font-size: 25px;
+        width: percent(300px,$width);
+        color: #2A2C3C;
+        position: absolute;
+        z-index: 19;
+        @include respond-to(lgmobile){
+            text-indent: -9999px;
+        }
+    }
+    .tip1{
+        left:6%;
+        top:12%;
+    }
+    .tip2{
+        left:6%;
+        top:30%;
+    }
+    .tip3{
+        right:5%;
+        bottom:12%;
+    }
+    .tip4{
+        right:5%;
+        bottom:30%;
+    }
+    .tag {
+        color: $bold-heading;
+    }
+    .user {
+        color: $user-color;
+    }
 }

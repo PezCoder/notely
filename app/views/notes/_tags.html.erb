@@ -1,6 +1,10 @@
-<% @tags.each do |tag| %>
-	<%= link_to user_notes_path(session[:id],:filter_tagname=>tag[0]) do %>
-		<span class="tagname">#<%= tag[0].downcase%></span>
-		<span class="tagcount"><%= tag[1] %></span>
+<% if @tags.count ==0 %>
+	<p class="placeholder-text">Your tags will show up here.</p>
+<% else %>
+	<% @tags.each do |tag| %>
+		<%= link_to user_notes_path(session[:id],:filter_tagname=>tag[0]) do %>
+			<span class="tagname">#<%= tag[0].downcase%></span>
+			<span class="tagcount"><%= tag[1] %></span>
+		<% end %>
 	<% end %>
 <% end %>

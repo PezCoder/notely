@@ -62,6 +62,14 @@ header {
         @include respond-to(tablet) {
             margin-right: 20px;
         }
+
+        i{
+            //our bell when the background will change to blue
+            //change color of bell to white
+            @include respond-to(lgmobile) {
+                color: white;
+            }
+    }
     }
     .header-link:hover {
         color: $complement;
@@ -89,10 +97,8 @@ header {
     i {
         color: $main-color;
         cursor: pointer;
-        @include respond-to(lgmobile) {
-            color: white;
-        }
     }
+
 }
 
 
@@ -272,8 +278,8 @@ header {
 #nav-toggle span:after {
     cursor: pointer;
     border-radius: 1px;
-    height: 4px;
-    width: 30px;
+    width:27px;
+    height:3px;
     background: $complement;
     position: absolute;
     display: none;
@@ -282,10 +288,6 @@ header {
     @include respond-to(tablet) {
         display: block;
     }
-     @include respond-to(lgmobile) {
-        width:27px;
-        height:3px;
-     }
 }
 
 #nav-toggle.active {
@@ -305,15 +307,9 @@ header {
 }
 
 #nav-toggle span:before {
-    top: -9px;
-    @include respond-to(lgmobile) {
-        top:-7px;
-    }
+    top:-7px;
 }
 
 #nav-toggle span:after {
-    bottom: -9px;
-    @include respond-to(lgmobile) {
-        bottom:-7px;
-    }
+    bottom:-7px;
 }
