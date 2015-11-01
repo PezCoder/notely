@@ -62,14 +62,13 @@ header {
         @include respond-to(tablet) {
             margin-right: 20px;
         }
-
-        i{
+        i {
             //our bell when the background will change to blue
             //change color of bell to white
             @include respond-to(lgmobile) {
                 color: white;
             }
-    }
+        }
     }
     .header-link:hover {
         color: $complement;
@@ -90,15 +89,26 @@ header {
         i {
             color: white;
             @include respond-to(lgmobile) {
-                color:$main-color;
+                color: $main-color;
             }
         }
+    }
+    .badge{
+        color:white;
+        background-color: red;
+        width:15px;
+        height:15px;
+        border-radius:100%;
+        display:inline-block;
+        text-align: center;
+        font-size:13px;
+        left:-10px;
+        position:relative;        
     }
     i {
         color: $main-color;
         cursor: pointer;
     }
-
 }
 
 
@@ -114,9 +124,9 @@ header {
         position: absolute;
         width: 0;
         height: 0;
-         @include respond-to(lgmobile){
-            right:auto;
-            left:30px;
+        @include respond-to(lgmobile) {
+            right: auto;
+            left: 30px;
         }
     }
     .up-arrow {
@@ -126,7 +136,6 @@ header {
         border-left: 12px solid transparent;
         border-right: 12px solid transparent;
         border-bottom: 15px solid $main-color;
-
     }
     .up-white-arrow {
         //white arrow over the blue to create a blue outline effect
@@ -211,13 +220,12 @@ header {
     @include shadow(2px, 4px);
     position: absolute;
     right: 0;
-
     @include respond-to(tablet) {
-        right:-18px;
+        right: -18px;
     }
     @include respond-to(lgmobile) {
-        left:$left-shift;
-        right:auto;
+        left: $left-shift;
+        right: auto;
     }
     top: $header-height+20px+40px;
     width: 300px;
@@ -278,8 +286,8 @@ header {
 #nav-toggle span:after {
     cursor: pointer;
     border-radius: 1px;
-    width:27px;
-    height:3px;
+    width: 27px;
+    height: 3px;
     background: $complement;
     position: absolute;
     display: none;
@@ -307,9 +315,9 @@ header {
 }
 
 #nav-toggle span:before {
-    top:-7px;
+    top: -7px;
 }
 
 #nav-toggle span:after {
-    bottom:-7px;
+    bottom: -7px;
 }

@@ -1,3 +1,6 @@
+//this is when searched.. Notes & tags are reloaded
 $("#all-notes").html("<%= escape_javascript(render(:partial=>'notes')) %>");
 $("#tags").html("<%= escape_javascript(render(:partial=>'tags',:locals=>{:tags=>@tags})) %>");
 loadContentColors();
+//quick edit for all, since every note is injected into dom again
+quickEditNote();

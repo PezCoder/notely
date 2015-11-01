@@ -2,12 +2,17 @@ $("<%= escape_javascript(render(:partial=>'each_note',:locals=>{:note=>@note})) 
 $("#tags").html("<%= escape_javascript(render(:partial=>'tags',:locals=>{:tags=>@tags})) %>");
 var all_notes = document.querySelector('#all-notes');
 var first_note = all_notes.children[0];
+//load colors for this note
 loadContentColors([first_note]);
+//quick edit should work (pass array with class of "content")
+quickEditNote([first_note.children[0]]);
 
 //empty the textbox after creation
 var textBox = document.getElementById('new-note');
-
 textBox.value='';
+
+
+
 //insert error messages accordingly
 <% if !flash[:notice].blank? %>
     $("#flash").html("<div class='notice'><%= escape_javascript(flash[:notice]) %></div>");

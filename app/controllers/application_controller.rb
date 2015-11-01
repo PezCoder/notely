@@ -29,6 +29,7 @@ class ApplicationController < ActionController::Base
   def get_notifications
     user = User.find_by_id(session[:id])
     @notifications = user.notifications.recent_notifications
+    @notify_count = @notifications.where(:is_seen=>false).count
   end
 
 end
