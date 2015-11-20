@@ -18,7 +18,7 @@ development:
   adapter: mysql2
   database: notely_development
   username: notely
-  password: inferno#
+  password: password
   host: localhost
 
 # Warning: The database defined as "test" will be erased and

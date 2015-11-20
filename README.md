@@ -5,7 +5,7 @@ Notely is a web application which lets you create, organize & collaborate your n
 It has some cool features like tagging, collaborating, live search & tags recommendation.
 
 # Let me check out myself !
-[There you go ->](http://thenotely.herokuapp.com)
+There you go -> [Notely](http://thenotely.herokuapp.com)
 
 # Technologies Used
 1. HTML5, CSS3, Sass, Javascript & jQuery
